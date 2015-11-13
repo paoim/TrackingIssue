@@ -1,0 +1,256 @@
+<div class="modal-header ri-model-header">
+	<div class="row-100">
+		<div class="col-85">
+			<span class="text-brand font-size-26">To Do List</span>
+		</div>
+		<div class="col-15 text-right">
+			<button class="btn btn-warning" ng-click="ok()"><span class="glyphicon glyphicon-remove"></span></button>
+		</div>
+	</div>
+</div>
+<div class="modal-body padding-model">
+	<div class="row ri-modal">
+		<form name="todoForm" novalidate>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-90">
+				<div class="row-100">
+					<div class="col-15">
+						<span>Who</span>
+						<span class="asterisk">*</span>
+					</div>
+					<div class="col-85">
+						<select class="form-control" name="todoWho" ng-model="todo.who" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in contacts" required></select>
+						<!-- <span class="asterisk" ng-show="todoForm.todoWho.$dirty && todoForm.todoWho.$invalid">
+							<span ng-show="todoForm.todoWho.$error.required">Who is required.</span>
+						</span> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-10">
+				<div class="row-100 margin-left-15">
+					<div class="col-15">
+						<span>&nbsp;</span>
+					</div>
+					<div class="col-85">
+						<span>{{todo.id}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-90">
+				<div class="row-100">
+					<div class="col-15">
+						<span>When</span>
+						<span class="asterisk">*</span>
+					</div>
+					<div class="col-85">
+						<div class="input-group">
+							<input type="text" class="form-control" name="todoDueDate" ng-model="todo.dueDate" datepicker-popup="{{datePicker.getFormat(0)}}" ng-click="openWhen($event)" is-open="$parent.openedWhen" min-date="minWhen" max-date="maxWhen" datepicker-options="datePicker.getDateOptions()" ng-required="true" close-text="Close" autofocus />
+							<span class="input-group-addon show-cursor" ng-click="openWhen($event)">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+							<!-- <span class="asterisk" ng-show="todoForm.todoDueDate.$dirty && todoForm.todoDueDate.$invalid">
+								<span ng-show="todoForm.todoDueDate.$error.required">When is required.</span>
+							</span> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-10">
+				<div class="row-100 margin-left-15">
+					<div class="col-15">
+						<span>&nbsp;</span>
+					</div>
+					<div class="col-85">
+						<span>&nbsp;</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-90">
+				<div class="row-100">
+					<div class="col-15">
+						<span>What</span>
+						<span class="asterisk">*</span>
+					</div>
+					<div class="col-85">
+						<textarea class="form-control text-area-format" name="todoWhat" rows="4" ng-model="todo.what" required></textarea>
+						<!-- <span class="asterisk" ng-show="todoForm.todoWhat.$dirty && todoForm.todoWhat.$invalid">
+							<span ng-show="todoForm.todoWhat.$error.required">What is required.</span>
+						</span> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-10">
+				<div class="row-100 margin-left-15">
+					<div class="col-15">
+						<span>&nbsp;</span>
+					</div>
+					<div class="col-85">
+						<span>&nbsp;</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-90">
+				<div class="row-100">
+					<div class="col-15">
+						<span>Part #</span>
+					</div>
+					<div class="col-85">
+						<input type="text" name="partNum" class="form-control" ng-model="todo.partNum" typeahead="partNum for partNum in partNumList | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-10">
+				<div class="row-100 margin-left-15">
+					<div class="col-15">
+						<span>&nbsp;</span>
+					</div>
+					<div class="col-85">
+						<span>&nbsp;</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-90">
+				<div class="row-100">
+					<div class="col-15">
+						<span>&nbsp;</span>
+					</div>
+					<div class="col-85">
+						<input type="checkbox" ng-model="todo.completed" />
+						<span>Is Completed</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-10">
+				<div class="row-100 margin-left-15">
+					<div class="col-15">
+						<span>&nbsp;</span>
+					</div>
+					<div class="col-85">
+						<span>&nbsp;</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row-100">
+			<div class="text-right">
+				<button class="btn btn-default" ng-disabled="todoForm.$invalid" ng-click="upsertTodo()">{{addBtnLabel}}</button>
+				<button class="btn btn-default" ng-click="linkToTodos()">Go to Todos List</button>
+				<button class="btn btn-default" ng-click="linkToTodoReport()">Generate Todo Report</button>
+			</div>
+		</div>
+		</form>
+		
+		<div class="row-100">
+			<strong>List of To Do List</strong>
+		</div>
+		<div class="row-100 margin-bottom-12">
+			<div class="row-100 ri-box ri-height">
+				<div class="table-responsive" ng-show="todolist.length > 0">
+					<table class="table table-striped">
+						<tr class="info">
+							<th><span class="glyphicon glyphicon-edit"></span></th>
+							<th><span class="glyphicon glyphicon-remove-circle"></span></th>
+							<th><span>Who</span></th>
+							<th><span>When</span></th>
+							<th><span>What</span></th>
+							<th><span>Part #</span></th>
+							<th><span>Is Done</span></th>
+						</tr>
+						<tr ng-repeat="item in todolist">
+							<td class="show-cursor" ng-click="doEditTodo(item)">
+								<span class="glyphicon glyphicon-edit"></span>
+							</td>
+							<td class="show-cursor" ng-click="doDeleteTodo(item, 'sm')">
+								<span class="glyphicon glyphicon-remove-circle"></span>
+							</td>
+							<td>
+								<span ng-if="(!item.contact || item.contact == '')">&nbsp;</span>
+								<span ng-if="item.contact.length > 0">{{item.contact}}</span>
+							</td>
+							<td>
+								<span ng-if="(!item.dueDate || item.dueDate == '')">&nbsp;</span>
+								<span ng-if="item.dueDate.length > 0">{{item.dueDate | date:'MM/dd/yyyy'}}</span>
+							</td>
+							<td>
+								<span ng-if="(!item.what || item.what == '')">&nbsp;</span>
+								<span ng-if="item.what.length > 0">{{item.what}}</span>
+							</td>
+							<td>
+								<span ng-if="(!item.partNum || item.partNum == '')">&nbsp;</span>
+								<span ng-if="item.partNum.length > 0">{{item.partNum}}</span>
+							</td>
+							<td>
+								<input type="checkbox" name="isCompletedTodo[]" ng-checked="item.completed" ng-disabled="true" />
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+				<!-- <div class="row-100 margin-bottom-5 bottom-line" ng-show="todolist.length > 0">
+					<div class="col-20">
+						<strong>Who</strong>
+					</div>
+					<div class="col-20">
+						<strong>When</strong>
+					</div>
+					<div class="col-40">
+						<strong>What</strong>
+					</div>
+					<div class="col-10">
+						<strong>Is Done</strong>
+					</div>
+					<div class="col-5">
+						<span>&nbsp;</span>
+					</div>
+					<div class="col-5">
+						<span>&nbsp;</span>
+					</div>
+					
+				</div>
+				<div class="row-100 margin-bottom-5" ng-repeat="item in todolist">
+					<div class="col-20">
+						<span>{{item.contact}}</span>
+					</div>
+					<div class="col-20">
+						<span>{{item.dueDate | date:'MM/dd/yyyy'}}</span>
+					</div>
+					<div class="col-40">
+						<span>{{item.what}}</span>
+					</div>
+					<div class="col-10 text-center">
+						<input type="checkbox" name="isCompletedTodo[]" ng-checked="item.completed" ng-disabled="true" />
+					</div>
+					<div class="col-5 show-cursor" ng-click="doEditTodo(item)">
+						<span class="glyphicon glyphicon-edit"></span>
+					</div>
+					<div class="col-5 show-cursor" ng-click="doDeleteTodo(item, 'sm')">
+						<span class="glyphicon glyphicon-remove-circle"></span>
+					</div>
+					
+				</div> -->
+				
+			</div>
+		</div>
+		<div class="row-100">
+			<div class="text-center">
+				<button type="button" class="btn btn-default" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">&lt; PREV</button>
+				<span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+				<button type="button" class="btn btn-default" ng-disabled="curPage >= todolist.length/pageSize - 1" ng-click="curPage = curPage+1">NEXT &gt;</button>
+			</div>
+		</div>
+		
+	</div>
+</div>
+<div class="modal-footer ri-model-footer">
+	<!-- <button class="btn btn-default" ng-click="ok()">OK</button>
+	<button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+</div>

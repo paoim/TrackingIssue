@@ -1,0 +1,50 @@
+<div class="row print-page">
+	<div class="print-box">
+		<div id="actionButton" class="row">
+			<div>
+				<button type="button" class="btn btn-lg btn-success" ng-disabled="issues.length == 0" ng-click="printReport()">Print</button>
+			</div>
+			<div>
+				<span>&nbsp;</span>
+			</div>
+		</div>
+		<div class="row alert alert-info" ng-show="isPageLoading">
+			<div class="animation">Loading <span></span><span></span><span></span></div>
+		</div>
+		<div id="reportContents">
+			<div class="row" ng-show="issues.length == 0">
+				<span>No data to print</span>
+			</div>
+			<div ng-show="issues.length > 0">
+				<div class="row alert alert-info">
+					<div class="col-md-1"><span>Part #</span></div>
+					<div class="col-md-2"><span>Customer Name</span></div>
+					<div class="col-md-2"><span>Historical Problems</span></div>
+					<div class="col-md-2"><span>Part/Process Fixes</span></div>
+					<div class="col-md-2"><span>Assigned To</span></div>
+					<div class="col-md-1"><span>Opened Date</span></div>
+					<div class="col-md-2"><span>Status</span></div>
+				</div>
+				<div class="row" ng-class-odd="'alert alert-warning'" ng-class-even="'alert alert-success'" ng-repeat="issue in issues">
+					<div class="col-md-1"><span><a href="#/issues/issue/view/{{issue.id}}">{{issue.partNum}}</a></span></div>
+					<div class="col-md-2"><span>{{issue.custName}}</span></div>
+					<div class="col-md-2">
+						<div ng-repeat="problem in issue.historicalProblems">
+							<span>{{problem.versionProblem}}</span>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div ng-repeat="fix in issue.historicalFixes">
+							<span>{{fix.versionFix}}</span>
+						</div>
+					</div>
+					<div class="col-md-2"><span>{{issue.assignedTo.firstName + ' ' + issue.assignedTo.lastName}}</span></div>
+					<div class="col-md-1"><span>{{issue.openedDate | date:'MM/dd/yyyy'}}</span></div>
+					<div class="col-md-2"><span>{{issue.status.name}}</span></div>
+				</div>
+			</div>
+			
+		</div>
+		
+	</div>
+</div>

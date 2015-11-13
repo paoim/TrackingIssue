@@ -1,0 +1,25 @@
+.search-box {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	background: #fff;
+	padding: 10px;
+	color: #333;
+}
+
+.pop-up-btn {
+	z-index: 2014;
+	margin-bottom: 5px;
+}
+
+.pop-up-box {
+	width: 50%;
+	z-index: 2015;
+	position: absolute;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	background-color: #e7e7e7;
+	-webkit-border-radius: 5px;
+}

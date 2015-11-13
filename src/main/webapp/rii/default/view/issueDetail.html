@@ -1,0 +1,398 @@
+<div class="row detail-page">
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80 col-mobile">
+			<div class="row-100">
+				<div class="col-label-issue col-mobile">
+					<span>Part #</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input-issue col-mobile">
+					<input type="text" name="partNum" class="form-control" ng-model="issue.partNum" typeahead="partNum for partNum in partNumList | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #" required autofocus />
+					<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+					<span class="asterisk" ng-show="issueForm.partNum.$dirty && issueForm.partNum.$invalid">
+						<span ng-show="issueForm.partNum.$error.required || issueForm.partNum.$invalid">Part # is required.</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20 col-mobile hide-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-label-id">
+						<span>ID #</span>
+					</div>
+					<div class="col-input-id col-mobile">
+						<span class="form-control">{{issue.id}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80 col-mobile">
+			<div class="row-100">
+				<div class="col-label-issue col-mobile">
+					<span>Customer Name</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input-issue col-mobile">
+					<!-- <select name="custName" class="form-control" ng-model="issue.custName" ng-options="custName for custName in custNameList" required></select> -->
+					<input type="text" name="custName" class="form-control" ng-model="issue.custName" typeahead="custName for custName in custNameList | filter:$viewValue | limitTo:10" placeholder="Enter Part #" required />
+					<span class="asterisk" ng-show="issueForm.custName.$dirty && issueForm.custName.$invalid">
+						<span ng-show="issueForm.custName.$error.required || issueForm.custName.$invalid">Customer's name is required.</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20 col-mobile">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-50 col-mobile">
+			<div class="row-100">
+				<div class="col-27 col-mobile">
+					<span>Job #</span>
+				</div>
+				<div class="col-73 col-mobile">
+					<input type="text" class="form-control" ng-model="issue.jobNum" placeholder="Enter Job #" />
+				</div>
+			</div>
+		</div>
+		<div class="col-50 col-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-27 col-mobile">
+						<span>Press #</span>
+					</div>
+					<div class="col-73 col-mobile">
+						<input type="text" class="form-control" ng-model="issue.pressNum" placeholder="Enter Press #" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-50 col-mobile">
+			<div class="row-100">
+				<div class="col-27 col-mobile">
+					<span>Mold #</span>
+				</div>
+				<div class="col-73 col-mobile">
+					<input type="text" class="form-control" ng-model="issue.moldNum" placeholder="Enter Mold #" />
+				</div>
+			</div>
+		</div>
+		<div class="col-50 col-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-27 col-mobile">
+						<span>Formula #</span>
+					</div>
+					<div class="col-73 col-mobile">
+						<input type="text" class="form-control" ng-model="issue.formulaNum" placeholder="Enter Formula #" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-50 col-mobile">
+			<div class="row-100">
+				<div class="col-27 col-mobile">
+					<span>Assigned To</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-73 col-mobile">
+					<select name="assignedTo" class="form-control" ng-model="issue.assignedTo.id" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in contacts" required></select>
+					<span class="asterisk" ng-show="issueForm.assignedTo.$dirty && issueForm.assignedTo.$invalid">
+						<span ng-show="issueForm.assignedTo.$error.required">AssignedTo is required.</span>
+					</span>
+					<!-- <a class="btn btn-default" href="#/contacts/newID">Add</a> -->
+				</div>
+			</div>
+		</div>
+		<div class="col-50 col-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-27 col-mobile">
+						<span>Priority</span>
+					</div>
+					<div class="col-73 col-mobile">
+						<select class="form-control" ng-model="issue.priority.id" ng-options="priority.id as priority.name for priority in priorities"></select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-50 col-mobile">
+			<div class="row-100">
+				<div class="col-27 col-mobile">
+					<span>Status</span>
+				</div>
+				<div class="col-73 col-mobile">
+					<select class="form-control" ng-model="issue.status.id" ng-options="status.id as status.name for status in statusItems"></select>
+				</div>
+			</div>
+		</div>
+		<div class="col-50 col-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-27 col-mobile">
+						<span>Category</span>
+					</div>
+					<div class="col-73 col-mobile">
+						<select class="form-control" ng-model="issue.category.id" ng-options="category.id as category.name for category in categories"></select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-50 col-mobile">
+			<div class="row-100">
+				<div class="col-27 col-mobile">
+					<span>Due Date</span>
+				</div>
+				<div class="col-73 col-mobile">
+					<div class="input-group">
+						<input type="text" class="form-control" datepicker-popup="{{datePicker.getFormat(0)}}" ng-model="issue.dueDate" ng-click="openDueDate($event)" is-open="openedDueDate" min-date="minDueDate" max-date="maxDueDate" datepicker-options="datePicker.getDateOptions()" />
+						<span class="input-group-addon show-cursor" ng-click="openDueDate($event)">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-50 col-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-27 col-mobile">
+						<span>Opened Date</span>
+					</div>
+					<div class="col-73 col-mobile">
+						<div class="input-group">
+							<input type="text" class="form-control" datepicker-popup="{{datePicker.getFormat(0)}}" ng-model="issue.openedDate" ng-click="openOpenedDate($event)" is-open="openedOpenedDate" min-date="minOpenedDate" max-date="maxOpenedDate" datepicker-options="datePicker.getDateOptions()" />
+							<span class="input-group-addon show-cursor" ng-click="openOpenedDate($event)">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-50 col-mobile">
+			<div class="row-100">
+				<div class="col-27 col-mobile">
+					<span>Opened By</span>
+				</div>
+				<div class="col-73 col-mobile">
+					<select class="form-control" ng-model="issue.openedBy.id" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in contacts"></select>
+					<!-- <a class="btn btn-default" href="#/contacts/newID">Add</a> -->
+				</div>
+			</div>
+		</div>
+		<div class="col-50 col-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-27 col-mobile">
+						<span>Follow Until</span>
+					</div>
+					<div class="col-73 col-mobile">
+						<div class="input-group">
+							<input type="text" class="form-control" datepicker-popup="{{datePicker.getFormat(0)}}" ng-model="issue.followUntil" ng-click="openFollowUntil($event)" is-open="openedFollowUntil" min-date="minDateFollowUntil" max-date="maxDateFollowUntil" datepicker-options="datePicker.getDateOptions()" date-disabled="datePicker.disabled(date, mode)" close-text="Close" />
+							<span class="input-group-addon show-cursor" ng-click="openFollowUntil($event)">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100">
+		<div class="col-50 col-mobile">
+			<div class="row-100">
+				<div class="col-27 col-mobile">
+					<span>Attachments</span>
+				</div>
+				<div class="col-73 col-mobile">
+					<div ng-click="openFileDialog()" class="image-box-dashe">
+						<div class="image-container">
+							<div ng-show="isNewUploadImage" class="preview-content">
+								<p>Click here to select a file!</p>
+							</div>
+							<div ng-show="!isNewUploadImage">
+								<img ng-src="{{imageSource}}" class="img-thumbnail" />
+								<!-- Image can display as img-thumbnail, img-rounded, img-circle, img-responsive -->
+							</div>
+						</div>
+					</div>
+					<input type="file" id="issueAttachment" accept="image/*" style="display:none" />
+					<input type="hidden" ng-model="issueAttachmentName" />
+					<input type="hidden" ng-model="issue.attachment" />
+				</div>
+			</div>
+		</div>
+		<div class="col-50 col-mobile">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div>
+			<tabset>
+				<tab heading="Issue Information">
+					<div class="row-100 tab-box">
+						<div class="row-100 padding-10">
+							<div class="col-50 col-mobile">
+								<div class="row-100">
+									<div class="row-100 margin-bottom-5">
+										<span>New Problem</span> <!-- New Comment -->
+									</div>
+									<div class="row-100 margin-bottom-5">
+										<textarea class="form-control text-area-format" rows="3" ng-model="issue.problem"></textarea>
+									</div>
+									<div class="row-100 margin-bottom-5">
+										<span>Historical Problems</span>
+									</div>
+									<div class="row-100">
+										<!-- [Version: 5/27/2014 2:29:16 PM] Just for Test comment -->
+										<div class="history-box">
+											<div ng-repeat="problem in issue.historicalProblems">
+												<span>{{problem.versionProblem}}</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-50 col-mobile">
+								<div class="margin-id-m">
+									<div class="row-100">
+										<div class="row-100 margin-bottom-5">
+											<span>Problem Fix</span> <!-- Description -->
+										</div>
+										<div class="row-100 margin-bottom-5">
+											<textarea class="form-control text-area-format" rows="3" ng-model="issue.fix"></textarea>
+										</div>
+										<div class="row-100 margin-bottom-5">
+											<span>Historical Problem Fixes</span>
+										</div>
+										<div class="row-100">
+											<div class="history-box">
+												<div ng-repeat="fix in issue.historicalFixes">
+													<span>{{fix.versionFix}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</tab>
+				<tab heading="Related Issues">
+					<div class="row tab-box">
+						<div class="row padding-15 margin-bottom-15">
+							<div class="ri-detail-box">
+								<div class="row-100" ng-show="relatedIssues.length > 0">
+									<div class="row-100 row-th">
+										<div class="related-issue-line margin-bottom-5">
+											<div class="col-5">
+												<strong>#</strong>
+											</div>
+											<div class="col-10">
+												<strong>Part #</strong>
+											</div>
+											<div class="col-20">
+												<strong>Assigned To</strong>
+											</div>
+											<div class="col-20">
+												<strong>Opened By</strong>
+											</div>
+											<div class="col-15">
+												<strong>Priority</strong>
+											</div>
+											<div class="col-15">
+												<strong>Category</strong>
+											</div>
+											<div class="col-15">
+												<strong>Status</strong>
+											</div>
+										</div>
+									</div>
+									<div class="row-100 row-item show-cursor" ng-repeat="relatedIssue in relatedIssues">
+										<div class="related-issue-line margin-bottom-5">
+											<div class="col-5">
+												<span><a href="#/issues/issue/view/{{relatedIssue.id}}">{{relatedIssue.id}}</a></span>
+											</div>
+											<div class="col-10">
+												<span ng-if="(!relatedIssue.partNum || relatedIssue.partNum == '')">&nbsp;</span>
+												<span ng-if="relatedIssue.partNum.length > 0">{{relatedIssue.partNum}}</span>
+											</div>
+											<div class="col-20">
+												<span ng-if="(!relatedIssue.assignedTo.firstName && !relatedIssue.assignedTo.lastName) || (relatedIssue.assignedTo.firstName == '' && relatedIssue.assignedTo.lastName == '')">&nbsp;</span>
+												<span ng-if="(relatedIssue.assignedTo.firstName.length > 0 || relatedIssue.openedBy.lastName.length > 0)">{{relatedIssue.assignedTo.firstName + ' ' + relatedIssue.assignedTo.lastName}}</span>
+											</div>
+											<div class="col-20">
+												<span ng-if="(!relatedIssue.openedBy.firstName && !relatedIssue.openedBy.lastName) || (relatedIssue.openedBy.firstName == '' && relatedIssue.openedBy.lastName == '')">&nbsp;</span>
+												<span ng-if="(relatedIssue.openedBy.firstName.length > 0 || relatedIssue.openedBy.lastName.length > 0)">{{relatedIssue.openedBy.firstName + ' ' + relatedIssue.openedBy.lastName}}</span>
+											</div>
+											<div class="col-15">
+												<span ng-if="(!relatedIssue.priority.name || relatedIssue.priority.name == '')">&nbsp;</span>
+												<span ng-if="relatedIssue.priority.name.length > 0">{{relatedIssue.priority.name}}</span>
+											</div>
+											<div class="col-15">
+												<span ng-if="(!relatedIssue.category.name || relatedIssue.category.name == '')">&nbsp;</span>
+												<span ng-if="relatedIssue.category.name.length > 0">{{relatedIssue.category.name}}</span>
+											</div>
+											<div class="col-15">
+												<span ng-if="(!relatedIssue.status.name || relatedIssue.status.name == '')">&nbsp;</span>
+												<span ng-if="relatedIssue.status.name.length > 0">{{relatedIssue.status.name}}</span>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+							<div class="row-100">
+								<div class="related-issue-line margin-bottom-5">
+									<button type="button" class="btn btn-default" ng-disabled="isVisibleRelatedIssue" ng-click="openRelatedIssueModal(issue, 'lg')">Add Related Issues</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</tab>
+			</tabset>
+		</div>
+	</div>
+</div>

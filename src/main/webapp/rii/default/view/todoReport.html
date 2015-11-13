@@ -1,0 +1,95 @@
+<div class="row detail-page margin-bottom-280">
+	<div class="row-100 margin-bottom-5">
+		<div>
+			<h4>Filter by:</h4>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-12">
+		<div class="btn-group">
+			<label class="btn btn-default" ng-model="todoReportFilter" btn-radio="'default'">Today</label>
+			<label class="btn btn-default" ng-model="todoReportFilter" btn-radio="'date'">Date</label>
+			<label class="btn btn-default" ng-model="todoReportFilter" btn-radio="'criteria'">Criteria</label>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-12" ng-show="todoReportFilter == 'date'">
+		<div class="col-50 col-mobile">
+			<div class="row-100">
+				<div class="col-27 col-mobile">
+					<span>Start Date</span>
+				</div>
+				<div class="col-73 col-mobile">
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="startDate" datepicker-popup="{{datePicker.getFormat(0)}}" ng-click="openStartDate($event)" is-open="openedStartDate" min-date="minStartDate" max-date="maxStartDate" datepicker-options="datePicker.getDateOptions()" date-disabled="datePicker.disabled(date, mode)" ng-change="compareDates()" ng-required="true" close-text="Close" />
+						<span class="input-group-addon show-cursor" ng-click="openStartDate($event)">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-50 col-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-27 col-mobile">
+						<span>End Date</span>
+					</div>
+					<div class="col-73 col-mobile">
+						<div class="input-group">
+							<input type="text" class="form-control" ng-model="endDate" datepicker-popup="{{datePicker.getFormat(0)}}" ng-click="openEndDate($event)" is-open="openedEndDate" min-date="minEndDate" max-date="maxEndDate" datepicker-options="datePicker.getDateOptions()" date-disabled="datePicker.disabled(date, mode)" ng-change="compareDates()" ng-required="true" close-text="Close" />
+							<span class="input-group-addon show-cursor" ng-click="openEndDate($event)">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5" ng-show="todoReportFilter == 'criteria'">
+		<div class="row-100 margin-bottom-12">
+			<div class="col-15 col-mobile">
+				<span>Who</span>
+			</div>
+			<div class="col-85 col-mobile">
+				<select class="form-control" ng-model="criteria.who" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in contacts"></select>
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-12">
+			<div class="col-15 col-mobile">
+				<span>When</span>
+			</div>
+			<div class="col-85 col-mobile">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="criteria.dueDate" datepicker-popup="{{datePicker.getFormat(0)}}" ng-click="openWhen($event)" is-open="openedWhen" min-date="minWhen" max-date="maxWhen" datepicker-options="datePicker.getDateOptions()" ng-required="true" close-text="Close" />
+					<span class="input-group-addon show-cursor" ng-click="openWhen($event)">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-15 col-mobile">
+				<span>Part #</span>
+			</div>
+			<div class="col-85 col-mobile">
+				<input type="text" name="partNum" class="form-control" ng-model="criteria.partNum" typeahead="partNum for partNum in partNumList | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #"/>
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-15 col-mobile">
+				<span>Completed Status</span>
+			</div>
+			<div class="col-85 col-mobile">
+				<div class="btn-group">
+					<label class="btn btn-success" ng-model="criteria.completed" btn-radio="'1'">Complete</label>
+					<label class="btn btn-success" ng-model="criteria.completed" btn-radio="'0'">Not complete</label>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+</div>

@@ -1,0 +1,107 @@
+<div id="detail">
+	<div class="box-format">
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<h4>Filter by:</h4>
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<div class="btn-group">
+					<label class="btn btn-default" ng-model="issueReportFilter" btn-radio="'default'">Default</label>
+					<label class="btn btn-default" ng-model="issueReportFilter" btn-radio="'date'">Date</label>
+					<label class="btn btn-default" ng-model="issueReportFilter" btn-radio="'criteria'">Criteria</label>
+				</div>
+			</div>
+		</div>
+		<div id="dateFilter" class="margin-bottom-5" ng-show="issueReportFilter == 'date'">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Start Date</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="startDate" min="minStartDate" max="maxStartDate" ng-change="compareDates()" required autofocus />
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>End Date</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="endDate" min="minEndDate" max="maxEndDate" ng-change="compareDates()" required />
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="criteriaFilter" class="margin-bottom-5" ng-show="issueReportFilter == 'criteria'">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Issue #</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="text" class="form-control" ng-model="criteria.issueId" typeahead="issueId for issueId in issueIds | filter:$viewValue | limitTo:10" placeholder="Enter Issue #" autofocus />
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Part #</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="text" class="form-control" ng-model="criteria.partNum" typeahead="partNum for partNum in getPartNum($viewValue) | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #" />
+					<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Opened By</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<select class="form-control" ng-model="criteria.openedBy.id" ng-options="openedBy.id as openedBy.name for openedBy in contactByItems"></select>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Assigned To</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<select class="form-control" ng-model="criteria.assignedTo.id" ng-options="assignedTo.id as assignedTo.name for assignedTo in contactByItems"></select>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Status</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<select class="form-control" ng-model="criteria.status.id" ng-options="status.id as status.name for status in statusItems"></select>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="actionButton">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<button type="button" class="btn btn-lg btn-success" ng-click="viewReport()">View Report</button>
+					<button type="button" class="btn btn-lg btn-success" ng-show="issueReportFilter !== 'default'" ng-click="resetReport()">Reset</button>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>

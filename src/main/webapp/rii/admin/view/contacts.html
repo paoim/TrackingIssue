@@ -1,0 +1,34 @@
+<div class="row">
+	<div class="text-center">
+		<!-- <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></pagination> -->
+		<div class="margin-bottom-12">
+			<button type="button" class="btn btn-default" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">&lt; PREV</button>
+			<span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+			<button type="button" class="btn btn-default" ng-disabled="curPage >= contacts.length/pageSize - 1" ng-click="curPage = curPage+1">NEXT &gt;</button>
+		</div>
+	</div>
+</div>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<tr class="info">
+			<th><span>ID</span></th>
+			<th><span>First Name</span></th>
+			<th><span>Last Name</span></th>
+			<th><span>Email Address</span></th>
+			<th><span>Business Phone</span></th>
+			<th><span>Company</span></th>
+			<th><span>Job Title</span></th>
+			<th><span>&nbsp;</span></th>
+		</tr>
+		<tr ng-repeat="cont in contacts | paginationFilter: curPage * pageSize | limitTo: pageSize">
+			<td><span><a href="#/contacts/{{cont.id}}">{{cont.id}}</a></span></td>
+			<td><span>{{cont.firstName}}</span></td>
+			<td><span>{{cont.lastName}}</span></td>
+			<td><span>{{cont.emailAddress}}</span></td>
+			<td><span>{{cont.businessPhone}}</span></td>
+			<td><span>{{cont.company}}</span></td>
+			<td><span>{{cont.jobTitle}}</span></td>
+			<td class="show-cursor" ng-click="doDeleteContact(cont.id, 'sm')"><span class="glyphicon glyphicon-remove-circle"></span></td>
+		</tr>
+	</table>
+</div>

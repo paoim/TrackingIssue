@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html ng-app="uploadImageApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Rii Issues Tracker - Upload Image Demo</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="../default/css/issuetracker.css" />
+</head>
+<body>
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand text-brand" href="http://pao-profile.appspot.com/" target="_blank">Upload Image Demo</a>
+			</div>
+
+			<div class="navbar-collapse collapse">
+				<!-- Menu block -->
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<span class="text-brand">Welcome to Upload Image Demo</span>
+				</div>
+				<div class="panel-body">
+					<div ng-controller="UploadImageCtrl">
+						<div class="image-box-dashe">
+							<div ng-click="loadFile()" class="preview-content">
+								<div id="imagePreview">
+									<p>Click here to select a file!</p>
+								</div>
+							</div>
+						</div>
+						<input type="file" id="fileElem" accept="image/*" style="display:none" />
+					</div>
+					<div ng-controller="FileCtrl">
+						<div class="image-box-dashe">
+							<div ng-click="openFileDialog()" class="preview-content">
+								<div id="previewImage"></div>
+							</div>
+						</div>
+						<input type="file" id="fileElement" accept="image/*" style="display:none" />
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div data-ng-include="'footer.html'" />
+
+	<script src="../js/libs/angular.min.js"></script>
+	<script src="../js/services/service-input-file.js"></script>
+	<script src="../js/demo/upload-image-app.js"></script>
+</body>
+</html>

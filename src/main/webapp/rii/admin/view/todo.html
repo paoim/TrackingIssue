@@ -1,0 +1,111 @@
+<div>
+	<div class="pop-up-btn">
+		<button class="btn btn-default" ng-click="openSearchForm()">{{openSearchFormLabel}}</button>
+	</div>
+	<div class="pop-up-box" ng-show="isOpenSearchForm">
+		<div class="search-box">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Start Date</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="searchTodo.startDate" min="minStartDate" max="maxStartDate" ng-change="compareDates()" required autofocus />
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>End Date</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="searchTodo.endDate" min="minEndDate" max="maxEndDate" ng-change="compareDates()" required />
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Who</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<select class="form-control" name="todoWho" ng-model="searchTodo.who" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in contacts" required></select>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Part #</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="text" name="partNum" class="form-control" ng-model="searchTodo.partNum" typeahead="partNum for partNum in partNumList | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #"/>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="searchBtn">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<button type="button" class="btn btn-default" ng-disabled="availableSearchTodo" ng-click="doSearchTodo()">Search Todo</button>
+					<button type="button" class="btn btn-default" ng-disabled="availableSearchTodo" ng-click="resetSearchTodo()">Reset</button>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8"></div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div id="lineBetweenSearchAndResult">
+		<div class="row margin-bottom-5">
+			<div class="padding-15">
+				<hr />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="padding-15">
+			<div class="alert alert-info" ng-show="isSearching">
+				<div class="animation">Loading <span></span><span></span><span></span></div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+<!-- Display Search Result -->
+<div ng-show="!isSearching">
+	<div class="row">
+		<div class="text-center">
+			<!-- <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></pagination> -->
+			<div class="margin-bottom-12">
+				<button type="button" class="btn btn-default" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">&lt; PREV</button>
+				<span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+				<button type="button" class="btn btn-default" ng-disabled="curPage >= todolist.length/pageSize - 1" ng-click="curPage = curPage+1">NEXT &gt;</button>
+			</div>
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tr class="info">
+				<th><span>#</span></th>
+				<th><span>Who</span></th>
+				<th><span>When</span></th>
+				<th><span>What</span></th>
+				<th><span>Part #</span></th>
+				<th><span>Is Done</span></th>
+				<th><span>Delete</span></th>
+			</tr>
+			<tr ng-repeat="todo in todolist | paginationFilter: curPage * pageSize | limitTo: pageSize">
+				<td><span><a href="#/todos/todo/view/{{todo.id}}">{{todo.id}}</a></span></td>
+				<td><span>{{todo.contact}}</span></td>
+				<td><span>{{todo.dueDate | date:'MM/dd/yyyy'}}</span></td>
+				<td><span>{{todo.what}}</span></td>
+				<td><span>{{todo.partNum}}</span></td>
+				<td>
+					<span ng-if="!todo.completed">Not complete</span>
+					<span ng-if="todo.completed">Completed</span>
+				</td>
+				<td class="show-cursor text-center" ng-click="doDeleteTodo(todo, 'sm')">
+					<span class="glyphicon glyphicon-remove-circle"></span>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html ng-app="autocompletionApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Rii Issues Tracker - Autocompletion Demo</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="../default/css/issuetracker.css" />
+</head>
+<body>
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand text-brand" href="http://pao-profile.appspot.com/" target="_blank">Angular Autocompletion Demo</a>
+			</div>
+
+			<div class="navbar-collapse collapse">
+				<!-- Menu block -->
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<span class="text-brand">Welcome to Autocompletion Demo</span>
+				</div>
+				<div class="panel-body">
+					<div ng-controller="MyAutocompleteCtrl">
+						<input type="text" ng-model="asyncSelected" placeholder="Address" typeahead="address for address in locations | limitTo:1" typeahead-loading="loadingLocations" class="form-control">
+						<br />
+						<input type="text" ng-model="myPart" placeholder="Enter Part #" typeahead="part for part in partList | filter:$viewValue | limitTo:10" class="form-control">
+						<br/>
+						<div class="btn-group" dropdown is-open="status.isopen">
+							<input type="text" class="dropdown-toggle" dropdown-toggle />
+							<ul class="dropdown-menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Separated link</a></li>
+							</ul>
+						</div>
+						<br />
+						<br />
+						<hr />
+						<input type="text" ng-model="asyncPartSelected" placeholder="Parts loaded via $http" typeahead="part for part in parts | filter:$viewValue | limitTo:10" class="form-control">
+						<br />
+						<hr />
+					</div>
+					<div ng-controller="MyController">
+						<input type="text" autocomplete ng-model="myModel" />
+					</div>
+					<br />
+					<hr />
+					<div ng-controller="DropdownCtrl">
+						<input type="text" ng-model="myTestInput" ng-change="toggleDropdownTest()" />
+						<br/>
+						<div class="btn-group" dropdown is-open="status.isopen">
+							<input type="text" class="dropdown-toggle" dropdown-toggle />
+							<ul class="dropdown-menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Separated link</a></li>
+							</ul>
+						</div>
+						<hr />
+						<p>
+							<button type="button" class="btn btn-default btn-sm" ng-click="toggleDropdown($event)">Toggle button dropdown</button>
+						</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div data-ng-include="'footer.html'" />
+
+	<script src="../js/libs/angular.min.js"></script>
+	<script src="../js/libs/ui-bootstrap-tpls-0.11.0.min.js"></script>
+	<script src="../js/demo/autocompletion-demo.js"></script>
+</body>
+</html>

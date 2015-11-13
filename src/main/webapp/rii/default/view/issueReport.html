@@ -1,0 +1,97 @@
+<div class="row detail-page margin-bottom-280">
+	<div class="row-100 margin-bottom-5">
+		<div>
+			<h4>Filter by:</h4>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-12">
+		<div class="btn-group">
+			<label class="btn btn-default" ng-model="issueReportFilter" btn-radio="'default'">Default</label>
+			<label class="btn btn-default" ng-model="issueReportFilter" btn-radio="'date'">Date</label>
+			<label class="btn btn-default" ng-model="issueReportFilter" btn-radio="'criteria'">Criteria</label>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-12" ng-show="issueReportFilter == 'date'">
+		<div class="col-50 col-mobile">
+			<div class="row-100">
+				<div class="col-27 col-mobile">
+					<span>Start Date</span>
+				</div>
+				<div class="col-73 col-mobile">
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="startDate" datepicker-popup="{{datePicker.getFormat(0)}}" ng-click="openStartDate($event)" is-open="openedStartDate" min-date="minStartDate" max-date="maxStartDate" datepicker-options="datePicker.getDateOptions()" date-disabled="datePicker.disabled(date, mode)" ng-change="compareDates()" ng-required="true" close-text="Close" autofocus />
+						<span class="input-group-addon show-cursor" ng-click="openStartDate($event)">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-50 col-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-27 col-mobile">
+						<span>End Date</span>
+					</div>
+					<div class="col-73 col-mobile">
+						<div class="input-group">
+							<input type="text" class="form-control" ng-model="endDate" datepicker-popup="{{datePicker.getFormat(0)}}" ng-click="openEndDate($event)" is-open="openedEndDate" min-date="minEndDate" max-date="maxEndDate" datepicker-options="datePicker.getDateOptions()" date-disabled="datePicker.disabled(date, mode)" ng-change="compareDates()" ng-required="true" close-text="Close" />
+							<span class="input-group-addon show-cursor" ng-click="openEndDate($event)">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5" ng-show="issueReportFilter == 'criteria'">
+		<div class="row-100 margin-bottom-12">
+			<div class="col-label">
+				<span>Issue #</span>
+			</div>
+			<div class="col-input">
+				<input type="text" class="form-control" ng-model="criteria.issueId" typeahead="issueId for issueId in issueIds | filter:$viewValue | limitTo:10" placeholder="Enter Issue #" autofocus />
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-label">
+				<span>Part #</span>
+			</div>
+			<div class="col-input">
+				<input type="text" class="form-control" ng-model="criteria.partNum" typeahead="partNum for partNum in getPartNum($viewValue) | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #" />
+				<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-label">
+				<span>Opened By</span>
+			</div>
+			<div class="col-input">
+				<!-- <input type="text" class="form-control" ng-model="criteria.openedBy" typeahead="openedBy.id as openedBy.name for openedBy in contactByItems | filter:$viewValue | limitTo:8" placeholder="Enter Opened By" /> -->
+				<select class="form-control" ng-model="criteria.openedBy.id" ng-options="openedBy.id as openedBy.name for openedBy in contactByItems"></select>
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-label">
+				<span>Assigned To</span>
+			</div>
+			<div class="col-input">
+				<select class="form-control" ng-model="criteria.assignedTo.id" ng-options="assignedTo.id as assignedTo.name for assignedTo in contactByItems"></select>
+			</div>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="col-label">
+				<span>Status</span>
+			</div>
+			<div class="col-input">
+				<select class="form-control" ng-model="criteria.status.id" ng-options="status.id as status.name for status in statusItems"></select>
+			</div>
+		</div>
+		
+	</div>
+	
+</div>

@@ -1,0 +1,90 @@
+<div class="row detail-page margin-bottom-280">
+	<div class="row-100 margin-bottom-12">
+		<div>
+			<h4>Send Email</h4>
+		</div>
+		<div class="btn-group">
+			<span>
+				<a class="btn btn-default" ng-disabled="isAlreadySendToSupervisor" ng-click="sendEmailToSupervisor()">Supervisor</a>
+			</span>
+			<span>
+				<a class="btn btn-default" ng-disabled="isAlreadySendToEveryOne" ng-click="sendEmailToEveryOne()">Every One</a>
+			</span>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-12 top-line">
+		<div>
+			<h4>Select option to import (Categories/Priorities/Status)</h4>
+		</div>
+		<div class="btn-group">
+			<label class="btn btn-success" ng-model="catPriStatusChoices" btn-radio="'default'">Default Data</label>
+			<label class="btn btn-success" ng-model="catPriStatusChoices" btn-radio="'upload'">Upload Data</label>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-12" ng-show="catPriStatusChoices == 'default'">
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledDefaultCategory" ng-click="uploadDefaultCategories()">Upload Default Categories</a>
+		</span>
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledDefaultPriority" ng-click="uploadDefaultPriorities()">Upload Default Priorities</a>
+		</span>
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledDefaultStatus" ng-click="uploadDefaultStatus()">Upload Default Status</a>
+		</span>
+	</div>
+	
+	<div class="row-100 margin-bottom-12" ng-show="catPriStatusChoices == 'upload'">
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledCategory" ng-click="uploadCategories()">Upload Categories</a>
+			<input type="file" id="fileCategory" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display:none" />
+		</span>
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledPriority" ng-click="uploadPriorities()">Upload Priorities</a>
+			<input type="file" id="filePriority" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display:none" />
+		</span>
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledStatus" ng-click="uploadStatus()">Upload Status</a>
+			<input type="file" id="fileStatus" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display:none" />
+		</span>
+	</div>
+	
+	<div class="row-100 margin-bottom-5 top-line">
+		<div>
+			<h4>Contacts/Parts & Customers</h4>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-12">
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledContact" ng-click="uploadContacts()">Upload Contacts</a>
+			<input type="file" id="fileContact" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display:none" />
+		</span>
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledPartCustomer" ng-click="uploadPartsCustomers()">Upload Parts & Customers</a>
+			<input type="file" id="filePartCustomer" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display:none" />
+		</span>
+	</div>
+	
+	<div class="row-100 margin-bottom-5 top-line">
+		<div>
+			<h4>Issues</h4>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-12">
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledIssue" ng-click="uploadIssues()">Upload Issues</a>
+			<input type="file" id="fileIssue" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display:none" />
+		</span>
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledUploadHP" ng-click="uploadHistoricalProblems()">Upload Historical Problems</a>
+			<input type="file" id="fileHistoricalProblem" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display:none" />
+		</span>
+		<span>
+			<a class="btn btn-default" ng-disabled="data.isDisabledUpdateHP" ng-click="updateHistoricalProblems()">Update Historical Problems</a>
+		</span>
+	</div>
+	
+</div>

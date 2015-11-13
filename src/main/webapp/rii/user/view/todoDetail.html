@@ -1,0 +1,72 @@
+<div id="detail">
+	<div class="box-format">
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>ID #</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<span class="form-control">{{todo.id}}</span>
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>Who</span>
+				<span class="asterisk">*</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<select class="form-control" name="todoWho" ng-model="todo.who" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in contacts" required></select>
+				<span class="asterisk" ng-show="issueForm.todoWho.$dirty && issueForm.todoWho.$invalid">
+					<span ng-show="issueForm.todoWho.$error.required">Who is required.</span>
+				</span>
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>When</span>
+				<span class="asterisk">*</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<input type="date" class="form-control" ng-model="todo.dueDate" min="minWhen" max="maxWhen" required />
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>What</span>
+				<span class="asterisk">*</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<textarea class="form-control text-area-format" name="todoWhat" rows="4" ng-model="todo.what" required></textarea>
+				<span class="asterisk" ng-show="issueForm.todoWhat.$dirty && issueForm.todoWhat.$invalid">
+					<span ng-show="issueForm.todoWhat.$error.required">What is required.</span>
+				</span>
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>Part #</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<input type="text" name="partNum" class="form-control" ng-model="todo.partNum" typeahead="partNum for partNum in partNumList | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #"/>
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>&nbsp;</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<input type="checkbox" ng-model="todo.completed" />
+				<span>Is Completed</span>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div id="actionBtn">
+		<div class="row">
+			<div class="padding-15">
+				<button type="button" class="btn btn-lg btn-success" ng-disabled="issueForm.$invalid && !isUpdateTodo" ng-click="upsertTodo()">{{buttonLabel}}</button>
+				<button type="button" class="btn btn-lg btn-success" ng-hide="isUpdateTodo" ng-disabled="availableUpsertBtn" ng-click="resetUpsertTodo()">Reset</button>
+			</div>
+		</div>
+	</div>
+</div>

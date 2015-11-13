@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<!-- <property name="dialect">org.hibernate.dialect.GenericDialect</property> -->
+		<property name="validationQuery">Select 1 from dual</property>
+		<property name="testOnBorrow">true</property>
+		<property name="show_sql">true</property>
+		<property name="hbm2ddl.auto">update</property><!-- create/update -->
+		<mapping class="com.rii.track.model.MetaData"/>
+		<mapping class="com.rii.track.model.Todo"/>
+		<mapping class="com.rii.track.model.PartCustomer" />
+		<mapping class="com.rii.track.model.Category" />
+		<mapping class="com.rii.track.model.Status" />
+		<mapping class="com.rii.track.model.Priority" />
+		<mapping class="com.rii.track.model.Photo" />
+		<mapping class="com.rii.track.model.HistoricalFix" />
+		<mapping class="com.rii.track.model.HistoricalProblem" />
+		<mapping class="com.rii.track.model.Contact" />
+		<mapping class="com.rii.track.model.Issue" />
+	</session-factory>
+</hibernate-configuration>

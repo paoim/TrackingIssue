@@ -1,0 +1,128 @@
+<div class="modal-header">
+	<h3 class="modal-title">Add Related Issues</h3>
+</div>
+<div class="modal-body">
+	<div class="row ri-modal">
+		<div class="row-100 margin-bottom-5">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>ID #</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<span class="form-control">{{item.id}}</span>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Part #</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<span class="form-control">{{item.partNum}}</span>
+				</div>
+			</div>
+			
+		</div>
+		<div class="row-100">
+			<span>Search for Related Issues</span>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="row-100 ri-box">
+				<div class="row-100 margin-bottom-5">
+					<div class="row margin-bottom-5">
+						<div class="col-xs-6 col-lg-4">
+							<span>Part # contains</span>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-lg-8">
+							<input type="text" class="form-control" ng-model="search.partNum" placeholder="Enter Part #" autofocus />
+						</div>
+					</div>
+					<div class="row margin-bottom-5">
+						<div class="col-xs-6 col-lg-4">
+							<span>Priority</span>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-lg-8">
+							<select class="form-control" ng-model="search.priority" ng-options="priority.id as priority.name for priority in item.priorities"></select>
+						</div>
+					</div>
+					<div class="row margin-bottom-5">
+						<div class="col-xs-6 col-lg-4">
+							<span>Assigned To</span>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-lg-8">
+							<select class="form-control" ng-model="search.assignedTo" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in item.contacts"></select>
+						</div>
+					</div>
+					<div class="row margin-bottom-5">
+						<div class="col-xs-6 col-lg-4">
+							<span>Status</span>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-lg-8">
+							<select class="form-control" ng-model="search.status" ng-options="status.id as status.name for status in item.statusItems"></select>
+						</div>
+					</div>
+					<div class="row margin-bottom-5">
+						<div class="col-xs-6 col-lg-4">
+							<span>Opened By</span>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-lg-8">
+							<select class="form-control" ng-model="search.openedBy" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in item.contacts"></select>
+						</div>
+					</div>
+					<div class="row margin-bottom-5">
+						<div class="col-xs-6 col-lg-4">
+							<span>Category</span>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-lg-8">
+							<select class="form-control" ng-model="search.category" ng-options="category.id as category.name for category in item.categories"></select>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="row-100 margin-bottom-5">
+			<div class="text-right">
+				<button class="btn btn-primary" ng-click="find({partNum : search.partNum, assignedTo : search.assignedTo, status : search.status, openedBy : search.openedBy, category : search.category, priority : search.priority})">Refresh Search</button>
+			</div>
+		</div>
+		
+		<div class="row-100">
+			<span>Related Issues</span>
+		</div>
+		<div class="row-100 margin-bottom-5">
+			<div class="row-100 ri-box">
+				<div class="table-responsive" ng-show="item.issues.length > 0">
+					<table class="table table-striped">
+						<tr class="info">
+							<th><span class="glyphicon glyphicon-ok"></span></th>
+							<th><span>#</span></th>
+							<th><span>Part #</span></th>
+							<th><span>Assigned To</span></th>
+							<th><span>Opened By</span></th>
+							<th><span>Priority</span></th>
+							<th><span>Category</span></th>
+							<th><span>Status</span></th>
+						</tr>
+						<tr ng-repeat="issue in item.issues | filter : {partNum : search.partNum, assignedTo : search.assignedTo, status : search.status, openedBy : search.openedBy, category : search.category, priority : search.priority}">
+							<td><input type="checkbox" name="relatedIssues[]" ng-model="relatedIssue_row" ng-checked="item.relatedIssueIds.indexOf(issue.id) > -1" ng-change="toggleChecked(issue, (relatedIssue_row === true))" /></td>
+							<td><span>{{issue.id}}</span></td>
+							<td><span>{{issue.partNum}}</span></td>
+							<td><span>{{issue.assignedTo.firstName + ' ' + issue.assignedTo.lastName}}</span></td>
+							<td><span>{{issue.openedBy.firstName + ' ' + issue.openedBy.lastName}}</span></td>
+							<td><span>{{issue.priority.name}}</span></td>
+							<td><span>{{issue.category.name}}</span></td>
+							<td><span>{{issue.status.name}}</span></td>
+						</tr>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+		
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">OK</button>
+	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

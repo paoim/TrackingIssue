@@ -1,0 +1,27 @@
+<div id="reportContents" class="row detail-page">
+	<div ng-show="todosList.length == 0">
+		<span>No data to print</span>
+	</div>
+	<div class="table-responsive" ng-show="todosList.length > 0">
+		<table class="table table-striped">
+			<tr class="info">
+				<th><span>Who</span></th>
+				<th><span>When</span></th>
+				<th><span>What</span></th>
+				<th><span>Part #</span></th>
+				<th><span>Is Done</span></th>
+			</tr>
+			<tr ng-repeat="todo in todosList">
+				<td><span>{{todo.contact}}</span></td>
+				<td><span>{{todo.dueDate | date:'MM/dd/yyyy'}}</span></td>
+				<td><span>{{todo.what}}</span></td>
+				<td><span>{{todo.partNum}}</span></td>
+				<td>
+					<span ng-if="!todo.completed">Not complete</span>
+					<span ng-if="todo.completed">Completed</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+</div>

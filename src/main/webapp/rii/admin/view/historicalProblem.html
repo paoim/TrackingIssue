@@ -1,0 +1,101 @@
+<div>
+	<div class="pop-up-btn">
+		<button class="btn btn-default" ng-click="openSearchForm()">{{openSearchFormLabel}}</button>
+	</div>
+	<div class="pop-up-box" ng-show="isOpenSearchForm">
+		<div class="search-box">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Start Date</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="searchHP.startDate" min="minStartDate" max="maxStartDate" ng-change="compareDates()" required autofocus />
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>End Date</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="searchHP.endDate" min="minEndDate" max="maxEndDate" ng-change="compareDates()" required />
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Issue #</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="text" name="issueID" class="form-control" ng-model="searchHP.issueID" typeahead="issueID for issueID in issueList | filter:$viewValue | limitTo:10" placeholder="Enter Issue #"/>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Part #</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="text" name="partNum" class="form-control" ng-model="searchHP.partNum" typeahead="partNum for partNum in partNumList | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #"/>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="searchBtn">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<button type="button" class="btn btn-default" ng-disabled="availableSearchHP" ng-click="doSearchHP()">Search Historical Problems</button>
+					<button type="button" class="btn btn-default" ng-disabled="availableSearchHP" ng-click="resetSearchHP()">Reset</button>
+				</div>
+				<div class="col-xs-6 col-lg-4"></div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div id="lineBetweenSearchAndResult">
+		<div class="row margin-bottom-5">
+			<div class="padding-15">
+				<hr />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="padding-15">
+			<div class="alert alert-info" ng-show="isSearching">
+				<div class="animation">Loading <span></span><span></span><span></span></div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+<!-- Display Search Result -->
+<div ng-show="!isSearching">
+	<div class="row">
+		<div class="text-center">
+			<div class="margin-bottom-12">
+				<button type="button" class="btn btn-default" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">&lt; PREV</button>
+				<span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+				<button type="button" class="btn btn-default" ng-disabled="curPage >= historicalProblems.length/pageSize - 1" ng-click="curPage = curPage+1">NEXT &gt;</button>
+			</div>
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tr class="info">
+				<th><span>ID</span></th>
+				<th><span>Issue #</span></th>
+				<th><span>Part #</span></th>
+				<th><span>Historical Problems</span></th>
+				<th><span>&nbsp;</span></th>
+			</tr>
+			<tr ng-repeat="hp in historicalProblems | paginationFilter: curPage * pageSize | limitTo: pageSize">
+				<td><span><a href="#/historicalProblems/{{hp.id}}">{{hp.id}}</a></span></td>
+				<td><span>{{hp.issueID}}</span></td>
+				<td><span>{{hp.partNum}}</span></td>
+				<td><span>{{hp.versionProblem}}</span></td>
+				<td class="show-cursor" ng-click="doDeleteHistoricalProblem(hp.id, 'sm')"><span class="glyphicon glyphicon-remove-circle"></span></td>
+			</tr>
+		</table>
+	</div>
+</div>

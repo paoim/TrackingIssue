@@ -1,0 +1,151 @@
+<div>
+	<div class="pop-up-btn">
+		<button class="btn btn-default" ng-click="openSearchForm()">{{openSearchFormLabel}}</button>
+		<button class="btn btn-default" ng-click="openFilterForm()">{{openCurrentFilterLabel}}</button>
+	</div>
+	<div class="pop-up-box" ng-show="isOpenSearchForm">
+		<div class="search-box">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Start Date</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="searchIssue.startDate" min="minStartDate" max="maxStartDate" ng-change="compareDates()" required autofocus />
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>End Date</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="searchIssue.endDate" min="minEndDate" max="maxEndDate" ng-change="compareDates()" required />
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Part #</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="text" class="form-control" focus ng-model="searchIssue.partNum" typeahead="partNum for partNum in getPartNum($viewValue) | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #" />
+					<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Opened By</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<select class="form-control" ng-model="searchIssue.openedBy.id" ng-options="openedBy.id as openedBy.name for openedBy in contactItems"></select>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Assigned To</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<select class="form-control" ng-model="searchIssue.assignedTo.id" ng-options="assignedTo.id as assignedTo.name for assignedTo in contactItems"></select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6 col-lg-4">
+					<span>Status</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<select class="form-control" ng-model="searchIssue.status.id" ng-options="status.id as status.name for status in statusItems"></select>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="searchBtn">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<button type="button" class="btn btn-default" ng-disabled="availableSearchIssue" ng-click="doSearchIssue()">Search Issue</button>
+					<button type="button" class="btn btn-default" ng-disabled="availableSearchIssue" ng-click="resetSearchIssue()">Reset</button>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8"></div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="pop-up-box" ng-show="isOpenFilterForm">
+		<div class="search-box">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-12">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-search"></span>
+						</span>
+						<input type="text" class="form-control" focus ng-model="page.filter.partNum" placeholder="Enter Part #" />
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-search"></span>
+						</span>
+						<input type="text" class="form-control" focus ng-model="page.filter.status" placeholder="Enter Status" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="lineBetweenSearchAndResult">
+		<div class="row margin-bottom-5">
+			<div class="padding-15">
+				<hr />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="padding-15">
+			<div class="alert alert-info" ng-show="isSearching">
+				<div class="animation">Loading <span></span><span></span><span></span></div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+
+<!-- Display Search Result -->
+<div ng-show="!isSearching">
+	<div class="row">
+		<div class="text-center">
+			<div class="margin-bottom-12">
+				<button type="button" class="btn btn-default" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">&lt; PREV</button>
+				<span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+				<button type="button" class="btn btn-default" ng-disabled="curPage >= issuesList.length/pageSize - 1" ng-click="curPage = curPage+1">NEXT &gt;</button>
+			</div>
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tr class="info">
+				<th><span>#</span></th>
+				<th><span>Part #</span></th>
+				<th><span>Customer Name</span></th>
+				<th><span>Assigned To</span></th>
+				<th><span>Priority</span></th>
+				<th><span>Status</span></th>
+				<th><span>Category</span></th>
+				<th><span>Due Date</span></th>
+				<th><span>Opened Date</span></th>
+				<th><span>Opened By</span></th>
+			</tr>
+			<tr ng-repeat="iss in issuesList | paginationFilter: curPage * pageSize | limitTo: pageSize | issueFilter: page.filter">
+				<td><span><a href="#/issues/issue/view/{{iss.id}}">{{iss.id}}</a></span></td>
+				<td><span>{{iss.partNum}}</span></td>
+				<td><span>{{iss.custName}}</span></td>
+				<td><span>{{iss.assignedTo.firstName + ' ' + iss.assignedTo.lastName}}</span></td>
+				<td><span>{{iss.priority.name}}</span></td>
+				<td><span>{{iss.status.name}}</span></td>
+				<td><span>{{iss.category.name}}</span></td>
+				<td><span>{{iss.dueDate | date:'MM/dd/yyyy'}}</span></td>
+				<td><span>{{iss.openedDate | date:'MM/dd/yyyy'}}</span></td>
+				<td><span>{{iss.openedBy.firstName + ' ' + iss.openedBy.lastName}}</span></td>
+			</tr>
+		</table>
+	</div>
+</div>

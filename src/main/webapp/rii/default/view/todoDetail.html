@@ -1,0 +1,145 @@
+<div class="row detail-page margin-bottom-280">
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>Who</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input">
+					<select class="form-control" name="todoWho" ng-model="todo.who" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in contacts" required></select>
+					<span class="asterisk" ng-show="issueForm.todoWho.$dirty && issueForm.todoWho.$invalid">
+						<span ng-show="issueForm.todoWho.$error.required">Who is required.</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20 hide-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-label-id">
+						<span>ID #</span>
+					</div>
+					<div class="col-input-id">
+						<span class="form-control">{{todo.id}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>When</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input">
+					<div class="input-group">
+						<input type="text" class="form-control" name="todoDueDate" ng-model="todo.dueDate" datepicker-popup="{{datePicker.getFormat(0)}}" ng-click="openWhen($event)" is-open="openedWhen" min-date="minWhen" max-date="maxWhen" datepicker-options="datePicker.getDateOptions()" ng-required="true" close-text="Close" />
+						<span class="input-group-addon show-cursor" ng-click="openWhen($event)">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</span>
+						<span class="asterisk" ng-show="issueForm.todoDueDate.$dirty && issueForm.todoDueDate.$invalid">
+							<span ng-show="issueForm.todoDueDate.$error.required">When is required.</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>What</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input">
+					<textarea class="form-control text-area-format" name="todoWhat" rows="4" ng-model="todo.what" required></textarea>
+					<span class="asterisk" ng-show="issueForm.todoWhat.$dirty && issueForm.todoWhat.$invalid">
+						<span ng-show="issueForm.todoWhat.$error.required">What is required.</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>Part #</span>
+				</div>
+				<div class="col-input">
+					<input type="text" name="partNum" class="form-control" ng-model="todo.partNum" typeahead="partNum for partNum in partNumList | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #"/>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>&nbsp;</span>
+				</div>
+				<div class="col-input">
+					<input type="checkbox" ng-model="todo.completed" />
+					<span>Is Completed</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

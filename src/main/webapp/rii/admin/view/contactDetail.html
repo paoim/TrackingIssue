@@ -1,0 +1,286 @@
+<div class="row detail-page">
+	<div class="row-100 margin-bottom-5">
+		<div>
+			<tabset>
+				<tab heading="General">
+					<div class="row-100 tab-box">
+						<div class="row-100 padding-10">
+							<div class="col-50 col-mobile">
+								<div class="row-100 margin-bottom-5">
+									<div class="col-27">
+										<span>First Name</span>
+										<span class="asterisk">*</span>
+									</div>
+									<div class="col-73">
+										<input type="text" name="firstName" class="form-control" ng-model="contact.firstName" placeholder="Enter First Name" required autofocus />
+										<span class="asterisk" ng-show="issueForm.firstName.$dirty && issueForm.firstName.$invalid">
+											<span ng-show="issueForm.firstName.$error.required">First name is required.</span>
+										</span>
+									</div>
+								</div>
+								<div class="row-100 margin-bottom-5">
+									<div class="col-27">
+										<span>Last Name</span>
+										<span class="asterisk">*</span>
+									</div>
+									<div class="col-73">
+										<input type="text" name="lastName" class="form-control" ng-model="contact.lastName" placeholder="Enter Last Name" required />
+										<span class="asterisk" ng-show="issueForm.lastName.$dirty && issueForm.lastName.$invalid">
+											<span ng-show="issueForm.lastName.$error.required">Last name is required.</span>
+										</span>
+									</div>
+								</div>
+								<div class="row-100 margin-bottom-5">
+									<div class="col-27">
+										<span>Company Name</span>
+									</div>
+									<div class="col-73">
+										<input type="text" class="form-control" ng-model="contact.company" placeholder="Enter Company Name" />
+									</div>
+								</div>
+								<div class="row-100 margin-bottom-5">
+									<div class="col-27">
+										<span>Job Title</span>
+									</div>
+									<div class="col-73">
+										<input type="text" class="form-control" ng-model="contact.jobTitle" placeholder="Enter Job Title" />
+									</div>
+								</div>
+								<div class="row-100 margin-bottom-5">
+									<div class="col-27">
+										<span>E-mail</span>
+									</div>
+									<div class="col-73">
+										<input type="email" name="emailAddress" class="form-control" ng-model="contact.emailAddress" placeholder="Enter E-mail" />
+										<span class="asterisk" ng-show="issueForm.emailAddress.$dirty && issueForm.emailAddress.$invalid">
+											<span ng-show="issueForm.emailAddress.$error.required">Email is required.</span>
+											<span ng-show="issueForm.emailAddress.$error.email">Invalid email address! Valid email should be: test@rii.com</span>
+										</span>
+									</div>
+								</div>
+								<div class="row-100 margin-bottom-5">
+									<div class="col-27">
+										<span>Web Page</span>
+									</div>
+									<div class="col-73">
+										<input type="url" name="webPage" class="form-control" ng-model="contact.webPage" placeholder="Enter Web Page" />
+										<span class="asterisk" ng-show="issueForm.webPage.$dirty && issueForm.webPage.$invalid">
+											<span ng-show="issueForm.webPage.$error.required">Required!</span>
+											<span ng-show="issueForm.webPage.$error.url">Not valid url! Valid url should be: http://www.rii.com</span>
+										</span>
+									</div>
+								</div>
+								
+							</div>
+							<div class="col-50 col-mobile">
+								<div class="margin-id-m">
+									<div class="row-100">
+										<div class="col-27">
+											<span>Attachments</span>
+										</div>
+										<div class="col-73">
+											<div ng-click="openFileDialog()" class="image-box-dashe">
+												<div class="image-container">
+													<div ng-show="isNewUploadImage" class="preview-content">
+														<p>Click here to select a file!</p>
+													</div>
+													<div ng-show="!isNewUploadImage">
+														<img ng-src="{{imageSource}}" class="img-rounded" />
+														<!-- Image can display as img-thumbnail, img-rounded, img-circle, img-responsive -->
+													</div>
+												</div>
+											</div>
+											<input type="file" id="contactAttachment" accept="image/*" style="display:none" />
+											<input type="hidden" ng-model="contactAttachmentName" />
+											<input type="hidden" ng-model="contact.attachment" />
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+						
+						<div class="row-100 padding-10">
+							<div class="col-50 col-mobile">
+								<div class="row-100 margin-bottom-5">
+									<fieldset>
+										<legend class="font-14">Phone Numbers</legend>
+										<div class="row-100 margin-bottom-5">
+											<div class="col-27">
+												<span>Business Phone</span>
+											</div>
+											<div class="col-73">
+												<input type="text" class="form-control" ng-model="contact.businessPhone" placeholder="Enter Business Phone" />
+											</div>
+										</div>
+										<div class="row-100 margin-bottom-5">
+											<div class="col-27">
+												<span>Home Phone</span>
+											</div>
+											<div class="col-73">
+												<input type="text" class="form-control" ng-model="contact.homePhone" placeholder="Enter Home Phone" />
+											</div>
+										</div>
+										<div class="row-100 margin-bottom-5">
+											<div class="col-27">
+												<span>Mobile Phone</span>
+											</div>
+											<div class="col-73">
+												<input type="text" class="form-control" ng-model="contact.mobilePhone" placeholder="Enter Mobile Phone" />
+											</div>
+										</div>
+										<div class="row-100 margin-bottom-5">
+											<div class="col-27">
+												<span>Fax Number</span>
+											</div>
+											<div class="col-73">
+												<input type="text" class="form-control" ng-model="contact.faxNumber" placeholder="Enter Fax Number" />
+											</div>
+										</div>
+									</fieldset>
+								</div>
+								
+								<div class="row-100 margin-bottom-5">
+									<fieldset>
+										<legend class="font-14">Address</legend>
+										<div class="row-100 margin-bottom-5">
+											<div class="col-27">
+												<span>Street</span>
+											</div>
+											<div class="col-73">
+												<input type="text" class="form-control" ng-model="contact.address" placeholder="Enter Street" />
+											</div>
+										</div>
+										<div class="row-100 margin-bottom-5">
+											<div class="col-27">
+												<span>City</span>
+											</div>
+											<div class="col-73">
+												<input type="text" class="form-control" ng-model="contact.city" placeholder="Enter City" />
+											</div>
+										</div>
+										<div class="row-100 margin-bottom-5">
+											<div class="col-27">
+												<span>State/Province</span>
+											</div>
+											<div class="col-73">
+												<input type="text" class="form-control" ng-model="contact.stateProvince" typeahead="state for state in states | filter:$viewValue | limitTo:5" placeholder="Enter State/Province" />
+											</div>
+										</div>
+										<div class="row-100 margin-bottom-5">
+											<div class="col-27">
+												<span>Zip/Postal Code</span>
+											</div>
+											<div class="col-73">
+												<input type="text" class="form-control" ng-model="contact.zipPostalCode" placeholder="Enter Zip/Postal Code" />
+											</div>
+										</div>
+										<div class="row-100 margin-bottom-5">
+											<div class="col-27">
+												<span>Country/Region</span>
+											</div>
+											<div class="col-73">
+												<input type="text" class="form-control" ng-model="contact.countryRegion" placeholder="Enter Country/Region" />
+											</div>
+										</div>
+									</fieldset>
+								</div>
+								
+							</div>
+							<div class="col-50 col-mobile">
+								<div class="margin-id-m">
+									<div class="row-100 margin-bottom-5">
+										<fieldset>
+											<legend class="font-14">Notes</legend>
+											<div class="row-100 margin-bottom-5">
+												<textarea class="form-control text-area-format" rows="17" ng-model="contact.note"></textarea>
+											</div>
+										</fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</tab>
+				
+				<tab heading="Assigned Issues">
+					<div class="row-100 tab-box">
+						<div class="row-100 padding-10">
+							<div class="row-100 margin-bottom-5">
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<tr class="info">
+											<th><span>#</span></th>
+											<th><span>Part #</span></th>
+											<th><span>Customer Name</span></th>
+											<th><span>Assigned To</span></th>
+											<th><span>Priority</span></th>
+											<th><span>Status</span></th>
+											<th><span>Category</span></th>
+											<th><span>Due Date</span></th>
+											<th><span>Opened Date</span></th>
+											<th><span>Opened By</span></th>
+										</tr>
+										<tr ng-repeat="iss in assignedToIssues">
+											<td><span><a href="#/issues/issue/view/{{iss.id}}">{{iss.id}}</a></span></td>
+											<td><span>{{iss.partNum}}</span></td>
+											<td><span>{{iss.custName}}</span></td>
+											<td><span>{{iss.assignedTo.firstName + ' ' + iss.assignedTo.lastName}}</span></td>
+											<td><span>{{iss.priority.name}}</span></td>
+											<td><span>{{iss.status.name}}</span></td>
+											<td><span>{{iss.category.name}}</span></td>
+											<td><span>{{iss.dueDate | date:'MM/dd/yyyy h:mma'}}</span></td>
+											<td><span>{{iss.openedDate | date:'MM/dd/yyyy h:mma'}}</span></td>
+											<td><span>{{iss.openedBy.firstName + ' ' + iss.openedBy.lastName}}</span></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</tab>
+				
+				<tab heading="Opened Issues">
+					<div class="row-100 tab-box">
+						<div class="row-100 padding-10">
+							<div class="row-100 margin-bottom-5">
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<tr class="info">
+											<th><span>#</span></th>
+											<th><span>Part #</span></th>
+											<th><span>Customer Name</span></th>
+											<th><span>Assigned To</span></th>
+											<th><span>Priority</span></th>
+											<th><span>Status</span></th>
+											<th><span>Category</span></th>
+											<th><span>Due Date</span></th>
+											<th><span>Opened Date</span></th>
+											<th><span>Opened By</span></th>
+										</tr>
+										<tr ng-repeat="iss in openedByIssues">
+											<td><span><a href="#/issues/issue/view/{{iss.id}}">{{iss.id}}</a></span></td>
+											<td><span>{{iss.partNum}}</span></td>
+											<td><span>{{iss.custName}}</span></td>
+											<td><span>{{iss.assignedTo.firstName + ' ' + iss.assignedTo.lastName}}</span></td>
+											<td><span>{{iss.priority.name}}</span></td>
+											<td><span>{{iss.status.name}}</span></td>
+											<td><span>{{iss.category.name}}</span></td>
+											<td><span>{{iss.dueDate | date:'MM/dd/yyyy h:mma'}}</span></td>
+											<td><span>{{iss.openedDate | date:'MM/dd/yyyy h:mma'}}</span></td>
+											<td><span>{{iss.openedBy.firstName + ' ' + iss.openedBy.lastName}}</span></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</tab>
+			</tabset>
+		</div>
+	</div>
+	
+</div>

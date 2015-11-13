@@ -1,0 +1,36 @@
+<div id="reportContents" class="row detail-page">
+	<div ng-show="issues.length == 0">
+		<span>No data to print</span>
+	</div>
+	<div class="table-responsive" ng-show="issues.length > 0">
+		<table class="table table-striped">
+			<tr class="info">
+				<th><span>Part #</span></th>
+				<th><span>Customer Name</span></th>
+				<th><span>Historical Problems</span></th> <!-- History -->
+				<th><span>Part/Process Fixes</span></th> <!-- Comments -->
+				<th><span>Assigned To</span></th>
+				<th><span>Opened Date</span></th>
+				<th><span>Status</span></th>
+			</tr>
+			<tr ng-repeat="issue in issues">
+				<td><span><a href="#/issues/issue/view/{{issue.id}}">{{issue.partNum}}</a></span></td>
+				<td><span>{{issue.custName}}</span></td>
+				<td>
+					<div ng-repeat="problem in issue.historicalProblems">
+						<span>{{problem.versionProblem}}</span>
+					</div>
+				</td>
+				<td>
+					<div ng-repeat="fix in issue.historicalFixes">
+						<span>{{fix.versionFix}}</span>
+					</div>
+				</td>
+				<td><span>{{issue.assignedTo.firstName + ' ' + issue.assignedTo.lastName}}</span></td>
+				<td><span>{{issue.openedDate | date:'MM/dd/yyyy'}}</span></td>
+				<td><span>{{issue.status.name}}</span></td>
+			</tr>
+		</table>
+	</div>
+	
+</div>

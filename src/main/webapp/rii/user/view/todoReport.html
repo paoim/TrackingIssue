@@ -1,0 +1,94 @@
+<div id="detail">
+	<div class="box-format">
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<h4>Filter by:</h4>
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<div class="btn-group">
+					<label class="btn btn-default" ng-model="todoReportFilter" btn-radio="'default'">Today</label>
+					<label class="btn btn-default" ng-model="todoReportFilter" btn-radio="'date'">Date</label>
+					<label class="btn btn-default" ng-model="todoReportFilter" btn-radio="'criteria'">Criteria</label>
+				</div>
+			</div>
+		</div>
+		
+		<div id="dateFilter" class="margin-bottom-5" ng-show="todoReportFilter == 'date'">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Start Date</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="startDate" min="minStartDate" max="maxStartDate" ng-change="compareDates()" required autofocus />
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>End Date</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="endDate" min="minEndDate" max="maxEndDate" ng-change="compareDates()" required />
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="criteriaFilter" class="margin-bottom-5" ng-show="todoReportFilter == 'criteria'">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Who</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<select class="form-control" ng-model="criteria.who" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in contacts"></select>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>When</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<input type="date" class="form-control" ng-model="todo.dueDate" min="minWhen" max="maxWhen" required />
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-6 col-lg-4">
+					<span>Completed Status</span>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<div class="btn-group">
+						<label class="btn btn-success" ng-model="criteria.completed" btn-radio="'1'">Complete</label>
+						<label class="btn btn-success" ng-model="criteria.completed" btn-radio="'0'">Not complete</label>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="actionButton">
+			<div class="row margin-bottom-5">
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="row margin-bottom-5">
+				<div class="col-xs-12 col-sm-6 col-lg-8">
+					<button type="button" class="btn btn-lg btn-success" ng-click="viewReport()">View Report</button>
+					<button type="button" class="btn btn-lg btn-success" ng-show="todoReportFilter !== 'default'" ng-click="resetReport()">Reset</button>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>

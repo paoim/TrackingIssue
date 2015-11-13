@@ -1,0 +1,124 @@
+<div class="pop-up-btn">
+	<button class="btn btn-lg btn-success" ng-click="openSearchForm()">{{openSearchFormLabel}}</button>
+</div>
+<div class="pop-up-box" ng-show="page.getPage().isSearchForm">
+	<div class="box-format">
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>Start Date</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<input type="date" class="form-control" ng-model="criteria.startDate" min="minStartDate" max="maxStartDate" ng-change="compareDates()" required autofocus />
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>End Date</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<input type="date" class="form-control" ng-model="criteria.endDate" min="minEndDate" max="maxEndDate" ng-change="compareDates()" required />
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>Part #</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<input type="text" class="form-control" focus ng-model="criteria.partNum" typeahead="partNum for partNum in getPartNum($viewValue) | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #" />
+				<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>Opened By</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<select class="form-control" ng-model="criteria.openedBy.id" ng-options="openedBy.id as openedBy.name for openedBy in contactItems"></select>
+			</div>
+		</div>
+		<div class="row margin-bottom-5">
+			<div class="col-xs-6 col-lg-4">
+				<span>Assigned To</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<select class="form-control" ng-model="criteria.assignedTo.id" ng-options="assignedTo.id as assignedTo.name for assignedTo in contactItems"></select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-lg-4">
+				<span>Status</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-8">
+				<select class="form-control" ng-model="criteria.status.id" ng-options="status.id as status.name for status in statusItems"></select>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div id="searchBtn">
+		<div class="row">
+			<div class="padding-15">
+				<button type="button" class="btn btn-lg btn-success" ng-disabled="availableSearchIssue" ng-click="searchIssue()">Search Issue</button>
+				<button type="button" class="btn btn-lg btn-success" ng-disabled="availableSearchIssue" ng-click="resetSearchIssue()">Reset</button>
+			</div>
+		</div>
+	</div>
+	
+	<div id="lineBetweenSearchAndResult">
+		<div class="row margin-bottom-5">
+			<div class="padding-15">
+				<hr />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="padding-15">
+			<div class="alert alert-info" ng-show="isPageLoading">
+				<div class="animation">Loading <span></span><span></span><span></span></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="result">
+	<div class="row margin-bottom-5">
+		<div class="padding-15">
+			<hr />
+		</div>
+	</div>
+	<div class="row margin-bottom-5">
+		<div class="padding-15">
+			<h4 ng-show="page.getPage().storeIssues.length == 0 && isNoResult">No search result found, please try again!</h4>
+			<h4 ng-hide="page.getPage().storeIssues.length == 0">List of {{page.getPage().storeIssues.length}} issues</h4>
+			<div ng-hide="page.getPage().storeIssues.length == 0">
+				<div class="text-center">
+					<div class="margin-bottom-15">
+						<button type="button" class="btn btn-success" ng-disabled="page.getPage().curPage == 0" ng-click="page.getPage().curPage=page.getPage().curPage - 1">&lt; PREV</button>
+						<span>Page {{page.getPage().curPage + 1}} of {{ page.getPage().numberOfPages }}</span>
+						<button type="button" class="btn btn-success" ng-disabled="page.getPage().curPage >= page.getPage().storeIssues.length/page.getPage().pageSize - 1" ng-click="page.getPage().curPage = page.getPage().curPage + 1">NEXT &gt;</button>
+					</div>
+				</div>
+				<div class="list-group">
+					<a href="#/issues/issue/view/{{iss.id}}" class="list-group-item" ng-repeat="iss in page.getPage().storeIssues | paginationFilter: page.getPage().curPage * page.getPage().pageSize | limitTo: page.getPage().pageSize">
+						<h4 class="list-group-item-heading">{{iss.id + ' - ' + iss.partNum + ' - ' + iss.custName}}</h4>
+						<p class="list-group-item-text">
+							{{
+							iss.assignedTo.firstName + ' ' 
+							+ iss.assignedTo.lastName + ' ' 
+							+ iss.priority.name + ' ' 
+							+ iss.status.name + ' ' 
+							+ iss.category.name + ' ' 
+							+ iss.dueDate | date:'MM/dd/yyyy' 
+							+ ' ' + iss.openedDate | date:'MM/dd/yyyy' + ' ' 
+							+ iss.openedBy.firstName + ' ' + iss.openedBy.lastName
+							}}
+						</p>
+					</a>
+				</div>
+			</div>
+			
+		</div>
+		
+	</div>
+</div>

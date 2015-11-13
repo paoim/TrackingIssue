@@ -1,0 +1,201 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+
+	<!-- <context:component-scan base-package="com.rii.track" /> -->
+
+	<!-- holding properties for database connectivity / -->
+	<!-- <context:property-placeholder location="classpath:jdbc.properties"/> -->
+
+	<!-- enabling annotation driven configuration / -->
+	<!-- <context:annotation-config /> -->
+
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+		destroy-method="close"> <property name="driverClassName" value="org.postgresql.Driver" 
+		/> <property name="url" value="jdbc:postgresql://localhost:5432/dbname" /> 
+		<property name="username" value="postgres" /> <property name="password" value="pwd" 
+		/> <property name="validationQuery" value="SELECT 1" /> </bean> -->
+
+	<!-- Rubber Industries PC -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:4404/rii_issue_tracker" />
+		<property name="username" value="root" />
+		<property name="password" value="rii2014@root" />
+	</bean> -->
+
+	<!-- Pao PC -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/rii_issue_tracker" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+	<!-- 
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:4404/rii_issue_tracker" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+	 -->
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+	</bean>
+
+	<tx:annotation-driven />
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		p:sessionFactory-ref="sessionFactory">
+	</bean>
+
+	<!-- Repository Configure -->
+	<bean id="categoryRepository" class="com.rii.track.repository.CategoryRepositoryImpl">
+		<!-- <constructor-arg> <ref bean="sessionFactory" /> </constructor-arg> -->
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="contactRepository" class="com.rii.track.repository.ContactRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="photoRepository" class="com.rii.track.repository.PhotoRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="historicalFixRepository" class="com.rii.track.repository.HistoricalFixRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="historicalProblemRepository" class="com.rii.track.repository.HistoricalProblemRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="issueRepository" class="com.rii.track.repository.IssueRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="partCustomerRepository" class="com.rii.track.repository.PartCustomerRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="priorityRepository" class="com.rii.track.repository.PriorityRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="statusRepository" class="com.rii.track.repository.StatusRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="todoRepository" class="com.rii.track.repository.TodoRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Service Configure -->
+	<bean id="categoryService" class="com.rii.track.service.CategoryServiceImpl">
+		<property name="categoryRepository" ref="categoryRepository" />
+	</bean>
+
+	<bean id="contactService" class="com.rii.track.service.ContactServiceImpl">
+		<property name="contactRepository" ref="contactRepository" />
+	</bean>
+
+	<bean id="photoService" class="com.rii.track.service.PhotoServiceImpl">
+		<property name="photoRepository" ref="photoRepository" />
+		<property name="imageLocation" value="D:\Rii\Pictures\" /><!-- 
+			Will change: C:\Development\Pictures\ -->
+	</bean>
+
+	<bean id="historicalFixService" class="com.rii.track.service.HistoricalFixServiceImpl">
+		<property name="historicalFixRepository" ref="historicalFixRepository" />
+	</bean>
+
+	<bean id="historicalProblemService" class="com.rii.track.service.HistoricalProblemServiceImpl">
+		<property name="historicalProblemRepository" ref="historicalProblemRepository" />
+		<property name="issueRepository" ref="issueRepository" />
+	</bean>
+
+	<bean id="issueService" class="com.rii.track.service.IssueServiceImpl">
+		<property name="issueRepository" ref="issueRepository" />
+		<property name="photoRepository" ref="photoRepository" />
+		<property name="statusRepository" ref="statusRepository" />
+		<property name="contactRepository" ref="contactRepository" />
+		<property name="priorityRepository" ref="priorityRepository" />
+		<property name="categoryRepository" ref="categoryRepository" />
+		<property name="historicalFixRepository" ref="historicalFixRepository" />
+		<property name="historicalProblemRepository" ref="historicalProblemRepository" />
+	</bean>
+
+	<bean id="partCustomerService" class="com.rii.track.service.PartCustomerServiceImpl">
+		<property name="partCustomerRepository" ref="partCustomerRepository" />
+	</bean>
+
+	<bean id="priorityService" class="com.rii.track.service.PriorityServiceImpl">
+		<property name="priorityRepository" ref="priorityRepository" />
+	</bean>
+
+	<bean id="statusService" class="com.rii.track.service.StatusServiceImpl">
+		<property name="statusRepository" ref="statusRepository" />
+	</bean>
+	
+	<bean id="todoService" class="com.rii.track.service.TodoServiceImpl">
+		<property name="todoRepository" ref="todoRepository" />
+		<property name="contactRepository" ref="contactRepository" />
+	</bean>
+
+	<bean class="com.rii.track.CategoryResource">
+		<property name="categoryService" ref="categoryService" />
+	</bean>
+
+	<bean class="com.rii.track.ContactResource">
+		<property name="contactService" ref="contactService" />
+	</bean>
+
+	<bean class="com.rii.track.PhotoResource">
+		<property name="photoService" ref="photoService" />
+		<property name="photoRelatedService" ref="photoService" />
+	</bean>
+
+	<!-- Resource Configure -->
+	<bean class="com.rii.track.MyResource"></bean>
+
+	<bean class="com.rii.track.HistoricalProblemResource">
+		<property name="historicalProblemService" ref="historicalProblemService" />
+	</bean>
+
+	<bean class="com.rii.track.HistoricalFixResource">
+		<property name="historicalFixService" ref="historicalFixService" />
+	</bean>
+
+	<bean class="com.rii.track.IssueResource">
+		<property name="issueService" ref="issueService" />
+		<property name="issueRelatedService" ref="issueService" />
+	</bean>
+
+	<bean class="com.rii.track.PartCustomerResource">
+		<property name="searchService" ref="partCustomerService" />
+		<property name="partCustomerService" ref="partCustomerService" />
+	</bean>
+
+	<bean class="com.rii.track.PriorityResource">
+		<property name="priorityService" ref="priorityService" />
+	</bean>
+
+	<bean class="com.rii.track.StatusResource">
+		<property name="statusService" ref="statusService" />
+	</bean>
+
+	<bean class="com.rii.track.TodoResource">
+		<property name="todoService" ref="todoService" />
+		<property name="todoRelatedService" ref="todoService" />
+	</bean>
+</beans>

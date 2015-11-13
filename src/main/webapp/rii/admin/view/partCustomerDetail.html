@@ -1,0 +1,139 @@
+<div class="row detail-page">
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>CustNum</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input">
+					<input type="text" name="custNum" class="form-control" ng-model="partCustomer.custNum" placeholder="Enter Customter #" required autofocus />
+					<span class="asterisk" ng-show="issueForm.custNum.$dirty && issueForm.custNum.$invalid">
+						<span ng-show="issueForm.custNum.$error.required">Customer's Num is required.</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20 hide-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-label-id">
+						<span>ID #</span>
+					</div>
+					<div class="col-input-id">
+						<span class="form-control">{{partCustomer.id}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>Customer's name</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input">
+					<input type="text" name="custName" class="form-control" ng-model="partCustomer.custName" placeholder="Enter Customter's name" required />
+					<span class="asterisk" ng-show="issueForm.custName.$dirty && issueForm.custName.$invalid">
+						<span ng-show="issueForm.custName.$error.required">Customer's name is required.</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>Customter's ID</span>
+				</div>
+				<div class="col-input">
+					<input type="text" class="form-control" ng-model="partCustomer.custId" placeholder="Enter Customter's ID" />
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>Part #</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input">
+					<input type="text" name="partNum" class="form-control" ng-model="partCustomer.partNum" placeholder="Enter Part #" required />
+					<span class="asterisk" ng-show="issueForm.partNum.$dirty && issueForm.partNum.$invalid">
+						<span ng-show="issueForm.partNum.$error.required">Part # is required.</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>Part Description</span>
+				</div>
+				<div class="col-input">
+					<textarea class="form-control text-area-format" rows="11" ng-model="partCustomer.partDescription"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

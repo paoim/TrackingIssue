@@ -1,0 +1,56 @@
+<div class="row detail-page">
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>Status</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input">
+					<input type="text" name="statName" class="form-control" ng-model="status.name" placeholder="Enter Status" required autofocus />
+					<span class="asterisk" ng-show="issueForm.statName.$dirty && issueForm.statName.$invalid">
+						<span ng-show="issueForm.statName.$error.required">Status's name is required.</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20 hide-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-label-id">
+						<span>ID #</span>
+					</div>
+					<div class="col-input-id">
+						<span class="form-control">{{status.id}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>Description</span>
+				</div>
+				<div class="col-input">
+					<textarea class="form-control text-area-format" rows="11" ng-model="status.description"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

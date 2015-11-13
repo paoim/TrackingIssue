@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="text-center">
+		<div class="margin-bottom-12">
+			<button type="button" class="btn btn-default" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">&lt; PREV</button>
+			<span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+			<button type="button" class="btn btn-default" ng-disabled="curPage >= partCustomers.length/pageSize - 1" ng-click="curPage = curPage+1">NEXT &gt;</button>
+		</div>
+	</div>
+</div>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<tr class="info">
+			<th><span>ID</span></th>
+			<th><span>Customer #</span></th>
+			<th><span>Customer's Name</span></th>
+			<th><span>Customer's ID</span></th>
+			<th><span>Part #</span></th>
+			<th><span>Part Description</span></th>
+			<th><span>&nbsp;</span></th>
+		</tr>
+		<tr ng-repeat="part in partCustomers | paginationFilter: curPage * pageSize | limitTo: pageSize">
+			<td><span><a href="#/partCustomers/{{part.id}}">{{part.id}}</a></span></td>
+			<td><span>{{part.custNum}}</span></td>
+			<td><span>{{part.custName}}</span></td>
+			<td><span>{{part.custId}}</span></td>
+			<td><span>{{part.partNum}}</span></td>
+			<td><span>{{part.partDescription}}</span></td>
+			<td class="show-cursor" ng-click="doDeletePartCustomer(part.id, 'sm')"><span class="glyphicon glyphicon-remove-circle"></span></td>
+		</tr>
+	</table>
+</div>

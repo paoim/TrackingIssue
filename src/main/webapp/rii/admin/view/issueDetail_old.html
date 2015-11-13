@@ -1,0 +1,278 @@
+<div class="row detail-page">
+	<div class="row margin-bottom-5 hide-mobile">
+		<div class="col-xs-6 col-lg-4">
+			<span>ID #</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<span class="form-control">{{issue.id}}</span>
+		</div>
+	</div>
+	
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Part #</span>
+			<span class="asterisk">*</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<input type="text" name="partNum" class="form-control" ng-model="issue.partNum" typeahead="partNum for partNum in partNumList | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" placeholder="Enter Part #" required autofocus />
+			<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+			<span class="asterisk" ng-show="issueForm.partNum.$dirty && issueForm.partNum.$invalid">
+				<span ng-show="issueForm.partNum.$error.required || issueForm.partNum.$invalid">Part # is required.</span>
+			</span>
+		</div>
+	</div>
+	
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Customer Name</span>
+			<span class="asterisk">*</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<select name="custName" class="form-control" ng-model="issue.custName" ng-options="custName for custName in custNameList" required></select>
+			<span class="asterisk" ng-show="issueForm.custName.$dirty && issueForm.custName.$invalid">
+				<span ng-show="issueForm.custName.$error.required || issueForm.custName.$invalid">Customer's name is required.</span>
+			</span>
+		</div>
+	</div>
+	
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Job #</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<input type="text" class="form-control" ng-model="issue.jobNum" placeholder="Enter Job #" />
+		</div>
+	</div>
+	
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Press #</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<input type="text" class="form-control" ng-model="issue.pressNum" placeholder="Enter Press #" />
+		</div>
+	</div>
+	
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Mold #</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<input type="text" class="form-control" ng-model="issue.moldNum" placeholder="Enter Mold #" />
+		</div>
+	</div>
+	
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Formula #</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<input type="text" class="form-control" ng-model="issue.formulaNum" placeholder="Enter Formula #" />
+		</div>
+	</div>
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Assigned To</span>
+			<span class="asterisk">*</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<select name="assignedTo" class="form-control" ng-model="issue.assignedTo.id" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in contacts" required></select>
+			<span class="asterisk" ng-show="issueForm.assignedTo.$dirty && issueForm.assignedTo.$invalid">
+				<span ng-show="issueForm.assignedTo.$error.required">AssignedTo is required.</span>
+			</span>
+		</div>
+	</div>
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Priority</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<select class="form-control" ng-model="issue.priority.id" ng-options="priority.id as priority.name for priority in priorities"></select>
+		</div>
+	</div>
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Status</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<select class="form-control" ng-model="issue.status.id" ng-options="status.id as status.name for status in statusItems"></select>
+		</div>
+	</div>
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Category</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<select class="form-control" ng-model="issue.category.id" ng-options="category.id as category.name for category in categories"></select>
+		</div>
+	</div>
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Due Date</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<!-- <input type="date" class="form-control" ng-model="issue.dueDate" min="minDueDate" max="maxDueDate" /> -->
+			<div class="input-group">
+				<input type="text" class="form-control" datepicker-popup="{{datePicker.getFormat(0)}}" ng-model="issue.dueDate" ng-click="openDueDate($event)" is-open="openedDueDate" min-date="minDueDate" max-date="maxDueDate" datepicker-options="datePicker.getDateOptions()" />
+				<span class="input-group-addon show-cursor" ng-click="openDueDate($event)">
+					<span class="glyphicon glyphicon-calendar"></span>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Opened Date</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<!-- <input type="date" class="form-control" ng-model="issue.openedDate" min="minOpenedDate" max="maxOpenedDate" /> -->
+			<div class="input-group">
+				<input type="text" class="form-control" datepicker-popup="{{datePicker.getFormat(0)}}" ng-model="issue.openedDate" ng-click="openOpenedDate($event)" is-open="openedOpenedDate" min-date="minOpenedDate" max-date="maxOpenedDate" datepicker-options="datePicker.getDateOptions()" />
+				<span class="input-group-addon show-cursor" ng-click="openOpenedDate($event)">
+					<span class="glyphicon glyphicon-calendar"></span>
+				</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Opened By</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<select class="form-control" ng-model="issue.openedBy.id" ng-options="contact.id as contact.firstName + ' ' + contact.lastName for contact in contacts"></select>
+		</div>
+	</div>
+	
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Follow Until</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<!-- <input type="date" class="form-control" ng-model="issue.followUntil" min="minDateFollowUntil" max="maxDateFollowUntil" /> -->
+			<div class="input-group">
+				<input type="text" class="form-control" datepicker-popup="{{datePicker.getFormat(0)}}" ng-model="issue.followUntil" ng-click="openFollowUntil($event)" is-open="openedFollowUntil" min-date="minDateFollowUntil" max-date="maxDateFollowUntil" datepicker-options="datePicker.getDateOptions()" date-disabled="datePicker.disabled(date, mode)" close-text="Close" />
+				<span class="input-group-addon show-cursor" ng-click="openFollowUntil($event)">
+					<span class="glyphicon glyphicon-calendar"></span>
+				</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row margin-bottom-5">
+		<div class="col-xs-6 col-lg-4">
+			<span>Attachments</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-lg-8">
+			<div ng-click="openFileDialog()" class="image-box-dashe">
+				<div class="image-container">
+					<div ng-show="isNewUploadImage" class="preview-content text-center">
+						<span>Click here to select a file!</span>
+					</div>
+					<div ng-show="!isNewUploadImage">
+						<img ng-src="{{imageSource}}" class="img-thumbnail" />
+						<!-- Image can display as img-thumbnail, img-rounded, img-circle, img-responsive -->
+					</div>
+				</div>
+			</div>
+			<input type="file" id="issueAttachment" accept="image/*" style="display:none" />
+			<input type="hidden" ng-model="issueAttachmentName" />
+			<input type="hidden" ng-model="issue.attachment" />
+		</div>
+	</div>
+	
+	<div class="row padding-10">
+		<div>
+			<tabset>
+				<tab heading="Issue Information">
+					<div class="row tab-box">
+						<div class="row padding-15 margin-bottom-15">
+							<div class="row related-issue-line">
+								<div class="col-xs-6 col-lg-4">
+									<span>New Problem</span> <!-- New Comment -->
+								</div>
+								<div class="col-xs-12 col-sm-6 col-lg-8">
+									<textarea class="form-control text-area-format" rows="3" ng-model="issue.problem"></textarea>
+								</div>
+							</div>
+							
+							<div class="row related-issue-line">
+								<div class="col-xs-6 col-lg-4">
+									<span>Historical Problems</span>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-lg-8">
+									<div class="history-box">
+										<div ng-repeat="problem in issue.historicalProblems">
+											<span>{{problem.versionProblem}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row related-issue-line">
+								<div class="col-xs-6 col-lg-4">
+									<span>Problem Fix</span> <!-- Description -->
+								</div>
+								<div class="col-xs-12 col-sm-6 col-lg-8">
+									<textarea class="form-control text-area-format" rows="3" ng-model="issue.fix"></textarea>
+								</div>
+							</div>
+							
+							<div class="row related-issue-line margin-bottom-5">
+								<div class="col-xs-6 col-lg-4">
+									<span>Historical Problem Fixes</span>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-lg-8">
+									<div class="history-box">
+										<div ng-repeat="fix in issue.historicalFixes">
+											<span>{{fix.versionFix}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</tab>
+				
+				<tab heading="Related Issues">
+					<div class="row tab-box">
+						<div class="row padding-15 margin-bottom-15">
+							<div class="ri-detail-box">
+								<div class="table-responsive" ng-show="relatedIssues.length > 0">
+									<table class="table table-striped">
+										<tr class="info">
+											<th><span>#</span></th>
+											<th><span>Part #</span></th>
+											<th><span>Assigned To</span></th>
+											<th><span>Opened By</span></th>
+											<th><span>Priority</span></th>
+											<th><span>Category</span></th>
+											<th><span>Status</span></th>
+										</tr>
+										<tr ng-repeat="iss in relatedIssues">
+											<td><span><a href="#/issues/issue/view/{{iss.id}}">{{iss.id}}</a></span></td>
+											<td><span>{{iss.partNum}}</span></td>
+											<td><span>{{iss.assignedTo.firstName + ' ' + iss.assignedTo.lastName}}</span></td>
+											<td><span>{{iss.openedBy.firstName + ' ' + iss.openedBy.lastName}}</span></td>
+											<td><span>{{iss.priority.name}}</span></td>
+											<td><span>{{iss.category.name}}</span></td>
+											<td><span>{{iss.status.name}}</span></td>
+										</tr>
+									</table>
+								</div>
+								
+							</div>
+						</div>
+						<div class="row padding-15 margin-bottom-15">
+							<div class="related-issue-line margin-bottom-5">
+								<button type="button" class="btn btn-default" ng-disabled="isVisibleRelatedIssue" ng-click="openRelatedIssueModal(issue, 'lg')">Add Related Issues</button>
+							</div>
+						</div>
+					</div>
+				</tab>
+			</tabset>
+		</div>
+		
+	</div>
+	
+</div>

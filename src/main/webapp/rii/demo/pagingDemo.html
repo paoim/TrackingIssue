@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html ng-app="paginationApp">
+<head>
+<meta charset="UTF-8">
+<title>Rii Issues Tracker - Pagination Demo</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="../default/css/issuetracker.css" />
+</head>
+<body>
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand text-brand"
+					href="http://pao-profile.appspot.com/" target="_blank">Pagination
+					Demo</a>
+			</div>
+
+			<div class="navbar-collapse collapse">
+				<!-- Menu block -->
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<span class="text-brand">Welcome to Pagination Demo</span>
+				</div>
+				<div class="panel-body">
+					<div ng-controller="PaginationDemoCtrl">
+						<div ng-repeat="friend in friends">{{friend.name}}</div>
+
+						<h4>Try Pagination</h4>
+						<pagination total-items="totalItems" items-per-page="itemsPerPage"
+							ng-model="currentPage" ng-change="pageChanged()"></pagination>
+
+						<h4>Default</h4>
+						<pagination total-items="totalItems" ng-model="currentPage"
+							ng-change="pageChanged()"></pagination>
+						<!-- 
+						<pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+						<pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"></pagination>
+						<pagination direction-links="false" total-items="totalItems" ng-model="currentPage" num-pages="smallnumPages"></pagination>
+						 -->
+						<pre>The selected page no: {{currentPage}}</pre>
+						<button class="btn btn-info" ng-click="setPage(3)">Set
+							current page to: 3</button>
+					</div>
+					<div ng-controller="ContentCtrl">
+						<div ng-repeat="friend in filteredFriends">{{friend.name}}</div>
+						<pagination total-items="totalItems" items-per-page="itemsPerPage"
+							ng-model="currentPage" ng-change="pageChanged()"></pagination>
+						<p>
+							Total items: {{totalItems}}<br /> Items per page:
+							{{itemsPerPage}}<br /> Current Page: {{currentPage}}
+						</p>
+					</div>
+					<hr />
+					<div ng-controller="SampleContoller" ng-init="showData()">
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<tr class="info">
+									<th><span>Name</span></th>
+									<th><span>Age</span></th>
+									<th><span>Designation</span></th>
+								</tr>
+								<tr ng-repeat="datalist in datalists | pagination: curPage * pageSize | limitTo: pageSize">
+									<td><span>{{datalist.name}}</span></td>
+									<td><span>{{datalist.age}}</span></td>
+									<td><span>{{datalist.designation}}</span></td>
+								</tr>
+							</table>
+							<div>
+								<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">&lt; PREV</button>
+								<span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+								<button type="button" class="btn btn-primary" ng-disabled="curPage >= datalists.length/pageSize - 1" ng-click="curPage = curPage+1">NEXT &gt;</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div data-ng-include="'footer.html'" />
+
+	<script src="../js/libs/angular.min.js"></script>
+	<script src="../js/libs/angular-route.min.js"></script>
+	<script src="../js/libs/ui-bootstrap-tpls-0.11.0.min.js"></script>
+	<script src="../js/demo/pagination-demo.js"></script>
+</body>
+</html>

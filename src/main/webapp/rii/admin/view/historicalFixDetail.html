@@ -1,0 +1,60 @@
+<div class="row detail-page">
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>Issue #</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input">
+					<input type="text" name="issueID" class="form-control" ng-model="historicalFix.issueID" placeholder="Enter Issue #" required autofocus />
+					<input type="hidden" name="partNum" class="form-control" ng-model="historicalFix.partNum" />
+					<span class="asterisk" ng-show="issueForm.issueID.$dirty && issueForm.issueID.$invalid">
+						<span ng-show="issueForm.issueID.$error.required">Issue # is required.</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20 hide-mobile">
+			<div class="margin-id-m">
+				<div class="row-100">
+					<div class="col-label-id">
+						<span>ID #</span>
+					</div>
+					<div class="col-input-id">
+						<span class="form-control">{{historicalFix.id}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-100 margin-bottom-5">
+		<div class="col-m-80">
+			<div class="row-100">
+				<div class="col-label">
+					<span>Fix</span>
+					<span class="asterisk">*</span>
+				</div>
+				<div class="col-input">
+					<textarea name="versionProblem" class="form-control text-area-format" rows="4" ng-model="historicalFix.versionFix" required></textarea>
+					<span class="asterisk" ng-show="issueForm.versionProblem.$dirty && issueForm.versionProblem.$invalid">
+						<span ng-show="issueForm.comment.$error.required">Fix is required.</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-m-20">
+			<div class="margin-space-m">
+				<div class="row-100">
+					<div class="col-label">
+						<span></span>
+					</div>
+					<div class="col-input">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

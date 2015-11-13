@@ -1,0 +1,5 @@
+@media print {
+	.ng-hide, .ng-hide * {
+		display: none !important;
+	}
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html ng-app="selectApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Rii Issues Tracker - Select Demo</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="../default/css/issuetracker.css" />
+</head>
+<body>
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand text-brand" href="http://pao-profile.appspot.com/" target="_blank">Angular Select Demo</a>
+			</div>
+
+			<div class="navbar-collapse collapse">
+				<!-- Menu block -->
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<span class="text-brand">Welcome to Select Demo</span>
+				</div>
+				<div class="panel-body">
+					<div ng-controller="SampleCtrl">
+						<div>
+							Name: 
+							<select ng-model="selectedOptionName"
+								ng-options="option.name for option in options">
+							</select>
+						</div>
+						<div>
+							Value: 
+							<select ng-model="selectedOptionValue"
+								ng-options="option.value as option.name for option in options">
+							</select>
+						</div>
+					</div>
+					<hr />
+					<div ng-controller="ItemsController">
+						<div ng-repeat="item in items">
+							Name: 
+							<input type="text" ng-model="item.objectName" /> <br />
+							Version: 
+							<select ng-model="item.versionID"
+								ng-options="version.id as version.name for version in versions">
+							</select> <br />
+							Version Name: 
+							<select ng-model="item.versionName"
+								ng-options="version.name as version.name for version in versions">
+							</select>
+						</div>
+					</div>
+					<hr />
+					<div ng-controller="ObjectCtrl">
+						<div ng-repeat="item in items">
+							Name: <input type="text" ng-model="item.name" /> <br />
+							Object:
+							<select ng-model="item.option.id"
+								ng-options="opt.id as opt.name + ' ' + opt.value for opt in options">
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div data-ng-include="'footer.html'" />
+
+	<script src="../js/libs/angular.min.js"></script>
+	<script src="../js/demo/select-app.js"></script>
+</body>
+</html>

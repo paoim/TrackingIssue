@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html ng-app="IssueTrackerApp" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Rii Tracking Issue for Mobile Web">
+	<meta name="author" content="Pao Im">
+	<link rel="icon" href="../../favicon.ico">
+	
+	<title>Rii - Issue Tracker</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="css/issue-tracker.css" />
+	<link rel="stylesheet" type="text/css" href="../css/animation-maker.css" />
+	
+	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+	<!--[if lt IE 9]><script src="../js/libs/ie8-responsive-file-warning.js"></script><![endif]-->
+	<script src="../js/libs/ie-emulation-modes-warning.js"></script>
+	
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<div class="container" ng-controller="IssueTrackerController">
+		<div class="header">
+			<nav>
+				<ul class="nav nav-pills pull-right" ng-controller="NavigationController">
+					<li class="d-menu" ng-class="{active : isActiveClass('/issues') }"><a href="#/issues">Issues</a></li>
+					<li class="d-menu" ng-class="{active : isActiveClass('/todos') }"><a href="#/todos">Todos</a></li>
+					<li class="d-menu" ng-class="{active : isActiveClass('/report') }"><a href="#/report">Report</a></li>
+
+					<li class="dropdown m-menu">
+						<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger caret"></span></a>
+						<ul class="dropdown-menu">
+							<li ng-class="{active : isActiveClass('/issues') }" role="presentation"><a href="#/issues">Issues</a></li>
+							<li ng-class="{active : isActiveClass('/todos') }" role="presentation"><a href="#/todos">Todos</a></li>
+							<li ng-class="{active : isActiveClass('/report') }" role="presentation"><a href="#/report">Report</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+			<h3 class="text-muted text-brand">Rii - Issue Tracker</h3>
+		</div>
+
+		<div class="jumbotron" ng-show="page.getPage().isListingPage">
+			<div class="row">
+				<div class="col-lg-6 margin-bottom-5">
+					<a class="btn btn-lg btn-success" href="#/issues/issue/upsert/newIssueID" role="button">Add New Issue</a>
+				</div>
+				<div class="col-lg-6">
+					<a class="btn btn-lg btn-success" href="#/todos/todo/upsert/newTodoID" role="button">Add New Todo</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row bodyContainer">
+			<form name="issueForm" novalidate>
+				<div ng-view="">Loading...</div>
+			</form>
+		</div>
+
+		<footer class="footer">
+			<p>&copy; Rubber Industries Inc. 2015</p>
+		</footer>
+
+	</div>
+	<!-- /container -->
+	
+	<!-- Import External Library -->
+	<script src="../js/libs/angular.min.js"></script>
+	<script src="../js/libs/angular-route.min.js"></script>
+	<script src="../js/libs/ui-bootstrap-tpls-0.11.0.min.js"></script>
+
+	<!-- Custom JS Library  -->
+	<script src="../js/services/service-http.js"></script>
+	<script src="../js/services/service-data.js"></script>
+	<script src="../js/services/service-util.js"></script>
+	<script src="../js/services/service-input-file.js"></script>
+	<script src="../js/services/service-date-picker.js"></script>
+	
+	<script src="js/services/service.js"></script>
+	<script src="js/services/service-todo.js"></script>
+	<script src="js/services/service-photo.js"></script>
+	<script src="js/services/service-issue.js"></script>
+	<script src="js/services/service-contact.js"></script>
+	<script src="js/services/service-category.js"></script>
+	<script src="js/services/service-status.js"></script>
+	<script src="js/services/service-priority.js"></script>
+	<script src="js/services/service-partCustomer.js"></script>
+	<script src="js/services/service-historicalFix.js"></script>
+	<script src="js/services/service-historicalProblem.js"></script>
+	
+	<script src="js/issue-tracker-app.js"></script>
+	<script src="js/issue-tracker-route.js"></script>
+
+	<script src="js/controllers/controller.js"></script>
+	<script src="js/controllers/controller-todo.js"></script>
+	<script src="js/controllers/controller-issue.js"></script>
+	<script src="js/controllers/controller-report.js"></script>
+	<script src="js/controllers/controller-todoReport.js"></script>
+	<script src="js/controllers/controller-issueReport.js"></script>
+	<script src="js/controllers/controller-print-todoReport.js"></script>
+	<script src="js/controllers/controller-print-issueReport.js"></script>
+	
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="../js/libs/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
