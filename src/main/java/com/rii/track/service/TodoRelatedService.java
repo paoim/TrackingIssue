@@ -15,9 +15,13 @@ public interface TodoRelatedService<T, S> {
 
 	void sendMailSSL();
 
-	void sendAllOpenTasksToSupervisor();
-
 	void sendOpenTasksToEveryOne();
+	
+	void sendAllOpenTasksToSupervisor();
+	
+	void pushToSendOpenTasksToEveryOne();
+	
+	void pushToSendAllOpenTasksToSupervisor();
 	
 	List<EmailSMTPUtil> getOpenTasksForEveryOne();
 }

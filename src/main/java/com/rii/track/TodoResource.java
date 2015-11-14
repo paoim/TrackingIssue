@@ -195,11 +195,39 @@ public class TodoResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("pushMailToSupervisor")
+	// http:localhost:8080/TrackingIssue/rest/todo/pushMailToSupervisor
+	public Response pushMailToSupervisor() {
+		try {
+			todoRelatedService.pushToSendAllOpenTasksToSupervisor();
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+
+		return Response.ok().build();
+	}
+
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("sendMailToEveryOne")
 	// http:localhost:8080/TrackingIssue/rest/todo/sendMailToEveryOne
 	public Response sendMailToEveryOne() {
 		try {
 			todoRelatedService.sendOpenTasksToEveryOne();
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+
+		return Response.ok().build();
+	}
+
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("pushMailToEveryOne")
+	// http:localhost:8080/TrackingIssue/rest/todo/pushMailToEveryOne
+	public Response pushMailToEveryOne() {
+		try {
+			todoRelatedService.pushToSendOpenTasksToEveryOne();
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}

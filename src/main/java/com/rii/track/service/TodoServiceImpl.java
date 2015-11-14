@@ -170,6 +170,31 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 	}
 
 	@Override
+	public void pushToSendOpenTasksToEveryOne() {
+		System.out.println("============Start >> pushToSendOpenTasksToEveryOne===========================================");
+		List<EmailSchedulerUtil> emailSchedulers = getEmailSchedulers();
+		for(EmailSchedulerUtil email : emailSchedulers) {
+			email.sendMailTLS();
+		}
+		System.out.println("============End >> pushToSendOpenTasksToEveryOne===========================================");
+	}
+
+	@Override
+	public void pushToSendAllOpenTasksToSupervisor() {
+		System.out.println("============Start >> pushToSendAllOpenTasksToSupervisor===========================================");
+		EmailSMTPUtil email = new EmailSMTPUtil();
+		List<TodoResult> results = getOpenTaskList();
+
+		email.setSendTo("Drozelle@rubberindustries.com,noreplyriitrackingissue@gmail.com");
+		email.setSubject("List of all Open Tasks");
+		email.setBody(getHtml(results));
+
+		EmailSchedulerUtil emailScheduler = new EmailSchedulerUtil(email);
+		emailScheduler.sendMailSSL();
+		System.out.println("============End >> pushToSendAllOpenTasksToSupervisor===========================================");
+	}
+
+	@Override
 	public List<EmailSMTPUtil> getOpenTasksForEveryOne() {
 		System.out.println("============Start >> getOpenTasksForEveryOne===========================================");
 		List<EmailSMTPUtil> emailList = new ArrayList<EmailSMTPUtil>();
