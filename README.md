@@ -19,7 +19,7 @@ paoim@yahoo.com
 
 
 ##Fixes and Bugs
-- 
+- Email Feature
 
 
 ##Git Basic:
