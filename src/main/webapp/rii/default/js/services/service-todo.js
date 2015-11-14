@@ -141,8 +141,24 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		}, true);
 		
 	},
+	pushMailToSupervisor = function(callbackHandler) {
+		dataService.getEntities("todos/pushMailToSupervisor", function(data) {
+			callbackHandler([], "Send Email To Supervisors Successfully...");
+		},function(error) {
+			callbackHandler([], "Cannot Send Email To Supervisors - " + error.message);
+		}, true);
+		
+	},
 	sendMailToEveryOne = function(callbackHandler) {
 		dataService.getEntities("todos/sendMailToEveryOne", function(data) {
+			callbackHandler([], "Send Email To Everyone Successfully...");
+		},function(error) {
+			callbackHandler([], "Cannot Send Email To Everyone - " + error.message);
+		}, true);
+		
+	},
+	pushMailToEveryOne = function(callbackHandler) {
+		dataService.getEntities("todos/pushMailToEveryOne", function(data) {
 			callbackHandler([], "Send Email To Everyone Successfully...");
 		},function(error) {
 			callbackHandler([], "Cannot Send Email To Everyone - " + error.message);
@@ -272,8 +288,10 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		deleteTodoCustom : deleteTodoCustom,
 		loadTodoCustomlist : loadTodoCustomlist,
 		sendMailToEveryOne : sendMailToEveryOne,
+		pushMailToEveryOne : pushMailToEveryOne,
 		loadTodolistByPageNo : loadTodolistByPageNo,
 		getOpenTasksEveryone : getOpenTasksEveryone,
+		pushMailToSupervisor : pushMailToSupervisor,
 		sendMailToSupervisor : sendMailToSupervisor
 	};
 });

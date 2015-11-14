@@ -42,8 +42,24 @@ issueTrackerApp.controller("ImportDataController", function($scope, $timeout, pa
 		});
 	};
 	
+	$scope.pushMailToEveryOne =function() {
+		todoService.pushMailToEveryOne(function(data, message) {
+			$scope.isAlreadySendToEveryOne = true;
+			newPage.isAlreadySendToEveryOne = true;
+			console.log(message);
+		});
+	};
+	
 	$scope.sendEmailToSupervisor =function() {
 		todoService.sendMailToSupervisor(function(data, message) {
+			$scope.isAlreadySendToSupervisor = true;
+			newPage.isAlreadySendToSupervisor = true;
+			console.log(message);
+		});
+	};
+	
+	$scope.pushMailToSupervisor =function() {
+		todoService.pushMailToSupervisor(function(data, message) {
 			$scope.isAlreadySendToSupervisor = true;
 			newPage.isAlreadySendToSupervisor = true;
 			console.log(message);
