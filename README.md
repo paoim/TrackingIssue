@@ -13,9 +13,9 @@ paoim@yahoo.com
 
 
 ##Feature:
-- Email by using Gmail SMTP
 - User Pages
 - Admin Pages
+- Email by using Gmail SMTP
 
 
 ##Fixes and Bugs
@@ -32,7 +32,13 @@ paoim@yahoo.com
 - git commit -m "Add read me"
 - git remote add origin https://github.com/paoim/TrackingIssue.git
 
-- Add ignore by Manual on GitHub
+- Add .gitignore by Manual on GitHub
+.classpath
+.project
+.settings/
+.springBeans
+bin/
+target/
 
 - git add pom.xml
 - git add src/
