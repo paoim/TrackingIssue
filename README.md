@@ -22,7 +22,7 @@ paoim@yahoo.com
 - Email Feature
 
 
-##Git Basic:
+##Git Basic Commands:
 1. Add New Project to GitHub
 1.1 Create Project in GitHub
 1.2 Commit New Project
@@ -32,7 +32,7 @@ paoim@yahoo.com
 - git commit -m "Add read me"
 - git remote add origin https://github.com/paoim/TrackingIssue.git
 
-- Add .gitignore by Manual on GitHub
+- Add .gitignore by Manual on GitHub:
 .classpath
 .project
 .settings/
