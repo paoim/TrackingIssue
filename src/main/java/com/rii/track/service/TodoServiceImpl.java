@@ -208,7 +208,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 		// Group by Users with their email
 		for (long key : mapForEmail.keySet()) {
 			EmailSMTPUtil emailUtil = new EmailSMTPUtil();
-			emailUtil.setSendTo(email.get(key) + "Drozelle@rubberindustries.com,noreplyriitrackingissue@gmail.com");
+			emailUtil.setSendTo(email.get(key) + ",Drozelle@rubberindustries.com,noreplyriitrackingissue@gmail.com");
 			emailUtil.setSubject("List of all your Open Tasks");
 			String html = getHtml(mapForEmail.get(key));
 			emailUtil.setBody(html);
