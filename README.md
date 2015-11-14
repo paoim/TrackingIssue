@@ -1,13 +1,17 @@
 # TrackingIssue
-=========xxx=======
+@C 2014-2015
+Pao Im
+paoim@yahoo.com
 
 Project Source:
----------------
-- 
-- 
+- Jersey			2.6
+- Spring			3.1.3
+- Hibernate			4.2.5
+- mysql				5.1.31
+- javax.mail		1.4.7
+- jersey-spring3	3.1.3
 
 Feature:
---------
 - Email by using Gmail SMTP
 - User Pages
 - Admin Pages
@@ -18,7 +22,6 @@ Fixes and Bugs
 
 
 Git Basic:
-----------
 1. Add New Project to GitHub
 1.1 Create Project in GitHub
 1.2 Commit New Project
