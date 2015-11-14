@@ -4,14 +4,15 @@ Pao Im
 paoim@yahoo.com
 
 ##Project Source:
-1. Back-End:
+###Back-End:
 - Jersey			2.6
 - Spring			3.1.3
 - Hibernate			4.2.5
 - mysql				5.1.31
 - javax.mail		1.4.7
 - jersey-spring3	3.1.3
-2. Front-End:
+
+###Front-End:
 - Javascript, Angular
 - HTML(5)
 - CSS(3)
@@ -29,7 +30,7 @@ paoim@yahoo.com
 
 
 ##Git Basic Commands:
-1. Add New Project to GitHub
+###Add New Project to GitHub
 1.1 Create Project in GitHub
 1.2 Commit New Project
 - echo "# TrackingIssue" >> README.md
@@ -53,7 +54,7 @@ target/
 - git pull --rebase
 - git push
 
-2. Commit New
+###Commit New
 - git add src/main/java/com/rii/track/service/TodoServiceImpl.java
 - git commit -m "Fixed on email feature"
 - git pull --rebase
