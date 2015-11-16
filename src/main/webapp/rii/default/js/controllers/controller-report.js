@@ -7,6 +7,8 @@ issueTrackerApp.controller("ReportController", function($scope, $routeParams, $l
 	var newPage = {
 			isDetailPage : true,
 			isReportPage : true,
+			isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+			isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 			//Keep to store issues
 			storeIssues : pageService.getPage().storeIssues || []
 	};

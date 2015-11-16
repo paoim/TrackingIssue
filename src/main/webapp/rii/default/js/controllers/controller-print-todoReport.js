@@ -14,6 +14,8 @@ issueTrackerApp.controller("PrintTodoReportController", function($scope, $routeP
 		title : "View Todos List",
 		reportUrl : "report/todos",
 		reportLabel : "Generate Todos Report",
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || [],
 		todoFilterReport : pageService.getPage().todoFilterReport || {}

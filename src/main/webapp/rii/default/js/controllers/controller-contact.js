@@ -12,6 +12,8 @@ issueTrackerApp.controller("ContactsController", function($scope, $modal, $log, 
 		createLabel : "New Contact",
 		createUrl : "contacts/newID",
 		uploadLabel : "Click to upload Contacts",
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
@@ -240,6 +242,8 @@ issueTrackerApp.controller("ContactDetailController", function($scope, $routePar
 		title : "Contact Details",
 		createLabel : createLabel,
 		isDisplaySaveBtn : isUpdateContact,
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},

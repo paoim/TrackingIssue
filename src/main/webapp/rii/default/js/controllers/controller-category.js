@@ -11,6 +11,8 @@ issueTrackerApp.controller("CategoryController", function($scope, $modal, $log, 
 		createLabel : "New Category",
 		createUrl : "categories/newID",
 		uploadLabel : "Click to upload Categories",
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
@@ -150,6 +152,8 @@ issueTrackerApp.controller("CategoryDetailController", function($scope, $routePa
 		title : "Category Details",
 		createLabel : createLabel,
 		isDisplaySaveBtn : isUpdateCategory,
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},

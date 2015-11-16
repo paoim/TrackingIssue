@@ -14,6 +14,8 @@ issueTrackerApp.controller("TodoController", function($scope, $modal, $log, $tem
 		createUrl : "todos/todo/view/newID",
 		reportLabel : "Generate Todo Report",
 		uploadLabel : "Click to upload Todos",
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
@@ -60,35 +62,6 @@ issueTrackerApp.controller("TodoController", function($scope, $modal, $log, $tem
 			$scope.contacts = data;
 		});
 	})();
-	
-	//sendMailSSL
-	/*(function() {
-		todoService.sendMailSSL(function(data, message) {
-			console.log(message);
-		});
-	})();
-	
-	//sendMailTLS
-	(function() {
-		todoService.sendMailTLS(function(data, message) {
-			console.log(message);
-		});
-	})();
-	
-	//sendMailToSupervisor
-	(function() {
-		todoService.sendMailToSupervisor(function(data, message) {
-			console.log(message);
-		});
-	})();
-	
-	//get OpenTasks for Everyone
-	(function() {
-		todoService.getOpenTasksEveryone(function(data, message) {
-			console.log(message);
-			console.log(data);
-		});
-	})();*/
 	
 	//init searchTodo for search form
 	$scope.searchTodo = {};
@@ -343,6 +316,8 @@ issueTrackerApp.controller("TodoDetailController", function($scope, $routeParams
 		reportUrl : "report/todos",
 		isDisplaySaveBtn : isUpdateTodo,
 		reportLabel : "Generate Todo Report",
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},

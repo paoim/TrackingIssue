@@ -11,6 +11,8 @@ issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, 
 		createLabel : "New Priority",
 		createUrl : "priorities/newID",
 		uploadLabel : "Click to upload Priorities",
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
@@ -136,6 +138,8 @@ issueTrackerApp.controller("PriorityDetailController", function($scope, $routePa
 		title : "Priority Details",
 		createLabel : createLabel,
 		isDisplaySaveBtn : isUpdatePriority,
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},

@@ -18,6 +18,8 @@ issueTrackerServices.factory("pageService", function($rootScope){
 		isLinkReportPage : false,
 		isDisplaySaveBtn : false,
 		isUploadExcelFile : false,
+		isAlreadySendToEveryOne : false,
+		isAlreadySendToSupervisor : false,
 		createLabel : "New Issue",
 		printUrl : "issues/report",
 		printLabel : "Generate Issue Report",

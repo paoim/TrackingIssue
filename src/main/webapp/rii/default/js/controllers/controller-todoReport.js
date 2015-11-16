@@ -14,6 +14,8 @@ issueTrackerApp.controller("TodoReportController", function($scope, $location, $
 		createLabel : "View Report",
 		title : "Generate Todos Report",
 		reportLabel : "Generate Issue Report",
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	};

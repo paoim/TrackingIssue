@@ -4,12 +4,14 @@
 ** Create Date: 07/11/2014
 *********************************************/
 // Create Issues Controller
-issueTrackerApp.controller("IssuesController", function($scope, $modal, $log, $templateCache, $filter, pageService, issueService, contactService, statusService, inputFileService, utilService) {
+issueTrackerApp.controller("IssuesController", function($scope, $modal, $log, $templateCache, $filter, pageService, issueService, contactService, statusService, todoService, inputFileService, utilService) {
 	var newPage = {
 		isDetailPage : false,
 		title : "Issues List",
 		isLinkReportPage : true,
 		isUploadExcelFile : false,//flag to show or hide upload button
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		createLabel : "New Issue",
 		createUrl : "issues/issue/view/newID",
 		uploadLabel : "Click to upload Issues",
@@ -121,6 +123,24 @@ issueTrackerApp.controller("IssuesController", function($scope, $modal, $log, $t
 			$scope.statusItems = statusItems;
 		});
 	})();
+	
+	// Send Email if not yet send
+	if (!newPage.isAlreadySendToSupervisor) {
+		/*(function() {
+			todoService.sendMailToSupervisor(function(data, message) {
+				newPage.isAlreadySendToSupervisor = true;
+				console.log(message);
+			});
+		})();*/
+	}
+	if (!newPage.isAlreadySendToEveryOne) {
+		/*(function() {
+			todoService.sendMailToEveryOne(function(data, message) {
+				newPage.isAlreadySendToEveryOne = true;
+				console.log(message);
+			});
+		})();*/
+	}
 	
 	//init searchIssue for search form
 	$scope.searchIssue = {};
@@ -698,6 +718,8 @@ issueTrackerApp.controller("IssueDetailController", function($scope, $routeParam
 		reportUrl : "report/issues",
 		isDisplaySaveBtn : isUpdateIssue,
 		reportLabel : "Generate Issue Report",
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		storeIssues : pageService.getPage().storeIssues || []
 	},
 	doNewAction = function() {

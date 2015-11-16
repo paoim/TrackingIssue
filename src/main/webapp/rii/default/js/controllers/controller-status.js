@@ -11,6 +11,8 @@ issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $t
 		createLabel : "New Status",
 		createUrl : "status/newID",
 		uploadLabel : "Click to upload Status",
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
@@ -135,6 +137,8 @@ issueTrackerApp.controller("StatusDetailController", function($scope, $routePara
 		title : "Status Details",
 		createLabel : createLabel,
 		isDisplaySaveBtn : isUpdateStatus,
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},

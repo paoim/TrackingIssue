@@ -13,6 +13,8 @@ issueTrackerApp.controller("PrintIssueReportController", function($scope, $route
 		title : "View Quick Part",
 		reportUrl : "report/issues",
 		reportLabel : "Generate Issue Report",
+		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
+		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || [],
 		issueFilterReport : pageService.getPage().issueFilterReport || {}
