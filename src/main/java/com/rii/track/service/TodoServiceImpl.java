@@ -241,12 +241,14 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 		}
 		
 		// Group by Users without their email
-		EmailSMTPUtil emailUtil = new EmailSMTPUtil();
-		emailUtil.setSendTo("Drozelle@rubberindustries.com,noreplyriitrackingissue@gmail.com");
-		emailUtil.setSubject("List of all Open Tasks without their email");
-		String html = getHtml(otherEmails);
-		emailUtil.setBody(html);
-		emailSchedulers.add(new EmailSchedulerUtil(emailUtil));
+		if (otherEmails.size() > 0) {
+			EmailSMTPUtil emailUtil = new EmailSMTPUtil();
+			emailUtil.setSendTo("Drozelle@rubberindustries.com,noreplyriitrackingissue@gmail.com");
+			emailUtil.setSubject("List of all Open Tasks without their email");
+			String html = getHtml(otherEmails);
+			emailUtil.setBody(html);
+			emailSchedulers.add(new EmailSchedulerUtil(emailUtil));
+		}
 		
 		System.out.println("============End >> getEmailSchedulers===========================================");
 
