@@ -3,12 +3,12 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create PartCustomer Controller
-issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $log, $templateCache, pageService, partCustomerService, inputFileService){
+issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $log, $templateCache, pageService, partCustomerService, inputFileService) {
 	var newPage = {
 		isDetailPage : false,
 		title : "PartCustomers List",
 		createLabel : "New PartCustomer",
-		createUrl : "partCustomers/newID",
+		createUrl : "setting/partCustomers/newID",
 		uploadLabel : "Click to upload PartCustomers",
 		isAlreadyLogin : pageService.getPage().isAlreadyLogin,
 		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
@@ -16,7 +16,7 @@ issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $l
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
-	loadPartCustomerList = function(){
+	loadPartCustomerList = function() {
 		//Show Animation
 		$scope.$emit('LOADPAGE');
 		
@@ -28,7 +28,7 @@ issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $l
 			return 1;
 		};
 		
-		partCustomerService.loadPartCustomers(function(partCustomers, message){
+		partCustomerService.loadPartCustomers(function(partCustomers, message) {
 			$scope.partCustomers = partCustomers;
 			$scope.numberOfPages = function() {
 				return Math.ceil($scope.partCustomers.length / $scope.pageSize);
@@ -43,13 +43,13 @@ issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $l
 	loadPartCustomerList();
 	
 	//Upload Excel file
-	var doNewAction = function(){
+	var doNewAction = function() {
 		//$templateCache.removeAll();//clear cache
 		var fileSelector = inputFileService.getSelectorById("fileElement");
 		inputFileService.loadFileDialog(fileSelector);
 		
-		inputFileService.addFileSelectedListener(fileSelector, function(){
-			if(this.files && this.files.length > 0){
+		inputFileService.addFileSelectedListener(fileSelector, function() {
+			if (this.files && this.files.length > 0) {
 				var file = this.files[0],
 				fileName = file.name,
 				fileSize = parseInt(file.size / 1024),
@@ -60,7 +60,7 @@ issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $l
 				};
 				console.log("Üpload file's size: " + fileSize + "KB");
 				
-				partCustomerService.uploadPartCustomerCsv(requestData, function(data, message){
+				partCustomerService.uploadPartCustomerCsv(requestData, function(data, message) {
 					//console.log(data);
 					//console.log(message);
 					loadPartCustomerList();
@@ -74,7 +74,7 @@ issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $l
 		
 	};
 	
-	$scope.doDeletePartCustomer = function(id, size){
+	$scope.doDeletePartCustomer = function(id, size) {
 		var item = {
 			id : id,
 			confirm : "partCustomer"
@@ -96,7 +96,7 @@ issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $l
 			$log.info('Modal for delete PartCustomer dismissed at: ' + new Date());
 		});
 		
-		//partCustomerService.deletePartCustomer(id, function(data, message){
+		//partCustomerService.deletePartCustomer(id, function(data, message) {
 			//alert(message);
 		//});
 	};
@@ -107,26 +107,25 @@ issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $l
 });
 
 //Create PartCustomer Detail Controller
-issueTrackerApp.controller("PartCustomerDetailController", function($scope, $routeParams, $location, pageService, partCustomerService, utilService){
+issueTrackerApp.controller("PartCustomerDetailController", function($scope, $routeParams, $location, pageService, partCustomerService, utilService) {
 	var partCustomerId = utilService.getId($routeParams.partCustomerId),
 	partCustomer = {id : partCustomerId},
 	createLabel = "Save New",
 	isUpdatePartCustomer = false;
 	
 	//Get PartCustomer ID
-	if(utilService.isNumber(partCustomerId)){
+	if (utilService.isNumber(partCustomerId)) {
 		isUpdatePartCustomer = true;
 		createLabel = "Update PartCustomer";
 	}
 	
-	if(isUpdatePartCustomer){
-		(function(){
-			partCustomerService.loadPartCustomer(partCustomerId, function(partCustomer, message){
+	if (isUpdatePartCustomer) {
+		(function() {
+			partCustomerService.loadPartCustomer(partCustomerId, function(partCustomer, message) {
 				$scope.partCustomer = partCustomer;
 			});
 		})();//auto execute function
-	}
-	else{
+	} else {
 		$scope.partCustomer = partCustomer;
 	}
 	
@@ -141,7 +140,7 @@ issueTrackerApp.controller("PartCustomerDetailController", function($scope, $rou
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
-	doNewAction = function(){
+	doNewAction = function() {
 		var partCustomers = partCustomerService.getPartCustomers(),
 		newPartCustomerId = partCustomers.length + 1,
 		newPartCustomer = {
@@ -153,17 +152,16 @@ issueTrackerApp.controller("PartCustomerDetailController", function($scope, $rou
 			partDescription : $scope.partCustomer.partDescription
 		};
 		
-		if(isUpdatePartCustomer){
-			partCustomerService.updatePartCustomer(newPartCustomer, function(data, message){
+		if (isUpdatePartCustomer) {
+			partCustomerService.updatePartCustomer(newPartCustomer, function(data, message) {
 				alert(message);
-				$location.path("/partCustomers");//redirect to partCustomers page
+				$location.path("/setting/partCustomers");//redirect to partCustomers page
 				//$location.reload();
 			});
-		}
-		else{
-			partCustomerService.createPartCustomer(newPartCustomer, function(data, message){
+		} else {
+			partCustomerService.createPartCustomer(newPartCustomer, function(data, message) {
 				alert(message);
-				$location.path("/partCustomers");
+				$location.path("/setting/partCustomers");
 				//$location.reload();
 			});
 		}
@@ -180,7 +178,7 @@ var ModalDeletePartCustomerInstanceCtrl = function($scope, $modalInstance, item,
 	$scope.item = item;
 
 	$scope.ok = function() {
-		partCustomerService.deletePartCustomer(item.id, function(data, message){
+		partCustomerService.deletePartCustomer(item.id, function(data, message) {
 			//alert(message);
 			$modalInstance.close(item);
 		});

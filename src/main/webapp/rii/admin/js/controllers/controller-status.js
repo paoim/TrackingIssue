@@ -3,12 +3,12 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create Status Controller
-issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $templateCache, pageService, statusService, inputFileService){
+issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $templateCache, pageService, statusService, inputFileService) {
 	var newPage = {
 		isDetailPage : false,
 		title : "Status List",
 		createLabel : "New Status",
-		createUrl : "status/newID",
+		createUrl : "setting/status/newID",
 		uploadLabel : "Click to upload Status",
 		isAlreadyLogin : pageService.getPage().isAlreadyLogin,
 		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
@@ -16,7 +16,7 @@ issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $t
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
-	loadStatusList = function(){
+	loadStatusList = function() {
 		//Show Animation
 		$scope.$emit('LOADPAGE');
 		
@@ -28,7 +28,7 @@ issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $t
 			return 1;
 		};
 		
-		statusService.loadStatusItems(function(statusItems, message){
+		statusService.loadStatusItems(function(statusItems, message) {
 			$scope.statusItems = statusItems;
 			$scope.numberOfPages = function() {
 				return Math.ceil($scope.statusItems.length / $scope.pageSize);
@@ -43,13 +43,13 @@ issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $t
 	loadStatusList();
 	
 	//Upload Excel File
-	var doNewAction = function(){
+	var doNewAction = function() {
 		//$templateCache.removeAll();//clear cache
 		var fileSelector = inputFileService.getSelectorById("fileElement");
 		inputFileService.loadFileDialog(fileSelector);
 		
-		inputFileService.addFileSelectedListener(fileSelector, function(){
-			if(this.files && this.files.length > 0){
+		inputFileService.addFileSelectedListener(fileSelector, function() {
+			if (this.files && this.files.length > 0) {
 				var file = this.files[0],
 				fileName = file.name,
 				fileSize = parseInt(file.size / 1024),
@@ -60,7 +60,7 @@ issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $t
 				};
 				console.log("Üpload file's size: " + fileSize + "KB");
 				
-				statusService.uploadStatusCsv(requestData, function(data, message){
+				statusService.uploadStatusCsv(requestData, function(data, message) {
 					//console.log(data);
 					//console.log(message);
 					loadStatusList();
@@ -74,7 +74,7 @@ issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $t
 		
 	};
 	
-	$scope.doDeleteStatus = function(index, size){
+	$scope.doDeleteStatus = function(index, size) {
 		var status = statusService.getStatusByIndex(index),
 		item = {
 				id : status.id,
@@ -98,7 +98,7 @@ issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $t
 			$log.info('Modal for delete Status dismissed at: ' + new Date());
 		});
 		
-		//statusService.deleteStatus(index, function(data, message){
+		//statusService.deleteStatus(index, function(data, message) {
 			//alert(message);
 		//});
 	};
@@ -109,26 +109,25 @@ issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $t
 });
 
 //Create Status Detail Controller
-issueTrackerApp.controller("StatusDetailController", function($scope, $routeParams, $location, pageService, statusService, utilService){
+issueTrackerApp.controller("StatusDetailController", function($scope, $routeParams, $location, pageService, statusService, utilService) {
 	var statusId = utilService.getId($routeParams.statusId),
 	status = {id : statusId},
 	createLabel = "Save New Status",
 	isUpdateStatus = false;
 	
 	//Get Status ID
-	if(utilService.isNumber(statusId)){
+	if (utilService.isNumber(statusId)) {
 		isUpdateStatus = true;
 		createLabel = "Update Status";
 	}
 	
-	if(isUpdateStatus){
-		(function(){
-			statusService.loadStatus(statusId, function(status, message){
+	if (isUpdateStatus) {
+		(function() {
+			statusService.loadStatus(statusId, function(status, message) {
 				$scope.status = status;
 			});
 		})();//auto execute function
-	}
-	else{
+	} else {
 		$scope.status = status;
 	}
 	
@@ -143,7 +142,7 @@ issueTrackerApp.controller("StatusDetailController", function($scope, $routePara
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
-	doNewAction = function(){
+	doNewAction = function() {
 		var statusItems = statusService.getStatusItems(),
 		newStatusId = statusItems.length + 1,
 		newStatus = {
@@ -152,17 +151,16 @@ issueTrackerApp.controller("StatusDetailController", function($scope, $routePara
 			description : $scope.status.description
 		};
 		
-		if(isUpdateStatus){
-			statusService.updateStatus(newStatus, function(data, message){
+		if (isUpdateStatus) {
+			statusService.updateStatus(newStatus, function(data, message) {
 				alert(message);
-				$location.path("/status");//redirect to status page
+				$location.path("/setting/status");//redirect to status page
 				//$location.reload();
 			});
-		}
-		else{
-			statusService.createStatus(newStatus, function(data, message){
+		} else {
+			statusService.createStatus(newStatus, function(data, message) {
 				alert(message);
-				$location.path("/status");
+				$location.path("/setting/status");
 				//$location.reload();
 			});
 		}
@@ -179,7 +177,7 @@ var ModalDeleteStatusInstanceCtrl = function($scope, $modalInstance, item, statu
 	$scope.item = item;
 
 	$scope.ok = function() {
-		statusService.deleteStatus(item.index, function(data, message){
+		statusService.deleteStatus(item.index, function(data, message) {
 			//alert(message);
 			$modalInstance.close(item);
 		});

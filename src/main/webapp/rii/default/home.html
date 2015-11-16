@@ -38,14 +38,10 @@
 
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right" ng-controller="NavigationController">
-					<!-- <li ng-repeat="menu in menuItems" ng-show="menu.isNormalPage" ng-class="menu.style"><a href="#/menu.link">{{menu.title}}</a></li> -->
 					<li ng-class="{active : isActiveClass('/issues') }"><a href="#/issues">Issues</a></li>
 					<li ng-class="{active : isActiveClass('/todos') }"><a href="#/todos">Todos</a></li>
 					<li ng-class="{active : isActiveClass('/report') }"><a href="#/report">Report</a></li>
 					<li ng-class="{active : isActiveClass('/contacts') }"><a href="#/contacts">Contacts</a></li>
-					<!-- <li ng-class="{active : isActiveClass('/categories') }"><a href="#/categories">Categories</a></li>
-					<li ng-class="{active : isActiveClass('/status') }"><a href="#/status">Status</a></li>
-					<li ng-class="{active : isActiveClass('/priorities') }"><a href="#/priorities">Priorities</a></li> -->
 				</ul>
 			</div>
 		</div>

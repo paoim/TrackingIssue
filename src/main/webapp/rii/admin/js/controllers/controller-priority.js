@@ -3,12 +3,12 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create Priority Controller
-issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, $templateCache, pageService, priorityService, inputFileService){
+issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, $templateCache, pageService, priorityService, inputFileService) {
 	var newPage = {
 		isDetailPage : false,
 		title : "Priorities List",
 		createLabel : "New Priority",
-		createUrl : "priorities/newID",
+		createUrl : "setting/priorities/newID",
 		uploadLabel : "Click to upload Priorities",
 		isAlreadyLogin : pageService.getPage().isAlreadyLogin,
 		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
@@ -16,7 +16,7 @@ issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, 
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
-	loadPriorityList = function(){
+	loadPriorityList = function() {
 		//Show Animation
 		$scope.$emit('LOADPAGE');
 		
@@ -28,7 +28,7 @@ issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, 
 			return 1;
 		};
 		
-		priorityService.loadPriorities(function(priorities, message){
+		priorityService.loadPriorities(function(priorities, message) {
 			$scope.priorities = priorities;
 			$scope.numberOfPages = function() {
 				return Math.ceil($scope.priorities.length / $scope.pageSize);
@@ -43,13 +43,13 @@ issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, 
 	loadPriorityList();
 	
 	//Upload Excel File
-	var doNewAction = function(){
+	var doNewAction = function() {
 		//$templateCache.removeAll();//clear cache
 		var fileSelector = inputFileService.getSelectorById("fileElement");
 		inputFileService.loadFileDialog(fileSelector);
 		
-		inputFileService.addFileSelectedListener(fileSelector, function(){
-			if(this.files && this.files.length > 0){
+		inputFileService.addFileSelectedListener(fileSelector, function() {
+			if (this.files && this.files.length > 0) {
 				var file = this.files[0],
 				fileName = file.name,
 				fileSize = parseInt(file.size / 1024),
@@ -60,7 +60,7 @@ issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, 
 				};
 				console.log("Üpload file's size: " + fileSize + "KB");
 				
-				priorityService.uploadPriorityCsv(requestData, function(data, message){
+				priorityService.uploadPriorityCsv(requestData, function(data, message) {
 					//console.log(data);
 					//console.log(message);
 					loadPriorityList();
@@ -74,7 +74,7 @@ issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, 
 		
 	};
 	
-	$scope.doDeletePriority = function(index, size){
+	$scope.doDeletePriority = function(index, size) {
 		var priority = priorityService.getPriorityByIndex(index),
 		item = {
 			id : priority.id,
@@ -98,7 +98,7 @@ issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, 
 			$log.info('Modal for delete Priority dismissed at: ' + new Date());
 		});
 		
-		//priorityService.deletePriority(index, function(data, message){
+		//priorityService.deletePriority(index, function(data, message) {
 			//alert(message);
 		//});
 	};
@@ -109,26 +109,25 @@ issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, 
 });
 
 //Create Priority Detail Controller
-issueTrackerApp.controller("PriorityDetailController", function($scope, $routeParams, $location, pageService, priorityService, utilService){
+issueTrackerApp.controller("PriorityDetailController", function($scope, $routeParams, $location, pageService, priorityService, utilService) {
 	var priorityId = utilService.getId($routeParams.priorityId),
 	priority = {id : priorityId},
 	createLabel = "Save New Priority",
 	isUpdatePriority = false;
 	
 	//Get Priority ID
-	if(utilService.isNumber(priorityId)){
+	if (utilService.isNumber(priorityId)) {
 		isUpdatePriority = true;
 		createLabel = "Update Priority";
 	}
 	
-	if(isUpdatePriority){
-		(function(){
-			priorityService.loadPriority(priorityId, function(priority, message){
+	if (isUpdatePriority) {
+		(function() {
+			priorityService.loadPriority(priorityId, function(priority, message) {
 				$scope.priority = priority;
 			});
 		})();//auto execute function
-	}
-	else{
+	} else {
 		$scope.priority = priority;
 	}
 	
@@ -144,7 +143,7 @@ issueTrackerApp.controller("PriorityDetailController", function($scope, $routePa
 		//Keep to store issues
 		storeIssues : pageService.getPage().storeIssues || []
 	},
-	doNewAction = function(){
+	doNewAction = function() {
 		var priorities = priorityService.getPriorities(),
 		newPriorityId = priorities.length + 1,
 		newPriority = {
@@ -153,17 +152,16 @@ issueTrackerApp.controller("PriorityDetailController", function($scope, $routePa
 			description : $scope.priority.description
 		};
 		
-		if(isUpdatePriority){
-			priorityService.updatePriority(newPriority, function(data, message){
+		if (isUpdatePriority) {
+			priorityService.updatePriority(newPriority, function(data, message) {
 				alert(message);
-				$location.path("/priorities");//redirect to priority page
+				$location.path("/setting/priorities");//redirect to priority page
 				//$location.reload();
 			});
-		}
-		else{
-			priorityService.createPriority(newPriority, function(data, message){
+		} else {
+			priorityService.createPriority(newPriority, function(data, message) {
 				alert(message);
-				$location.path("/priorities");
+				$location.path("/setting/priorities");
 				//$location.reload();
 			});
 		}
@@ -180,7 +178,7 @@ var ModalDeletePriorityInstanceCtrl = function($scope, $modalInstance, item, pri
 	$scope.item = item;
 
 	$scope.ok = function() {
-		priorityService.deletePriority(item.index, function(data, message){
+		priorityService.deletePriority(item.index, function(data, message) {
 			//alert(message);
 			$modalInstance.close(item);
 		});

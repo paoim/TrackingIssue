@@ -17,7 +17,7 @@
 			<th><span>&nbsp;</span></th>
 		</tr>
 		<tr ng-repeat="pri in priorities | paginationFilter: curPage * pageSize | limitTo: pageSize">
-			<td><span><a href="#/priorities/{{pri.id}}">{{pri.id}}</a></span></td>
+			<td><span><a href="#/setting/priorities/{{pri.id}}">{{pri.id}}</a></span></td>
 			<td><span>{{pri.name}}</span></td>
 			<td><span>{{pri.description}}</span></td>
 			<td class="show-cursor" ng-click="doDeletePriority($index, 'sm')"><span class="glyphicon glyphicon-remove-circle"></span></td>

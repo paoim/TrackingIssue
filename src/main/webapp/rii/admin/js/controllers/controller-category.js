@@ -8,7 +8,7 @@ issueTrackerApp.controller("CategoryController", function($scope, $modal, $log, 
 		isDetailPage : false,
 		title : "Categories List",
 		createLabel : "New Category",
-		createUrl : "categories/newID",
+		createUrl : "setting/categories/newID",
 		uploadLabel : "Click to upload Categories",
 		isAlreadyLogin : pageService.getPage().isAlreadyLogin,
 		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
@@ -52,7 +52,7 @@ issueTrackerApp.controller("CategoryController", function($scope, $modal, $log, 
 		inputFileService.addFileSelectedListener(fileSelector, function() {
 			var files = this.files;
 			
-			if(files && files.length > 0) {
+			if (files && files.length > 0) {
 				var file = this.files[0],
 				fileName = file.name,
 				fileSize = parseInt(file.size / 1024),
@@ -115,19 +115,18 @@ issueTrackerApp.controller("CategoryDetailController", function($scope, $routePa
 	isUpdateCategory = false;
 	
 	//Get Category ID
-	if(utilService.isNumber(categoryId)) {
+	if (utilService.isNumber(categoryId)) {
 		isUpdateCategory = true;
 		createLabel = "Update Category";
 	}
 	
-	if(isUpdateCategory) {
+	if (isUpdateCategory) {
 		(function() {
 			categoryService.loadCategory(categoryId, function(category, message) {
 				$scope.category = category;
 			});
 		})();//auto execute function
-	}
-	else{
+	} else {
 		$scope.category = category;
 	}
 	
@@ -152,17 +151,16 @@ issueTrackerApp.controller("CategoryDetailController", function($scope, $routePa
 		};
 		
 		//Update Category
-		if(isUpdateCategory) {
+		if (isUpdateCategory) {
 			categoryService.updateCategory(newCategory, function(data, message) {
 				alert(message);
-				$location.path("/categories");//redirect to category page
+				$location.path("/setting/categories");//redirect to category page
 				//$location.reload();
 			});
-		}
-		else{
+		} else {
 			categoryService.createCategory(newCategory, function(data, message) {
 				alert(message);
-				$location.path("/categories");
+				$location.path("/setting/categories");
 				//$location.reload();
 			});
 		}

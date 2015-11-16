@@ -19,7 +19,7 @@
 			<th><span>&nbsp;</span></th>
 		</tr>
 		<tr ng-repeat="part in partCustomers | paginationFilter: curPage * pageSize | limitTo: pageSize">
-			<td><span><a href="#/partCustomers/{{part.id}}">{{part.id}}</a></span></td>
+			<td><span><a href="#/setting/partCustomers/{{part.id}}">{{part.id}}</a></span></td>
 			<td><span>{{part.custNum}}</span></td>
 			<td><span>{{part.custName}}</span></td>
 			<td><span>{{part.custId}}</span></td>

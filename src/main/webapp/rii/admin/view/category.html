@@ -17,7 +17,7 @@
 			<th><span>&nbsp;</span></th>
 		</tr>
 		<tr ng-repeat="cat in categoriesList | paginationFilter: curPage * pageSize | limitTo: pageSize">
-			<td><span><a href="#/categories/{{cat.id}}">{{cat.id}}</a></span></td>
+			<td><span><a href="#/setting/categories/{{cat.id}}">{{cat.id}}</a></span></td>
 			<td><span>{{cat.name}}</span></td>
 			<td><span>{{cat.description}}</span></td>
 			<td class="show-cursor" ng-click="doDeleteCategory($index, 'sm')"><span class="glyphicon glyphicon-remove-circle"></span></td>

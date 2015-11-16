@@ -8,7 +8,7 @@ issueTrackerApp.controller("historicalProblemController", function($scope, $moda
 		isDetailPage : false,
 		title : "Historical Problems List",
 		createLabel : "New Historical Problem",
-		createUrl : "historicalProblems/newID",
+		createUrl : "setting/historicalProblems/newID",
 		uploadLabel : "Click to upload Historical Problems",
 		isAlreadyLogin : pageService.getPage().isAlreadyLogin,
 		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
@@ -246,7 +246,7 @@ issueTrackerApp.controller("historicalProblemController", function($scope, $moda
 		inputFileService.loadFileDialog(fileSelector);
 		
 		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if(this.files && this.files.length > 0) {
+			if (this.files && this.files.length > 0) {
 				var file = this.files[0],
 				fileName = file.name,
 				fileSize = parseInt(file.size / 1024),
@@ -309,26 +309,26 @@ issueTrackerApp.controller("historicalProblemDetailController", function($scope,
 	isupdateHistoricalProblem = false;
 	
 	//Get historicalProblem ID
-	if(utilService.isNumber(historicalProblemId)) {
+	if (utilService.isNumber(historicalProblemId)) {
 		isupdateHistoricalProblem = true;
 		createLabel = "Update Historical Problem";
 	}
 	
-	if(isupdateHistoricalProblem) {
+	if (isupdateHistoricalProblem) {
 		(function() {
 			historicalProblemService.loadHistoricalProblem(historicalProblemId, function(historicalProblem, message) {
 				$scope.historicalProblem = historicalProblem;
 			});
 		})();//auto execute function
 	}
-	else{
+	else {
 		$scope.historicalProblem = historicalProblem;
 	}
 	
 	// load auto completion data
 	/*$scope.partNumList = [];
 	$scope.$watch("historicalProblem.partNum", function(partNum) {
-		if(partNum && partNum.length > 3) {
+		if (partNum && partNum.length > 3) {
 			var query = "PartNum like '" + partNum + "%'";
 			issueService.searchPartNum(encodeURI(query), function(items) {
 				$scope.partNumList.length = 0;
@@ -336,7 +336,7 @@ issueTrackerApp.controller("historicalProblemDetailController", function($scope,
 					$scope.partNumList.push(item.partNum);
 				});
 				
-				if($scope.partNumList.length > 0) {
+				if ($scope.partNumList.length > 0) {
 					var newPartNumList = utilService.removeDuplicateList($scope.partNumList);
 					$scope.partNumList = newPartNumList;
 				}
@@ -370,17 +370,16 @@ issueTrackerApp.controller("historicalProblemDetailController", function($scope,
 			newHistoricalProblem.partNum = issue.partNum;
 			console.log(newHistoricalProblem);
 			
-			if(isupdateHistoricalProblem) {
+			if (isupdateHistoricalProblem) {
 				historicalProblemService.updateHistoricalProblem(newHistoricalProblem, function(data, message) {
 					alert(message);
-					$location.path("/historicalProblems");//redirect to historicalProblems page
+					$location.path("/setting/historicalProblems");//redirect to historicalProblems page
 					//$location.reload();
 				});
-			}
-			else{
+			} else {
 				historicalProblemService.createHistoricalProblem(newHistoricalProblem, function(data, message) {
 					alert(message);
-					$location.path("/historicalProblems");
+					$location.path("/setting/historicalProblems");
 					//$location.reload();
 				});
 			}

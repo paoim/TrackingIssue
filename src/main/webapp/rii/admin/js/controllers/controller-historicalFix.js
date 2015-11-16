@@ -8,7 +8,7 @@ issueTrackerApp.controller("historicalFixController", function($scope, $modal, $
 		isDetailPage : false,
 		title : "Historical Fixes List",
 		createLabel : "New Historical Fix",
-		createUrl : "historicalFixes/newID",
+		createUrl : "setting/historicalFixes/newID",
 		uploadLabel : "Click to upload Historical Fixes",
 		isAlreadyLogin : pageService.getPage().isAlreadyLogin,
 		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
@@ -246,7 +246,7 @@ issueTrackerApp.controller("historicalFixController", function($scope, $modal, $
 		inputFileService.loadFileDialog(fileSelector);
 		
 		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if(this.files && this.files.length > 0) {
+			if (this.files && this.files.length > 0) {
 				var file = this.files[0],
 				fileName = file.name,
 				fileSize = parseInt(file.size / 1024),
@@ -309,26 +309,25 @@ issueTrackerApp.controller("historicalFixDetailController", function($scope, $ro
 	isupdateHistoricalFix = false;
 	
 	//Get historicalFix ID
-	if(utilService.isNumber(historicalFixId)) {
+	if (utilService.isNumber(historicalFixId)) {
 		isupdateHistoricalFix = true;
 		createLabel = "Update Historical Fix";
 	}
 	
-	if(isupdateHistoricalFix) {
+	if (isupdateHistoricalFix) {
 		(function() {
 			historicalFixService.loadHistoricalFix(historicalFixId, function(historicalFix, message) {
 				$scope.historicalFix = historicalFix;
 			});
 		})();//auto execute function
-	}
-	else{
+	} else {
 		$scope.historicalFix = historicalFix;
 	}
 	
 	// load auto completion data
 	/*$scope.partNumList = [];
 	$scope.$watch("historicalFix.partNum", function(partNum) {
-		if(partNum && partNum.length > 3) {
+		if (partNum && partNum.length > 3) {
 			var query = "PartNum like '" + partNum + "%'";
 			issueService.searchPartNum(encodeURI(query), function(items) {
 				$scope.partNumList.length = 0;
@@ -336,7 +335,7 @@ issueTrackerApp.controller("historicalFixDetailController", function($scope, $ro
 					$scope.partNumList.push(item.partNum);
 				});
 				
-				if($scope.partNumList.length > 0) {
+				if ($scope.partNumList.length > 0) {
 					var newPartNumList = utilService.removeDuplicateList($scope.partNumList);
 					$scope.partNumList = newPartNumList;
 				}
@@ -371,17 +370,16 @@ issueTrackerApp.controller("historicalFixDetailController", function($scope, $ro
 			newHistoricalFix.partNum = issue.partNum;
 			console.log(newHistoricalFix);
 			
-			if(isupdateHistoricalFix) {
+			if (isupdateHistoricalFix) {
 				historicalFixService.updateHistoricalFix(newHistoricalFix, function(data, message) {
 					alert(message);
-					$location.path("/historicalFixes");//redirect to historicalFixes page
+					$location.path("/setting/historicalFixes");//redirect to historicalFixes page
 					//$location.reload();
 				});
-			}
-			else{
+			} else {
 				historicalFixService.createHistoricalFix(newHistoricalFix, function(data, message) {
 					alert(message);
-					$location.path("/historicalFixes");
+					$location.path("/setting/historicalFixes");
 					//$location.reload();
 				});
 			}

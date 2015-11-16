@@ -90,7 +90,7 @@
 				<th><span>&nbsp;</span></th>
 			</tr>
 			<tr ng-repeat="hp in historicalProblems | paginationFilter: curPage * pageSize | limitTo: pageSize">
-				<td><span><a href="#/historicalProblems/{{hp.id}}">{{hp.id}}</a></span></td>
+				<td><span><a href="#/setting/historicalProblems/{{hp.id}}">{{hp.id}}</a></span></td>
 				<td><span>{{hp.issueID}}</span></td>
 				<td><span>{{hp.partNum}}</span></td>
 				<td><span>{{hp.versionProblem}}</span></td>

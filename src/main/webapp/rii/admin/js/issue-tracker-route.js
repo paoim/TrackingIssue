@@ -15,41 +15,6 @@ issueTrackerApp.config(function($routeProvider, $locationProvider) {
 		controller : "IssuesController",
 		templateUrl : "view/issues.html"
 	}).
-	when("/contacts",
-	{
-		controller : "ContactsController",
-		templateUrl : "view/contacts.html"
-	}).
-	when("/categories",
-	{
-		controller : "CategoryController",
-		templateUrl : "view/category.html"
-	}).
-	when("/status",
-	{
-		controller : "StatusController",
-		templateUrl : "view/status.html"
-	}).
-	when("/priorities",
-	{
-		controller : "PriorityController",
-		templateUrl : "view/priority.html"
-	}).
-	when("/historicalProblems",
-	{
-		controller : "historicalProblemController",
-		templateUrl : "view/historicalProblem.html"
-	}).
-	when("/historicalFixes",
-	{
-		controller : "historicalFixController",
-		templateUrl : "view/historicalFix.html"
-	}).
-	when("/partCustomers",
-	{
-		controller : "PartCustomerController",
-		templateUrl : "view/partCustomer.html"
-	}).
 	when("/todos",
 	{
 		controller : "TodoController",
@@ -62,40 +27,6 @@ issueTrackerApp.config(function($routeProvider, $locationProvider) {
 	when("/todos/todo/view/:todoId", {
 		controller : "TodoDetailController",
 		templateUrl : "view/todoDetail.html"
-	}).
-	when("/contacts/:contactId", {
-		controller : "ContactDetailController",
-		templateUrl : "view/contactDetail.html"
-	}).
-	when("/categories/:categoryId", {
-		controller : "CategoryDetailController",
-		templateUrl : "view/categoryDetail.html"
-	}).
-	when("/status/:statusId", {
-		controller : "StatusDetailController",
-		templateUrl : "view/statusDetail.html"
-	}).
-	when("/priorities/:priorityId", {
-		controller : "PriorityDetailController",
-		templateUrl : "view/priorityDetail.html"
-	}).
-	when("/historicalProblems/:historicalProblemId",
-	{
-		controller : "historicalProblemDetailController",
-		templateUrl : "view/historicalProblemDetail.html"
-	}).
-	when("/historicalFixes/:historicalFixId",
-	{
-		controller : "historicalFixDetailController",
-		templateUrl : "view/historicalFixDetail.html"
-	}).
-	when("/partCustomers/:partCustomerId", {
-		controller : "PartCustomerDetailController",
-		templateUrl : "view/partCustomerDetail.html"
-	}).
-	when("/importData", {
-		controller : "ImportDataController",
-		templateUrl : "view/importData.html"
 	}).
 	when("/report", {
 		controller : "ReportController",
@@ -116,6 +47,83 @@ issueTrackerApp.config(function($routeProvider, $locationProvider) {
 	when("/report/todos/:criteria", {
 		controller : "PrintTodoReportController",
 		templateUrl : "view/printTodoReport.html"
+	}).
+	when("/setting", {
+		controller : "SettingController",
+		templateUrl : "view/setting.html"
+	}).
+	when("/setting/contacts",
+	{
+		controller : "ContactsController",
+		templateUrl : "view/contacts.html"
+	}).
+	when("/setting/categories",
+	{
+		controller : "CategoryController",
+		templateUrl : "view/category.html"
+	}).
+	when("/setting/status",
+	{
+		controller : "StatusController",
+		templateUrl : "view/status.html"
+	}).
+	when("/setting/priorities",
+	{
+		controller : "PriorityController",
+		templateUrl : "view/priority.html"
+	}).
+	when("/setting/historicalProblems",
+	{
+		controller : "historicalProblemController",
+		templateUrl : "view/historicalProblem.html"
+	}).
+	when("/setting/historicalFixes",
+	{
+		controller : "historicalFixController",
+		templateUrl : "view/historicalFix.html"
+	}).
+	when("/setting/partCustomers",
+	{
+		controller : "PartCustomerController",
+		templateUrl : "view/partCustomer.html"
+	}).
+	when("/setting/contacts/:contactId", {
+		controller : "ContactDetailController",
+		templateUrl : "view/contactDetail.html"
+	}).
+	when("/setting/categories/:categoryId", {
+		controller : "CategoryDetailController",
+		templateUrl : "view/categoryDetail.html"
+	}).
+	when("/setting/status/:statusId", {
+		controller : "StatusDetailController",
+		templateUrl : "view/statusDetail.html"
+	}).
+	when("/setting/priorities/:priorityId", {
+		controller : "PriorityDetailController",
+		templateUrl : "view/priorityDetail.html"
+	}).
+	when("/setting/historicalProblems/:historicalProblemId",
+	{
+		controller : "historicalProblemDetailController",
+		templateUrl : "view/historicalProblemDetail.html"
+	}).
+	when("/setting/historicalFixes/:historicalFixId",
+	{
+		controller : "historicalFixDetailController",
+		templateUrl : "view/historicalFixDetail.html"
+	}).
+	when("/setting/partCustomers/:partCustomerId", {
+		controller : "PartCustomerDetailController",
+		templateUrl : "view/partCustomerDetail.html"
+	}).
+	when("/setting/sendEmail", {
+		controller : "SendEmailController",
+		templateUrl : "view/sendEmail.html"
+	}).
+	when("/setting/importData", {
+		controller : "ImportDataController",
+		templateUrl : "view/importData.html"
 	}).
 	otherwise({
 		redirectTo : "login"

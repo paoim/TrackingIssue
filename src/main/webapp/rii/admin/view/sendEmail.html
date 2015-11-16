@@ -1,0 +1,30 @@
+<div class="row detail-page">
+	<div class="row-100 margin-bottom-12">
+		<div>
+			<h4>Schedule to Send Email Every Day at 6:10 AM</h4>
+		</div>
+		<div class="btn-group">
+			<span>
+				<a class="btn btn-default" ng-disabled="isAlreadySendToSupervisor" ng-click="sendEmailToSupervisor()">Supervisor</a>
+			</span>
+			<span>
+				<a class="btn btn-default" ng-disabled="isAlreadySendToEveryOne" ng-click="sendEmailToEveryOne()">Every One</a>
+			</span>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-12 top-line">
+		<div>
+			<h4>Push to Send Email</h4>
+		</div>
+		<div class="btn-group">
+			<span>
+				<a class="btn btn-default" ng-disabled="isAlreadySendToSupervisor" ng-click="pushMailToSupervisor()">Supervisor</a>
+			</span>
+			<span>
+				<a class="btn btn-default" ng-disabled="isAlreadySendToEveryOne" ng-click="pushMailToEveryOne()">Every One</a>
+			</span>
+		</div>
+	</div>
+	
+</div>
