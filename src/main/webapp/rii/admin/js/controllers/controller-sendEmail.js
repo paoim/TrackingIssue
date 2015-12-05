@@ -7,7 +7,7 @@ issueTrackerApp.controller("SendEmailController", function($scope, pageService, 
 	var newPage = {
 		isDetailPage : true,
 		isNotDisplaySubPanelHeading : true,
-		title : "Import Data from Excel to Data Store",
+		title : "",
 		isAlreadyLogin : pageService.getPage().isAlreadyLogin,
 		isAlreadySendToEveryOne : pageService.getPage().isAlreadySendToEveryOne,
 		isAlreadySendToSupervisor : pageService.getPage().isAlreadySendToSupervisor,

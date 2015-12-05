@@ -457,6 +457,14 @@ input[type="text"]:invalid {
 	margin: 0px;
 }
 
+.setting-line {
+	padding-top: 10px;
+}
+
+.setting-line h4 {
+	display: inline-block;
+}
+
 @media screen and (max-width: 768px) {
 	.preview-content {
 		left: 35%;
@@ -500,6 +508,9 @@ input[type="text"]:invalid {
 		display: none;
 	}
 	.show-mobile {
+		display: block;
+	}
+	.setting-line h4 {
 		display: block;
 	}
 	/*.navbar-nav.navbar-right:last-child {

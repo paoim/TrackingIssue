@@ -342,6 +342,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 	}
 
 	private List<TodoResult> getOpenTaskList() {
+		System.out.println("============Start >> getOpenTaskList===========================================");
 		String query = FilterUtil.getOpenTaskQuery();
 		List<TodoResult> results = new ArrayList<TodoResult>();
 		List<Todo> todolist = todoRepository.getEntities(query);
@@ -351,14 +352,17 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 				results.add(result);
 			}
 		}
+		System.out.println(">>=====================Total Open Task List: " + results.size());
 		
 		// Sort all TodoResults by Who (ContactID)
 		Collections.sort(results, new TodoResultWhoComparator());
+		System.out.println("============End >> getOpenTaskList===========================================");
 		
 		return results;
 	}
 	
 	private TodoResult getOpenTask(Todo todo) {
+		System.out.println("============Start >> getOpenTask===========================================");
 		TodoResult result = new TodoResult();
 		DateFormatUtil dformat = new DateFormatUtil(DateFormatUtil.SLAS_MMDDYYYY);
 		if (todo.getWho() != -1) {
@@ -381,6 +385,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 			result.setPartNum(todo.getPartNumber());
 			result.setIssueID(todo.getIssueID());
 		}
+		System.out.println("============End >> getOpenTask===========================================");
 		
 		return result;
 	}
