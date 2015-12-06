@@ -155,7 +155,8 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 		email.setBody(getHtml(results));
 
 		EmailSchedulerUtil emailScheduler = new EmailSchedulerUtil(email);
-		emailScheduler.sendMailTLSEveryDayAtSixAm();
+		//emailScheduler.sendMailTLSEveryDayAtSixAm();
+		emailScheduler.sendMailSSLEveryDayAtSixAm();
 		System.out.println("============End >> sendAllOpenTasksToSupervisor===========================================");
 	}
 
@@ -174,7 +175,8 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 		System.out.println("============Start >> pushToSendOpenTasksToEveryOne===========================================");
 		List<EmailSchedulerUtil> emailSchedulers = getEmailSchedulers();
 		for(EmailSchedulerUtil email : emailSchedulers) {
-			email.sendMailTLS();
+			//email.sendMailTLS();
+			email.sendMailSSL();
 		}
 		System.out.println("============End >> pushToSendOpenTasksToEveryOne===========================================");
 	}
