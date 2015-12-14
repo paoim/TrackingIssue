@@ -1,7 +1,18 @@
 <div class="row detail-page">
 	<div class="row-100 margin-bottom-12">
 		<div>
-			<h4>Schedule to Send Email Every Day at 6:10 AM</h4>
+			<h4>Schedule to Send Email Every Day at</h4>
+		</div>
+		<div class="input-group margin-bottom-5">
+			<span>Hour</span>
+			<span>
+				<input type="text" ng-model="hour" placeholder="hh:mm">
+			</span>
+			<span>
+				<label class="btn btn-default" ng-model="part" btn-radio="'AM'">AM</label>
+				<label class="btn btn-default" ng-model="part" btn-radio="'PM'">PM</label>
+			</span>
+			<span class="asterisk">{{hourError}}</span>
 		</div>
 		<div class="btn-group">
 			<span>

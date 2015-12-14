@@ -145,7 +145,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 	}
 
 	@Override
-	public void sendAllOpenTasksToSupervisor() {
+	public void sendAllOpenTasksToSupervisor(String hour) {
 		System.out.println("============Start >> sendAllOpenTasksToSupervisor===========================================");
 		EmailSMTPUtil email = new EmailSMTPUtil();
 		List<TodoResult> results = getOpenTaskList();
@@ -154,18 +154,18 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 		email.setSubject("List of all Open Tasks");
 		email.setBody(getHtml(results));
 
-		EmailSchedulerUtil emailScheduler = new EmailSchedulerUtil(email);
-		//emailScheduler.sendMailTLSEveryDayAtSixAm();
-		emailScheduler.sendMailSSLEveryDayAtSixAm();
+		EmailSchedulerUtil emailScheduler = new EmailSchedulerUtil(email, hour);
+		//emailScheduler.sendMailTLSEveryDay();
+		emailScheduler.sendMailSSLEveryDay();
 		System.out.println("============End >> sendAllOpenTasksToSupervisor===========================================");
 	}
 
 	@Override
-	public void sendOpenTasksToEveryOne() {
+	public void sendOpenTasksToEveryOne(String hour) {
 		System.out.println("============Start >> sendOpenTasksToEveryOne===========================================");
-		List<EmailSchedulerUtil> emailSchedulers = getEmailSchedulers();
+		List<EmailSchedulerUtil> emailSchedulers = getEmailSchedulers(hour);
 		for(EmailSchedulerUtil email : emailSchedulers) {
-			email.sendMailSSLEveryDayAtSixAm();
+			email.sendMailSSLEveryDay();
 		}
 		System.out.println("============End >> sendOpenTasksToEveryOne===========================================");
 	}
@@ -173,7 +173,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 	@Override
 	public void pushToSendOpenTasksToEveryOne() {
 		System.out.println("============Start >> pushToSendOpenTasksToEveryOne===========================================");
-		List<EmailSchedulerUtil> emailSchedulers = getEmailSchedulers();
+		List<EmailSchedulerUtil> emailSchedulers = getEmailSchedulers(EmailSchedulerUtil.SIX_AM);
 		for(EmailSchedulerUtil email : emailSchedulers) {
 			//email.sendMailTLS();
 			email.sendMailSSL();
@@ -191,7 +191,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 		email.setSubject("List of all Open Tasks");
 		email.setBody(getHtml(results));
 
-		EmailSchedulerUtil emailScheduler = new EmailSchedulerUtil(email);
+		EmailSchedulerUtil emailScheduler = new EmailSchedulerUtil(email, EmailSchedulerUtil.SIX_AM);
 		emailScheduler.sendMailSSL();
 		System.out.println("============End >> pushToSendAllOpenTasksToSupervisor===========================================");
 	}
@@ -200,7 +200,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 	public List<EmailSMTPUtil> getOpenTasksForEveryOne() {
 		System.out.println("============Start >> getOpenTasksForEveryOne===========================================");
 		List<EmailSMTPUtil> emailList = new ArrayList<EmailSMTPUtil>();
-		List<EmailSchedulerUtil> emailSchedulers = getEmailSchedulers();
+		List<EmailSchedulerUtil> emailSchedulers = getEmailSchedulers(EmailSchedulerUtil.SIX_AM);
 		
 		for(EmailSchedulerUtil email : emailSchedulers) {
 			emailList.add(email.getEmail());
@@ -210,7 +210,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 		return emailList;
 	}
 
-	protected List<EmailSchedulerUtil> getEmailSchedulers() {
+	protected List<EmailSchedulerUtil> getEmailSchedulers(String hour) {
 		System.out.println("============Start >> getEmailSchedulers===========================================");
 		List<TodoResult> results = getOpenTaskList();
 		Map<Long, String> email = new HashMap<Long, String>();
@@ -239,7 +239,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 			emailUtil.setSubject("List of all your Open Tasks");
 			String html = getHtml(mapForEmail.get(key));
 			emailUtil.setBody(html);
-			emailSchedulers.add(new EmailSchedulerUtil(emailUtil));
+			emailSchedulers.add(new EmailSchedulerUtil(emailUtil, hour));
 		}
 		
 		// Group by Users without their email
@@ -249,7 +249,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 			emailUtil.setSubject("List of all Open Tasks without their email");
 			String html = getHtml(otherEmails);
 			emailUtil.setBody(html);
-			emailSchedulers.add(new EmailSchedulerUtil(emailUtil));
+			emailSchedulers.add(new EmailSchedulerUtil(emailUtil, hour));
 		}
 		
 		System.out.println("============End >> getEmailSchedulers===========================================");
@@ -286,7 +286,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 		htmlText += "</table>";
 		email.setBody(htmlText);
 		
-		EmailSchedulerUtil emailScheduler = new EmailSchedulerUtil(email);
+		EmailSchedulerUtil emailScheduler = new EmailSchedulerUtil(email, EmailSchedulerUtil.SIX_AM);
 		emailScheduler.sendMailSSL();
 		System.out.println("============End >> sendEmailForUpsertTask===========================================");
 	}
@@ -300,7 +300,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 		html += "<b>Wish you a nice day!</b><br>";
 		html += "<font color=red>Your total open tasks is </font>" + +results.size() + ".";
 		email.setBody(html);
-		EmailSchedulerUtil emailScheduler = new EmailSchedulerUtil(email);
+		EmailSchedulerUtil emailScheduler = new EmailSchedulerUtil(email, EmailSchedulerUtil.SIX_AM);
 		return emailScheduler;
 	}
 

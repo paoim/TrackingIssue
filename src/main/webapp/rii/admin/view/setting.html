@@ -1,6 +1,13 @@
 <div class="row detail-page">
 	<div class="row-100 margin-bottom-12">
 		<div class="setting-line">
+			<a class="btn btn-default btn-lg" href="#/setting/sendEmail" role="button">Send Email</a>
+			<h4>Sending Email to Supervisor or Everyone</h4>
+		</div>
+	</div>
+	
+	<div class="row-100 margin-bottom-12 top-line">
+		<div class="setting-line">
 			<a class="btn btn-default btn-lg" href="#/setting/contacts" role="button">Contacts</a>
 			<h4>Create New, Update, and View Contact</h4>
 		</div>
@@ -50,14 +57,7 @@
 	
 	<div class="row-100 margin-bottom-12 top-line">
 		<div class="setting-line">
-			<a class="btn btn-default btn-lg" href="#/setting/sendEmail" role="button">Send Email</a>
-			<h4>Sending Email to Supervisor or Everyone</h4>
-		</div>
-	</div>
-	
-	<div class="row-100 margin-bottom-12 top-line">
-		<div class="setting-line">
-			<a class="btn btn-default btn-lg" href="#/setting/importData" role="button">Import Data</a>
+			<a ng-disabled="isDisabledImportData" class="btn btn-default btn-lg" href="#/setting/importData" role="button">Import Data</a>
 			<h4>Import Data from CSV file</h4>
 		</div>
 	</div>

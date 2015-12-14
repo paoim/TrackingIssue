@@ -14,5 +14,7 @@ issueTrackerApp.controller("SettingController", function($scope, pageService) {
 			storeIssues : pageService.getPage().storeIssues || []
 	};
 	
+	$scope.isDisabledImportData = true;
+	
 	pageService.setPage(newPage);
 });

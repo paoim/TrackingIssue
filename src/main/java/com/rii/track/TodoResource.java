@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import com.rii.track.model.Todo;
 import com.rii.track.service.CRUDService;
 import com.rii.track.service.TodoRelatedService;
+import com.rii.track.service.model.HourFilter;
 import com.rii.track.service.model.TodoFilter;
 import com.rii.track.service.model.TodoResult;
 import com.rii.track.util.EmailSMTPUtil;
@@ -179,13 +180,17 @@ public class TodoResource {
 		return Response.ok().build();
 	}
 
-	@GET
+	@POST
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("sendMailToSupervisor")
 	// http:localhost:8080/TrackingIssue/rest/todo/sendMailToSupervisor
-	public Response sendMailToSupervisor() {
+	public Response sendMailToSupervisor(HourFilter filter) {
+		if (filter == null) {
+			return Response.status(Status.BAD_REQUEST).build();
+		}
+		
 		try {
-			todoRelatedService.sendAllOpenTasksToSupervisor();
+			todoRelatedService.sendAllOpenTasksToSupervisor(filter.toString());
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
@@ -207,13 +212,17 @@ public class TodoResource {
 		return Response.ok().build();
 	}
 
-	@GET
+	@POST
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("sendMailToEveryOne")
 	// http:localhost:8080/TrackingIssue/rest/todo/sendMailToEveryOne
-	public Response sendMailToEveryOne() {
+	public Response sendMailToEveryOne(HourFilter filter) {
+		if (filter == null) {
+			return Response.status(Status.BAD_REQUEST).build();
+		}
+		
 		try {
-			todoRelatedService.sendOpenTasksToEveryOne();
+			todoRelatedService.sendOpenTasksToEveryOne(filter.toString());
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}

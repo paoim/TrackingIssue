@@ -93,12 +93,6 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		
 	},
 	loadTodoReport = function(todoFilter, callbackHandler) {
-		/*dataService.getEntity("todos/report", criteria, function(data) {
-			var newTodos = data || [];
-			callbackHandler(newTodos, "Load Todos Successfully...");
-		},function(error) {
-			callbackHandler([], "Cannot Todos - " + error.message);
-		}, true);*/
 		dataService.postEntities("todos/report", todoFilter, function(data) {
 			var newTodos = data || [];
 			callbackHandler(newTodos, "Load Todos Successfully...");
@@ -133,13 +127,13 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		}, true);
 		
 	},
-	sendMailToSupervisor = function(callbackHandler) {
-		dataService.getEntities("todos/sendMailToSupervisor", function(data) {
+	sendMailToSupervisor = function(hourFilter, callbackHandler) {
+		dataService.postEntities("todos/sendMailToSupervisor", hourFilter, function(data) {
 			callbackHandler([], "Send Email To Supervisors Successfully...");
-		},function(error) {
+		},
+		function(error) {
 			callbackHandler([], "Cannot Send Email To Supervisors - " + error.message);
 		}, true);
-		
 	},
 	pushMailToSupervisor = function(callbackHandler) {
 		dataService.getEntities("todos/pushMailToSupervisor", function(data) {
@@ -149,13 +143,13 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		}, true);
 		
 	},
-	sendMailToEveryOne = function(callbackHandler) {
-		dataService.getEntities("todos/sendMailToEveryOne", function(data) {
+	sendMailToEveryOne = function(hourFilter, callbackHandler) {
+		dataService.postEntities("todos/sendMailToEveryOne", hourFilter, function(data) {
 			callbackHandler([], "Send Email To Everyone Successfully...");
-		},function(error) {
+		},
+		function(error) {
 			callbackHandler([], "Cannot Send Email To Everyone - " + error.message);
 		}, true);
-		
 	},
 	pushMailToEveryOne = function(callbackHandler) {
 		dataService.getEntities("todos/pushMailToEveryOne", function(data) {

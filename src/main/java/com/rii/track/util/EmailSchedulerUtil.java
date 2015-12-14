@@ -9,9 +9,14 @@ import java.util.TimerTask;
 
 public class EmailSchedulerUtil {
 
+	private String hour;
+	
 	private EmailSMTPUtil email;
+	
+	final public static String SIX_AM = "06:10 AM";
 
-	public EmailSchedulerUtil(EmailSMTPUtil email) {
+	public EmailSchedulerUtil(EmailSMTPUtil email, String hour) {
+		this.hour = hour;
 		this.email = email;
 	}
 
@@ -29,10 +34,10 @@ public class EmailSchedulerUtil {
 		System.out.println("Task is running on: " + new Date());
 	}
 
-	public void sendMailTLSEveryDayAtSixAm() {
+	public void sendMailTLSEveryDay() {
 		System.out.println("============Start >> sendMailTLSEveryDayAtSixAm===========================================");
 		Timer timer = new Timer();
-		Calendar date = getDate("06:10 AM");
+		Calendar date = getDate(this.hour); //"06:10 AM"
 		System.out.println("Start to generate on: " + date.getTime());
 
 		// Schedule to run every day
@@ -55,20 +60,20 @@ public class EmailSchedulerUtil {
 				System.out.println("Number of Hour: " + calendar.get(Calendar.HOUR));
 
 				// Make sure it is in Morning at 6 AM
-				if (calendar.get(Calendar.AM_PM) == 0) {
-					if (calendar.get(Calendar.HOUR) == 6) {
+				//if (calendar.get(Calendar.AM_PM) == 0) {
+					//if (calendar.get(Calendar.HOUR) == 6) {
 						sendMailTLS();
-					}
-				}
+					//}
+				//}
 			}
 		}, date.getTime(), 1000 * 60 * 60 * 24);
 		System.out.println("============End >> sendMailTLSEveryDayAtSixAm===========================================");
 	}
 
-	public void sendMailSSLEveryDayAtSixAm() {
+	public void sendMailSSLEveryDay() {
 		System.out.println("============Start >> sendMailSSLEveryDayAtSixAm===========================================");
 		Timer timer = new Timer();
-		Calendar date = getDate("06:10 AM");
+		Calendar date = getDate(this.hour); //"06:10 AM"
 		System.out.println("Start to generate on: " + date.getTime());
 
 		// Schedule to run every day
@@ -91,11 +96,11 @@ public class EmailSchedulerUtil {
 				System.out.println("Number of Hour: " + calendar.get(Calendar.HOUR));
 
 				// Make sure it is in Morning at 6 AM
-				if (calendar.get(Calendar.AM_PM) == 0) {
-					if (calendar.get(Calendar.HOUR) == 6) {
+				//if (calendar.get(Calendar.AM_PM) == 0) {
+					//if (calendar.get(Calendar.HOUR) == 6) {
 						sendMailSSL();
-					}
-				}
+					//}
+				//}
 			}
 		}, date.getTime(), 1000 * 60 * 60 * 24);
 		System.out.println("============End >> sendMailSSLEveryDayAtSixAm===========================================");

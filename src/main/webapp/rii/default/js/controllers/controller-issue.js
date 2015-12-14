@@ -124,24 +124,6 @@ issueTrackerApp.controller("IssuesController", function($scope, $modal, $log, $t
 		});
 	})();
 	
-	// Send Email if not yet send
-	if (!newPage.isAlreadySendToSupervisor) {
-		/*(function() {
-			todoService.sendMailToSupervisor(function(data, message) {
-				newPage.isAlreadySendToSupervisor = true;
-				console.log(message);
-			});
-		})();*/
-	}
-	if (!newPage.isAlreadySendToEveryOne) {
-		/*(function() {
-			todoService.sendMailToEveryOne(function(data, message) {
-				newPage.isAlreadySendToEveryOne = true;
-				console.log(message);
-			});
-		})();*/
-	}
-	
 	//init searchIssue for search form
 	$scope.searchIssue = {};
 	

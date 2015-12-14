@@ -14,14 +14,14 @@ public interface TodoRelatedService<T, S> {
 	void sendMailTLS();
 
 	void sendMailSSL();
-
-	void sendOpenTasksToEveryOne();
-	
-	void sendAllOpenTasksToSupervisor();
 	
 	void pushToSendOpenTasksToEveryOne();
 	
 	void pushToSendAllOpenTasksToSupervisor();
 	
+	void sendOpenTasksToEveryOne(String hour);
+	
 	List<EmailSMTPUtil> getOpenTasksForEveryOne();
+	
+	void sendAllOpenTasksToSupervisor(String hour);
 }
