@@ -28,3 +28,6 @@ target/
 - git commit -m "Fixed on email feature"
 - git pull --rebase
 - git push
+
+###Local Log:
+- tail -f /var/lib/tomcat7/logs/catalina.out
