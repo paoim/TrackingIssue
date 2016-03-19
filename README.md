@@ -23,7 +23,3 @@ paoim@yahoo.com
 - User Pages
 - Admin Pages
 - Email by using Gmail SMTP
-
-
-##Fixes and Bugs
-- Email Feature
