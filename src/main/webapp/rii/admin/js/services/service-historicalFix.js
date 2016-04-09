@@ -45,7 +45,7 @@ issueTrackerServices.factory("historicalFixService", function($rootScope, dataSe
 	},
 	loadHistoricalFixes = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("historicalFixes", function(data) {
+		dataService.getEntities("historicalFixes/getAll", function(data) {
 			var newHistoricalFixes = historicalFixes;
 			if(data) {
 				setHistoricalFixes(data);
@@ -59,7 +59,7 @@ issueTrackerServices.factory("historicalFixService", function($rootScope, dataSe
 		
 	},
 	loadHistoricalFixesByPageNo = function(starNo, endNo, callbackHandler) {
-		dataService.getEntitiesByPageNo("historicalFixes", starNo, endNo, function(data) {
+		dataService.getEntitiesByPageNo("historicalFixes/getPage", starNo, endNo, function(data) {
 			var newHistoricalFixes = historicalFixes;
 			if(data) {
 				setHistoricalFixes(data);
@@ -108,7 +108,7 @@ issueTrackerServices.factory("historicalFixService", function($rootScope, dataSe
 		
 	},
 	loadHistoricalFix = function(id, callbackHandler) {
-		dataService.getEntity("historicalFixes", id, function(data) {
+		dataService.getEntity("historicalFixes/get", id, function(data) {
 			callbackHandler(data, "Load historicalFix Successfully...");
 		},
 		function(error) {
@@ -118,7 +118,7 @@ issueTrackerServices.factory("historicalFixService", function($rootScope, dataSe
 	},
 	createHistoricalFix = function(historicalFix, callbackHandler) {
 		delete historicalFix.id;
-		dataService.createEntity("historicalFixes/fix", historicalFix, function(data) {
+		dataService.createEntity("historicalFixes/create", historicalFix, function(data) {
 			if(data) {
 				addHistoricalFix(data);
 				callbackHandler(data, "Create historicalFix Successfully...");
@@ -131,7 +131,7 @@ issueTrackerServices.factory("historicalFixService", function($rootScope, dataSe
 		
 	},
 	updateHistoricalFix = function(historicalFix, callbackHandler) {
-		dataService.updateEntity("historicalFixes/fix", historicalFix, function(data) {
+		dataService.updateEntity("historicalFixes/update", historicalFix, function(data) {
 			if(data) {
 				var index = getHistoricalFixIndex(data.id);
 				removeHistoricalFix(index);
@@ -149,7 +149,7 @@ issueTrackerServices.factory("historicalFixService", function($rootScope, dataSe
 		//var historicalFix = getHistoricalFixByIndex(index);
 		var index = getHistoricalFixIndex(id);
 		
-		dataService.deleteEntity("historicalFixes/fix/" + id, function(data) {
+		dataService.deleteEntity("historicalFixes/delete/" + id, function(data) {
 			removeHistoricalFix(index);
 			callbackHandler(data, "Delete historicalFix Successfully...");
 		},
@@ -169,8 +169,7 @@ issueTrackerServices.factory("historicalFixService", function($rootScope, dataSe
 		});
 	};
 	
-	
-	return{
+	return {
 		loadIssueHF : loadIssueHF,
 		loadHFReport : loadHFReport,
 		loadPartNumHF : loadPartNumHF,

@@ -45,7 +45,7 @@ public class PriorityResource {
 	// for input
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	// for output
-	@Path("priority")
+	@Path("create")
 	public Response createPriority(Priority entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -62,7 +62,7 @@ public class PriorityResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("priority")
+	@Path("update")
 	public Response updatePriority(Priority entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -78,7 +78,7 @@ public class PriorityResource {
 
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("priority/{priorityId}")
+	@Path("delete/{priorityId}")
 	public Response deletePriority(@PathParam("priorityId") String priorityId) {
 		if (priorityId == null || priorityId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -91,7 +91,7 @@ public class PriorityResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("default")
+	@Path("saveDefault")
 	public Response saveDafult() {
 		priorityService.saveDafult();
 
@@ -100,6 +100,7 @@ public class PriorityResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getAll")
 	public List<Priority> getAllPriorities() {
 
 		return priorityService.getAll("true");
@@ -107,7 +108,7 @@ public class PriorityResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{pageNo}/{itemPerPage}")
+	@Path("getPage/{pageNo}/{itemPerPage}")
 	public List<Priority> getPrioritiesByPageNo(
 			@PathParam("pageNo") String pageNo,
 			@PathParam("itemPerPage") String itemPerPage) {
@@ -117,8 +118,8 @@ public class PriorityResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{priorityId}")
-	// http:localhost:8080/TrackingIssue/rest/priorities/1234
+	@Path("get/{priorityId}")
+	// http:localhost:8080/TrackingIssue/rest/priorities/get/1234
 	public Response getPriority(@PathParam("priorityId") String priorityId) {
 		if (priorityId == null || priorityId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();

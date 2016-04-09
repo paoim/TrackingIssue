@@ -45,7 +45,7 @@ issueTrackerServices.factory("historicalProblemService", function($rootScope, da
 	},
 	loadHistoricalProblems = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("historicalProblems", function(data) {
+		dataService.getEntities("historicalProblems/getAll", function(data) {
 			var newHistoricalProblems = historicalProblems;
 			if(data) {
 				setHistoricalProblems(data);
@@ -59,7 +59,7 @@ issueTrackerServices.factory("historicalProblemService", function($rootScope, da
 		
 	},
 	loadHistoricalProblemsByPageNo = function(starNo, endNo, callbackHandler) {
-		dataService.getEntitiesByPageNo("historicalProblems", starNo, endNo, function(data) {
+		dataService.getEntitiesByPageNo("historicalProblems/getPage", starNo, endNo, function(data) {
 			var newHistoricalProblems = historicalProblems;
 			if(data) {
 				setHistoricalProblems(data);
@@ -74,7 +74,7 @@ issueTrackerServices.factory("historicalProblemService", function($rootScope, da
 		
 	},
 	loadHistoricalProblem = function(id, callbackHandler) {
-		dataService.getEntity("historicalProblems", id, function(data) {
+		dataService.getEntity("historicalProblems/get", id, function(data) {
 			callbackHandler(data, "Load historicalProblem Successfully...");
 		},
 		function(error) {
@@ -118,7 +118,7 @@ issueTrackerServices.factory("historicalProblemService", function($rootScope, da
 	},
 	createHistoricalProblem = function(historicalProblem, callbackHandler) {
 		delete historicalProblem.id;
-		dataService.createEntity("historicalProblems/problem", historicalProblem, function(data) {
+		dataService.createEntity("historicalProblems/create", historicalProblem, function(data) {
 			if(data) {
 				addHistoricalProblem(data);
 				callbackHandler(data, "Create historicalProblem Successfully...");
@@ -131,7 +131,7 @@ issueTrackerServices.factory("historicalProblemService", function($rootScope, da
 		
 	},
 	updateHistoricalProblem = function(historicalProblem, callbackHandler) {
-		dataService.updateEntity("historicalProblems/problem", historicalProblem, function(data) {
+		dataService.updateEntity("historicalProblems/update", historicalProblem, function(data) {
 			if(data) {
 				var index = getHistoricalProblemIndex(data.id);
 				removeHistoricalProblem(index);
@@ -149,7 +149,7 @@ issueTrackerServices.factory("historicalProblemService", function($rootScope, da
 		//var historicalProblem = getHistoricalProblemByIndex(index);
 		var index = getHistoricalProblemIndex(id);
 		
-		dataService.deleteEntity("historicalProblems/problem/" + id, function(data) {
+		dataService.deleteEntity("historicalProblems/delete/" + id, function(data) {
 			removeHistoricalProblem(index);
 			callbackHandler(data, "Delete historicalProblem Successfully...");
 		},
@@ -170,7 +170,7 @@ issueTrackerServices.factory("historicalProblemService", function($rootScope, da
 	};
 	
 	
-	return{
+	return {
 		loadIssueHP : loadIssueHP,
 		loadHPReport : loadHPReport,
 		loadPartNumHP : loadPartNumHP,

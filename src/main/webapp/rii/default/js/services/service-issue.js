@@ -63,7 +63,7 @@ issueTrackerServices.factory("issueService", function($rootScope, dataService) {
 		
 	},
 	loadIssue = function(id, callbackHandler) {
-		dataService.getEntity("issues", id, function(data) {
+		dataService.getEntity("issues/get", id, function(data) {
 			callbackHandler(data, "Load Issue Successfully...");
 		},
 		function(error) {
@@ -73,7 +73,7 @@ issueTrackerServices.factory("issueService", function($rootScope, dataService) {
 	},
 	loadIssues = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("issues", function(data) {
+		dataService.getEntities("issues/getAll", function(data) {
 			var newIssues = issues;
 			if(data) {
 				setIssues(data);
@@ -95,7 +95,7 @@ issueTrackerServices.factory("issueService", function($rootScope, dataService) {
 		
 	},
 	loadIssuesByPageNo = function(startNo, endNo, callbackHandler) {
-		dataService.getEntitiesByPageNo("issues", startNo, endNo, function(data) {
+		dataService.getEntitiesByPageNo("issues/getPage", startNo, endNo, function(data) {
 			var newIssues = issues;
 			if(data) {
 				setIssues(data);
@@ -111,26 +111,32 @@ issueTrackerServices.factory("issueService", function($rootScope, dataService) {
 	},
 	filterIssues = function(query) {
 		
-		return dataService.doFilterEntity("issues/search", query);
+		return dataService.doFilterEntity("issues/getSearch", query);
 	},
 	filterPartNum = function(query) {
 		
-		return dataService.doFilterEntity("partCustomers/search", query);
+		return dataService.doFilterEntity("partCustomers/getSearch", query);
 	},
 	searchPartNum = function(query, callbackHandler) {
-		dataService.getEntity("partCustomers/search", query, function(data) {
+		dataService.getEntity("partCustomers/getSearch", query, function(data) {
 			callbackHandler(data, "Load Filter PartNum Successfully...");
 		},function(error) {
 			callbackHandler([], "Cannot load Filter PartNum - " + error.message);
 		}, true);
+		/*dataService.postEntities("partCustomers/postSearch", query, function(data) {
+			callbackHandler(data, "Load Filter PartNum Successfully...");
+		},
+		function(error) {
+			callbackHandler([], "Cannot load Filter PartNum - " + error.message);
+		}, true);*/
 	},
 	searchIssues = function(issueFilter, callbackHandler) {
-		/*dataService.getEntity("issues/search", query, function(data) {
+		/*dataService.getEntity("issues/getSearch", issueFilter, function(data) {
 			callbackHandler(data, "Load Search Issues Successfully...");
 		},function(error) {
 			callbackHandler([], "Cannot load Search Issues - " + error.message);
 		}, true);*/
-		dataService.postEntities("issues/search", issueFilter, function(data) {
+		dataService.postEntities("issues/postSearch", issueFilter, function(data) {
 			callbackHandler(data, "Load Search Issues Successfully...");
 		},
 		function(error) {
@@ -156,7 +162,7 @@ issueTrackerServices.factory("issueService", function($rootScope, dataService) {
 		delete issue.id;
 		delete issue.relatedIssues;
 		
-		dataService.createEntity("issues/issue", issue, function(data) {
+		dataService.createEntity("issues/create", issue, function(data) {
 			if(data) {
 				addIssue(data);
 				callbackHandler(data, "Create Issue Successfully...");
@@ -169,7 +175,7 @@ issueTrackerServices.factory("issueService", function($rootScope, dataService) {
 		
 	},
 	updateIssue = function(issue, callbackHandler) {
-		dataService.updateEntity("issues/issue", issue, function(data) {
+		dataService.updateEntity("issues/update", issue, function(data) {
 			if(data) {
 				var index = getIssueIndex(data.id);
 				removeIssue(index);
@@ -187,7 +193,7 @@ issueTrackerServices.factory("issueService", function($rootScope, dataService) {
 		//var issue = getIssueByIndex(index);
 		var index = getIssueIndex(id);
 		
-		dataService.deleteEntity("issues/issue/" + id, function(data) {
+		dataService.deleteEntity("issues/delete/" + id, function(data) {
 			removeIssue(index);
 			callbackHandler(data, "Delete Issue Successfully...");
 		},

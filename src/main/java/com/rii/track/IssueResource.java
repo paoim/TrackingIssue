@@ -49,7 +49,7 @@ public class IssueResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	// for input
-	@Path("issue")
+	@Path("create")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	// for output
 	public Response createIssue(Issue entity) {
@@ -68,7 +68,7 @@ public class IssueResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("issue")
+	@Path("update")
 	public Response updateIssue(Issue entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -84,7 +84,7 @@ public class IssueResource {
 
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("issue/{issueId}")
+	@Path("delete/{issueId}")
 	public Response deleteIssue(@PathParam("issueId") String issueId) {
 		if (issueId == null || issueId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -97,7 +97,7 @@ public class IssueResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("default")
+	@Path("saveDefault")
 	public Response saveDafult() {
 		issueService.saveDafult();
 
@@ -124,6 +124,7 @@ public class IssueResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getAll")
 	public List<IssueResult> getAllIssues() {
 
 		return issueService.getAll("true");
@@ -131,7 +132,7 @@ public class IssueResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{pageNo}/{itemPerPage}")
+	@Path("get/{pageNo}/{itemPerPage}")
 	public List<IssueResult> getIssuesByPageNo(
 			@PathParam("pageNo") String pageNo,
 			@PathParam("itemPerPage") String itemPerPage) {
@@ -152,13 +153,24 @@ public class IssueResource {
 
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("search")
-	public List<IssueResult> filter(IssueFilter filter) {
+	@Path("postSearch")
+	public List<IssueResult> postSearch(IssueFilter filter) {
 		if (filter == null) {
 			return new ArrayList<IssueResult>();
 		}
 
-		return issueRelatedService.search(filter);
+		return issueRelatedService.postSearch(filter);
+	}
+
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getSearch/{query}")
+	public List<IssueResult> getSearch(@PathParam("query") String query) {
+		if (query == null || query.length() < 0) {
+			return new ArrayList<IssueResult>();
+		}
+
+		return issueRelatedService.getSearch(query);
 	}
 
 	@GET
@@ -198,7 +210,7 @@ public class IssueResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{issueId}")
+	@Path("get/{issueId}")
 	// http://localhost:8080/TrackingIssue/rest/issues/1234
 	public Response getIssue(@PathParam("issueId") String issueId) {
 		if (issueId == null || issueId.length() < 0) {

@@ -41,7 +41,7 @@ public class CategoryResource {
 	}
 
 	@POST
-	@Path("category")
+	@Path("creeate")
 	@Consumes(MediaType.APPLICATION_JSON)
 	// for input
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -60,7 +60,7 @@ public class CategoryResource {
 	}
 
 	@PUT
-	@Path("category")
+	@Path("update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response updateCategory(Category entity) {
@@ -78,7 +78,7 @@ public class CategoryResource {
 
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("category/{categoryId}")
+	@Path("delete/{categoryId}")
 	public Response deleteCategory(@PathParam("categoryId") String categoryId) {
 		if (categoryId == null || categoryId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -91,7 +91,7 @@ public class CategoryResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("default")
+	@Path("saveDefault")
 	public Response saveDafult() {
 		categoryService.saveDafult();
 
@@ -100,6 +100,7 @@ public class CategoryResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getAll")
 	public List<Category> getAllCategories() {
 
 		return categoryService.getAll("true");
@@ -107,7 +108,7 @@ public class CategoryResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{pageNo}/{itemPerPage}")
+	@Path("getPage/{pageNo}/{itemPerPage}")
 	public List<Category> getCategoriesByPageNo(
 			@PathParam("pageNo") String pageNo,
 			@PathParam("itemPerPage") String itemPerPage) {
@@ -117,8 +118,8 @@ public class CategoryResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{categoryId}")
-	// http:localhost:8080/TrackingIssue/rest/categories/1234
+	@Path("get/{categoryId}")
+	// http:localhost:8080/TrackingIssue/rest/categories/get/1234
 	public Response getCategory(@PathParam("categoryId") String categoryId) {
 		if (categoryId == null || categoryId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();

@@ -54,7 +54,7 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 	},
 	loadTodolist = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("todos", function(data) {
+		dataService.getEntities("todos/getAll", function(data) {
 			var newTodolist = todolist;
 			if(data) {
 				setTodolist(data);
@@ -68,7 +68,7 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		
 	},
 	loadTodolistByPageNo = function(startNo, endNo, callbackHandler) {
-		dataService.getEntitiesByPageNo("todos", startNo, endNo, function(data) {
+		dataService.getEntitiesByPageNo("todos/getPage", startNo, endNo, function(data) {
 			var newTodolist = todolist;
 			if(data) {
 				setTodolist(data);
@@ -83,7 +83,7 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		
 	},
 	loadTodo = function(id, callbackHandler) {
-		dataService.getEntity("todos", id, function(data) {
+		dataService.getEntity("todos/get", id, function(data) {
 			var newTodo = data || {};
 			callbackHandler(newTodo, "Load Todo Successfully...");
 		},
@@ -169,7 +169,7 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 	},
 	createTodo = function(todo, callbackHandler) {
 		delete todo.id;
-		dataService.createEntity("todos/todo", todo, function(data) {
+		dataService.createEntity("todos/create", todo, function(data) {
 			if(data) {
 				addTodo(data);
 				callbackHandler(data, "Create Todo Successfully...");
@@ -182,7 +182,7 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		
 	},
 	updateTodo = function(todo, callbackHandler) {
-		dataService.updateEntity("todos/todo", todo, function(data) {
+		dataService.updateEntity("todos/update", todo, function(data) {
 			if(data) {
 				var index = getTodoIndex(data.id);
 				removeTodo(index);
@@ -199,7 +199,7 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 	deleteTodo = function(id, callbackHandler) {
 		var index = getTodoIndex(id);
 		
-		dataService.deleteEntity("todos/todo/" + id, function(data) {
+		dataService.deleteEntity("todos/delete/" + id, function(data) {
 			removeTodo(index);
 			var newTodo = data || {};
 			callbackHandler(newTodo, "Delete Todo Successfully...");
@@ -210,7 +210,7 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		
 	},
 	loadTodoCustomlist = function(callbackHandler) {
-		dataService.getEntities("todos", function(data) {
+		dataService.getEntities("todos/getAll", function(data) {
 			var newTodos = data || [];
 			callbackHandler(newTodos, "Load Todolist Successfully...");
 		},function(error) {
@@ -220,7 +220,7 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 	},
 	createTodoCustom = function(todo, callbackHandler) {
 		delete todo.id;
-		dataService.createEntity("todos/todo", todo, function(data) {
+		dataService.createEntity("todos/create", todo, function(data) {
 			var newTodo = data || {};
 			callbackHandler(newTodo, "Create Todo Successfully...");
 		},
@@ -230,7 +230,7 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		
 	},
 	updateTodoCustom = function(todo, callbackHandler) {
-		dataService.updateEntity("todos/todo", todo, function(data) {
+		dataService.updateEntity("todos/update", todo, function(data) {
 			var newTodo = data || {};
 			callbackHandler(newTodo, "Update Todo Successfully...");
 		},
@@ -240,7 +240,7 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		
 	},
 	deleteTodoCustom = function(id, callbackHandler) {
-		dataService.deleteEntity("todos/todo/" + id, function(data) {
+		dataService.deleteEntity("todos/delete/" + id, function(data) {
 			var newTodo = data || {};
 			callbackHandler(newTodo, "Delete Todo Successfully...");
 		},

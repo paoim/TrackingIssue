@@ -6,5 +6,7 @@ import com.rii.track.service.model.IssueFilter;
 
 public interface SearchService<T, S> {
 
-	List<S> search(IssueFilter filter);
+	List<S> getSearch(String query);
+	
+	List<S> postSearch(IssueFilter filter);
 }

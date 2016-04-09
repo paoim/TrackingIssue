@@ -104,12 +104,14 @@ public class ConvertUtil {
 		result.setPartNum(entity.getPartNumber());
 
 		String contactName = "";
-		if (EntityUtil.isValidString(contact.getFirstName())) {
-			contactName = contact.getFirstName();
-		}
-		if (EntityUtil.isValidString(contact.getLastName())) {
-			contactName = EntityUtil.isValidString(contactName) ? contactName
-					+ " " + contact.getLastName() : contact.getLastName();
+		if (contact != null) {
+			if (EntityUtil.isValidString(contact.getFirstName())) {
+				contactName = contact.getFirstName();
+			}
+			if (EntityUtil.isValidString(contact.getLastName())) {
+				contactName = EntityUtil.isValidString(contactName) ? contactName
+						+ " " + contact.getLastName() : contact.getLastName();
+			}
 		}
 		result.setContact(contactName);
 

@@ -71,4 +71,9 @@ public class TodoFilter {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+
+	@Override
+	public String toString() {
+		return "isDefault:" + this.isDefault + "|partNum:" + this.partNum + "|when:" + this.when + "|who:" + this.who + "|status:" + this.status + "|startDate:" + this.startDate + "|endDate:" + this.endDate;
+	}
 }

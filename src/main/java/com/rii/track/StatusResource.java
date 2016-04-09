@@ -44,7 +44,7 @@ public class StatusResource {
 	// for input
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	// for output
-	@Path("status")
+	@Path("create")
 	public Response createStatus(com.rii.track.model.Status entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -61,7 +61,7 @@ public class StatusResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("status")
+	@Path("update")
 	public Response updateStatus(com.rii.track.model.Status entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -77,7 +77,7 @@ public class StatusResource {
 
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("status/{statusId}")
+	@Path("delete/{statusId}")
 	public Response deleteStatus(@PathParam("statusId") String statusId) {
 		if (statusId == null || statusId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -90,7 +90,7 @@ public class StatusResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("default")
+	@Path("saveDefault")
 	public Response saveDafult() {
 		statusService.saveDafult();
 
@@ -99,6 +99,7 @@ public class StatusResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getAll")
 	public List<com.rii.track.model.Status> getAllStatus() {
 
 		return statusService.getAll("true");
@@ -106,7 +107,7 @@ public class StatusResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{pageNo}/{itemPerPage}")
+	@Path("getPage/{pageNo}/{itemPerPage}")
 	public List<com.rii.track.model.Status> getStatusByPageNo(
 			@PathParam("pageNo") String pageNo,
 			@PathParam("itemPerPage") String itemPerPage) {
@@ -116,8 +117,8 @@ public class StatusResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{statusId}")
-	// http:localhost:8080/TrackingIssue/rest/status/1234
+	@Path("get/{statusId}")
+	// http:localhost:8080/TrackingIssue/rest/status/get/1234
 	public Response getStatus(@PathParam("statusId") String statusId) {
 		if (statusId == null || statusId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();

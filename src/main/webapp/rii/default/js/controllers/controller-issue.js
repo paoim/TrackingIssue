@@ -586,8 +586,7 @@ issueTrackerApp.controller("IssueDetailController", function($scope, $routeParam
 				
 			});
 		})();//auto execute function
-	}
-	else{
+	} else {
 		//For creating New Issue
 		$scope.issue = issue;
 		keepDefaultDisplay();

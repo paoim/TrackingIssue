@@ -49,7 +49,7 @@ public class HistoricalProblemResource {
 	// for input
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	// for output
-	@Path("problem")
+	@Path("create")
 	public Response createHistoricalProblem(HistoricalProblem entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -67,7 +67,7 @@ public class HistoricalProblemResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("problem")
+	@Path("update")
 	public Response updateHistoricalProblem(HistoricalProblem entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -84,7 +84,7 @@ public class HistoricalProblemResource {
 
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("problem/{historicalProblemId}")
+	@Path("delete/{historicalProblemId}")
 	public Response deleteHistoricalProblem(
 			@PathParam("historicalProblemId") String historicalProblemId) {
 		if (historicalProblemId == null || historicalProblemId.length() < 0) {
@@ -98,7 +98,7 @@ public class HistoricalProblemResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{pageNo}/{itemPerPage}")
+	@Path("getPage/{pageNo}/{itemPerPage}")
 	public List<HistoricalProblemResult> getHistoricalProblemsByPageNo(
 			@PathParam("pageNo") String pageNo,
 			@PathParam("itemPerPage") String itemPerPage) {
@@ -109,6 +109,7 @@ public class HistoricalProblemResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getAll")
 	public List<HistoricalProblemResult> getAllHistoricalProblems() {
 
 		return historicalProblemService.getAll("true");
@@ -116,7 +117,7 @@ public class HistoricalProblemResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{historicalProblemId}")
+	@Path("get/{historicalProblemId}")
 	public Response getHistoricalProblem(
 			@PathParam("historicalProblemId") String historicalProblemId) {
 		if (historicalProblemId == null || historicalProblemId.length() < 0) {

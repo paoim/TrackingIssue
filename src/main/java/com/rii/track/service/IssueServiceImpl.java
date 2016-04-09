@@ -313,8 +313,18 @@ public class IssueServiceImpl implements CRUDService<Issue, IssueResult>,
 	}
 
 	@Override
-	public List<IssueResult> search(IssueFilter filter) {
+	public List<IssueResult> postSearch(IssueFilter filter) {
 		String query = FilterUtil.getIssueSearchQuery(filter);
+		List<Issue> issues = issueRepository.getEntities(query);
+		if (EntityUtil.isEmpltyList(issues)) {
+			issues = new ArrayList<Issue>();
+		}
+
+		return getResults(issues, false);
+	}
+
+	@Override
+	public List<IssueResult> getSearch(String query) {
 		List<Issue> issues = issueRepository.getEntities(query);
 		if (EntityUtil.isEmpltyList(issues)) {
 			issues = new ArrayList<Issue>();

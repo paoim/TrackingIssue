@@ -97,7 +97,7 @@ public class PhotoResource {
 	// for input
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	// for output
-	@Path("photo")
+	@Path("create")
 	public Response createPhoto(Photo entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -114,7 +114,7 @@ public class PhotoResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("photo")
+	@Path("update")
 	public Response updatePhoto(Photo entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -130,7 +130,7 @@ public class PhotoResource {
 
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("photo/{photoId}")
+	@Path("delete/{photoId}")
 	public Response deletePhoto(@PathParam("photoId") String photoId) {
 		if (photoId == null || photoId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -143,6 +143,7 @@ public class PhotoResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getAll")
 	public List<PhotoResult> getAllPhoto() {
 
 		return photoService.getAll("true");
@@ -150,7 +151,7 @@ public class PhotoResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{pageNo}/{itemPerPage}")
+	@Path("getPage/{pageNo}/{itemPerPage}")
 	public List<PhotoResult> getPhotoByPageNo(
 			@PathParam("pageNo") String pageNo,
 			@PathParam("itemPerPage") String itemPerPage) {
@@ -160,8 +161,8 @@ public class PhotoResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{photoId}")
-	// http:localhost:8080/TrackingIssue/rest/photo/1234
+	@Path("get/{photoId}")
+	// http:localhost:8080/TrackingIssue/rest/photo/get/1234
 	public Response getPhoto(@PathParam("photoId") String photoId) {
 		if (photoId == null || photoId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();

@@ -46,7 +46,7 @@ issueTrackerServices.factory("priorityService", function($rootScope, dataService
 	},
 	loadPriorities = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("priorities", function(data) {
+		dataService.getEntities("priorities/getAll", function(data) {
 			var newPriorities = priorities;
 			if(data) {
 				setPriorities(data);
@@ -60,7 +60,7 @@ issueTrackerServices.factory("priorityService", function($rootScope, dataService
 		
 	},
 	loadPrioritiesByPageNo = function(startNo, endNo, callbackHandler) {
-		dataService.getEntitiesByPageNo("priorities", startNo, endNo, function(data) {
+		dataService.getEntitiesByPageNo("priorities/getPage", startNo, endNo, function(data) {
 			var newPriorities = priorities;
 			if(data) {
 				setPriorities(data);
@@ -75,7 +75,7 @@ issueTrackerServices.factory("priorityService", function($rootScope, dataService
 		
 	},
 	loadPriority = function(id, callbackHandler) {
-		dataService.getEntity("priorities", id, function(data) {
+		dataService.getEntity("priorities/get", id, function(data) {
 			callbackHandler(data, "Load Priority Successfully...");
 		},
 		function(error) {
@@ -85,7 +85,7 @@ issueTrackerServices.factory("priorityService", function($rootScope, dataService
 	},
 	createPriority = function(priority, callbackHandler) {
 		delete priority.id;
-		dataService.createEntity("priorities/priority", priority, function(data) {
+		dataService.createEntity("priorities/create", priority, function(data) {
 			if(data) {
 				addPriority(data);
 				callbackHandler(data, "Create Priority Successfully...");
@@ -98,7 +98,7 @@ issueTrackerServices.factory("priorityService", function($rootScope, dataService
 		
 	},
 	updatePriority = function(priority, callbackHandler) {
-		dataService.updateEntity("priorities/priority", priority, function(data) {
+		dataService.updateEntity("priorities/update", priority, function(data) {
 			if(data) {
 				var index = getPriorityIndex(data.id);
 				removePriority(index);
@@ -115,7 +115,7 @@ issueTrackerServices.factory("priorityService", function($rootScope, dataService
 	deletePriority = function(index, callbackHandler) {
 		var priority = getPriorityByIndex(index);
 		
-		dataService.deleteEntity("priorities/priority/" + priority.id, function(data) {
+		dataService.deleteEntity("priorities/delete/" + priority.id, function(data) {
 			removePriority(index);
 			callbackHandler(data, "Delete Priority Successfully...");
 		},
@@ -136,7 +136,7 @@ issueTrackerServices.factory("priorityService", function($rootScope, dataService
 		});
 	};
 	
-	return{
+	return {
 		//public functions
 		getPriority : getPriority,
 		addPriority : addPriority,

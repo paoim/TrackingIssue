@@ -48,7 +48,7 @@ public class HistoricalFixResource {
 	// for input
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	// for output
-	@Path("fix")
+	@Path("create")
 	public Response createHistoricalFix(HistoricalFix entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -65,7 +65,7 @@ public class HistoricalFixResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("fix")
+	@Path("update")
 	public Response updateHistoricalFix(HistoricalFix entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -81,7 +81,7 @@ public class HistoricalFixResource {
 
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("fix/{historicalFixId}")
+	@Path("delete/{historicalFixId}")
 	public Response deleteHistoricalFix(
 			@PathParam("historicalFixId") String historicalFixId) {
 		if (historicalFixId == null || historicalFixId.length() < 0) {
@@ -95,7 +95,7 @@ public class HistoricalFixResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{pageNo}/{itemPerPage}")
+	@Path("getPage/{pageNo}/{itemPerPage}")
 	public List<HistoricalFixResult> getHistoricalFixesByPageNo(
 			@PathParam("pageNo") String pageNo,
 			@PathParam("itemPerPage") String itemPerPage) {
@@ -105,6 +105,7 @@ public class HistoricalFixResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getAll")
 	public List<HistoricalFixResult> getAllHistoricalFixes() {
 
 		return historicalFixService.getAll("true");
@@ -112,7 +113,7 @@ public class HistoricalFixResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{historicalFixId}")
+	@Path("get/{historicalFixId}")
 	public Response getHistoricalFix(
 			@PathParam("historicalFixId") String historicalFixId) {
 		if (historicalFixId == null || historicalFixId.length() < 0) {

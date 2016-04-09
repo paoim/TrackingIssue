@@ -38,7 +38,7 @@ public class TodoResource {
 	// for input
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	// for output
-	@Path("todo")
+	@Path("create")
 	public Response createTodo(Todo entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -55,7 +55,7 @@ public class TodoResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("todo")
+	@Path("update")
 	public Response updateTodo(Todo entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -71,7 +71,7 @@ public class TodoResource {
 
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("todo/{todoId}")
+	@Path("delete/{todoId}")
 	public Response deleteTodo(@PathParam("todoId") String todoId) {
 		if (todoId == null || todoId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -84,6 +84,7 @@ public class TodoResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getAll")
 	public List<TodoResult> getAllTodolist() {
 
 		return todoService.getAll("true");
@@ -91,7 +92,7 @@ public class TodoResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{pageNo}/{itemPerPage}")
+	@Path("getPage/{pageNo}/{itemPerPage}")
 	public List<TodoResult> getTodolistByPageNo(
 			@PathParam("pageNo") String pageNo,
 			@PathParam("itemPerPage") String itemPerPage) {
@@ -112,8 +113,8 @@ public class TodoResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{todoId}")
-	// http:localhost:8080/TrackingIssue/rest/todo/1234
+	@Path("get/{todoId}")
+	// http:localhost:8080/TrackingIssue/rest/todo/get/1234
 	public Response getTodo(@PathParam("todoId") String todoId) {
 		if (todoId == null || todoId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();

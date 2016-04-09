@@ -50,47 +50,41 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		},function(error) {
 			callbackHandler({}, "Cannot load Last Todo - " + error.message);
 		});
-		
 	},
 	loadTodolist = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("todos", function(data) {
+		dataService.getEntities("todos/getAll", function(data) {
 			var newTodolist = todolist;
 			if(data) {
 				setTodolist(data);
 				newTodolist = data;
 			}
-			
 			callbackHandler(newTodolist, "Load Todolist Successfully...");
 		},function(error) {
 			callbackHandler([], "Cannot load Todolist - " + error.message);
 		}, true);
-		
 	},
 	loadTodolistByPageNo = function(startNo, endNo, callbackHandler) {
-		dataService.getEntitiesByPageNo("todos", startNo, endNo, function(data) {
+		dataService.getEntitiesByPageNo("todos/getPage", startNo, endNo, function(data) {
 			var newTodolist = todolist;
 			if(data) {
 				setTodolist(data);
 				newTodolist = data;
 			}
-			
 			callbackHandler(newTodolist, "Load Todolist Successfully...");
 		},
 		function(error) {
 			callbackHandler([], "Cannot load Todolist - " + error.message);
 		});
-		
 	},
 	loadTodo = function(id, callbackHandler) {
-		dataService.getEntity("todos", id, function(data) {
+		dataService.getEntity("todos/get", id, function(data) {
 			var newTodo = data || {};
 			callbackHandler(newTodo, "Load Todo Successfully...");
 		},
 		function(error) {
 			callbackHandler({}, "Cannot load Todo - " + error.message);
 		}, true);
-		
 	},
 	loadTodoReport = function(todoFilter, callbackHandler) {
 		/*dataService.getEntity("todos/report", criteria, function(data) {
@@ -106,7 +100,6 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		function(error) {
 			callbackHandler([], "Cannot Todos - " + error.message);
 		}, true);
-		
 	},
 	loadPartNumTodo = function(partNum, callbackHandler) {
 		dataService.getEntity("todos/partNum/list", partNum, function(data) {
@@ -115,7 +108,6 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		},function(error) {
 			callbackHandler([], "Cannot load Todos - " + error.message);
 		}, true);
-		
 	},
 	sendMailSSL = function(callbackHandler) {
 		dataService.getEntities("todos/sendMailSSL", function(data) {
@@ -123,7 +115,6 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		},function(error) {
 			callbackHandler([], "Cannot send email by using SSL - " + error.message);
 		}, true);
-		
 	},
 	sendMailTLS = function(callbackHandler) {
 		dataService.getEntities("todos/sendMailTLS", function(data) {
@@ -131,7 +122,6 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		},function(error) {
 			callbackHandler([], "Cannot send email by using TLS - " + error.message);
 		}, true);
-		
 	},
 	sendMailToSupervisor = function(hourFilter, callbackHandler) {
 		dataService.postEntities("todos/sendMailToSupervisor", hourFilter, function(data) {
@@ -147,7 +137,6 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		},function(error) {
 			callbackHandler([], "Cannot Send Email To Supervisors - " + error.message);
 		}, true);
-		
 	},
 	sendMailToEveryOne = function(hourFilter, callbackHandler) {
 		dataService.postEntities("todos/sendMailToEveryOne", hourFilter, function(data) {
@@ -163,7 +152,6 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		},function(error) {
 			callbackHandler([], "Cannot Send Email To Everyone - " + error.message);
 		}, true);
-		
 	},
 	getOpenTasksEveryone = function(callbackHandler) {
 		dataService.getEntities("todos/openTasksEveryone", function(data) {
@@ -171,41 +159,36 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		},function(error) {
 			callbackHandler([], "Cannot Get Open Tasks Everyone - " + error.message);
 		}, true);
-		
 	},
 	createTodo = function(todo, callbackHandler) {
 		delete todo.id;
-		dataService.createEntity("todos/todo", todo, function(data) {
+		dataService.createEntity("todos/create", todo, function(data) {
 			if(data) {
 				addTodo(data);
 				callbackHandler(data, "Create Todo Successfully...");
 			}
-			
 		},
 		function(error) {
 			callbackHandler({}, "Cannot create Todo - " + error.message);
 		});
-		
 	},
 	updateTodo = function(todo, callbackHandler) {
-		dataService.updateEntity("todos/todo", todo, function(data) {
+		dataService.updateEntity("todos/update", todo, function(data) {
 			if(data) {
 				var index = getTodoIndex(data.id);
 				removeTodo(index);
 				addTodo(data);
 				callbackHandler(data, "Update Todo Successfully...");
 			}
-			
 		},
 		function(error) {
 			callbackHandler({}, "Cannot update Todo - " + error.message);
 		});
-		
 	},
 	deleteTodo = function(id, callbackHandler) {
 		var index = getTodoIndex(id);
 		
-		dataService.deleteEntity("todos/todo/" + id, function(data) {
+		dataService.deleteEntity("todos/delete/" + id, function(data) {
 			removeTodo(index);
 			var newTodo = data || {};
 			callbackHandler(newTodo, "Delete Todo Successfully...");
@@ -213,47 +196,42 @@ issueTrackerServices.factory("todoService", function($rootScope, dataService) {
 		function(error) {
 			callbackHandler({}, "Cannot delete Todo - " + error.message);
 		});
-		
 	},
 	loadTodoCustomlist = function(callbackHandler) {
-		dataService.getEntities("todos", function(data) {
+		dataService.getEntities("todos/getAll", function(data) {
 			var newTodos = data || [];
 			callbackHandler(newTodos, "Load Todolist Successfully...");
 		},function(error) {
 			callbackHandler([], "Cannot load Todolist - " + error.message);
 		});
-		
 	},
 	createTodoCustom = function(todo, callbackHandler) {
 		delete todo.id;
-		dataService.createEntity("todos/todo", todo, function(data) {
+		dataService.createEntity("todos/create", todo, function(data) {
 			var newTodo = data || {};
 			callbackHandler(newTodo, "Create Todo Successfully...");
 		},
 		function(error) {
 			callbackHandler({}, "Cannot create Todo - " + error.message);
 		});
-		
 	},
 	updateTodoCustom = function(todo, callbackHandler) {
-		dataService.updateEntity("todos/todo", todo, function(data) {
+		dataService.updateEntity("todos/update", todo, function(data) {
 			var newTodo = data || {};
 			callbackHandler(newTodo, "Update Todo Successfully...");
 		},
 		function(error) {
 			callbackHandler({}, "Cannot update Todo - " + error.message);
 		});
-		
 	},
 	deleteTodoCustom = function(id, callbackHandler) {
-		dataService.deleteEntity("todos/todo/" + id, function(data) {
+		dataService.deleteEntity("todos/delete/" + id, function(data) {
 			var newTodo = data || {};
 			callbackHandler(newTodo, "Delete Todo Successfully...");
 		},
 		function(error) {
 			callbackHandler({}, "Cannot delete Todo - " + error.message);
 		});
-		
 	},
 	uploadTodoCsv = function(requestData, callbackHandler) {
 		dataService.doUploadFilePost("todos/uploadCsv", requestData, function(data) {

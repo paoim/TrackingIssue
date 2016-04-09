@@ -46,7 +46,7 @@ issueTrackerServices.factory("categoryService", function($rootScope, dataService
 	},
 	loadCategories = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("categories", function(data) {
+		dataService.getEntities("categories/getAll", function(data) {
 			var newCategories = categories;
 			if(data) {
 				setCategories(data);
@@ -60,7 +60,7 @@ issueTrackerServices.factory("categoryService", function($rootScope, dataService
 		
 	},
 	loadCategoriesByPageNo = function(startNo, endNo, callbackHandler) {
-		dataService.getEntitiesByPageNo("categories", startNo, endNo, function(data) {
+		dataService.getEntitiesByPageNo("categories/getPage", startNo, endNo, function(data) {
 			var newCategories = categories;
 			if(data) {
 				setCategories(data);
@@ -75,7 +75,7 @@ issueTrackerServices.factory("categoryService", function($rootScope, dataService
 		
 	},
 	loadCategory = function(id, callbackHandler) {
-		dataService.getEntity("categories", id, function(data) {
+		dataService.getEntity("categories/get", id, function(data) {
 			callbackHandler(data, "Load Category Successfully...");
 		},
 		function(error) {
@@ -85,7 +85,7 @@ issueTrackerServices.factory("categoryService", function($rootScope, dataService
 	},
 	createCategory = function(category, callbackHandler) {
 		delete category.id;
-		dataService.createEntity("categories/category", category, function(data) {
+		dataService.createEntity("categories/create", category, function(data) {
 			if(data) {
 				addCategory(data);
 				callbackHandler(data, "Create Category Successfully...");
@@ -98,7 +98,7 @@ issueTrackerServices.factory("categoryService", function($rootScope, dataService
 		
 	},
 	updateCategory = function(category, callbackHandler) {
-		dataService.updateEntity("categories/category", category, function(data) {
+		dataService.updateEntity("categories/update", category, function(data) {
 			if(data) {
 				var index = getCategoryIndex(data.id);
 				removeCategory(index);
@@ -115,7 +115,7 @@ issueTrackerServices.factory("categoryService", function($rootScope, dataService
 	deleteCategory = function(index, callbackHandler) {
 		var category = getCategoryByIndex(index);
 		
-		dataService.deleteEntity("categories/category/" + category.id, function(data) {
+		dataService.deleteEntity("categories/delete/" + category.id, function(data) {
 			removeCategory(index);
 			callbackHandler(data, "Delete Category Successfully...");
 		},
@@ -136,7 +136,7 @@ issueTrackerServices.factory("categoryService", function($rootScope, dataService
 		});
 	},
 	uploadDefaultCategory = function(callbackHandler) {
-		dataService.getEntities("categories/default", function(data) {
+		dataService.getEntities("categories/saveDefault", function(data) {
 			callbackHandler(data, "Upload Default Category Successfully...");
 		},function(error) {
 			callbackHandler({}, "Cannot upload default Category - " + error.message);
@@ -144,7 +144,7 @@ issueTrackerServices.factory("categoryService", function($rootScope, dataService
 		
 	};
 	
-	return{
+	return {
 		//public functions
 		getCategory : getCategory,
 		addCategory : addCategory,

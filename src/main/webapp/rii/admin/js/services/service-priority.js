@@ -3,19 +3,19 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create Priority Service
-issueTrackerServices.factory("priorityService", function($rootScope, dataService){
+issueTrackerServices.factory("priorityService", function($rootScope, dataService) {
 	//private variable
 	var priorities = [],
 	
 	//private functions
-	setPriorities = function(newPriorities){
+	setPriorities = function(newPriorities) {
 		priorities = [];
 		priorities = newPriorities;
 	},
-	getPriorityByIndex = function(index){
+	getPriorityByIndex = function(index) {
 		return priorities[index];
 	},
-	getPriorityIndex = function(id){
+	getPriorityIndex = function(id) {
 		var index;
 		for (var i = 0; i < priorities.length; i++) {
 			if (priorities[i].id === id) {
@@ -25,7 +25,7 @@ issueTrackerServices.factory("priorityService", function($rootScope, dataService
 		}
 		return index;
 	},
-	getPriority = function(id){
+	getPriority = function(id) {
 		var priority = {};
 		for (var i = 0; i < priorities.length; i++) {
 			if (priorities[i].id === id) {
@@ -35,71 +35,71 @@ issueTrackerServices.factory("priorityService", function($rootScope, dataService
 		}
 		return priority;
 	},
-	getPriorities = function(){
+	getPriorities = function() {
 		return priorities;
 	},
-	addPriority = function(newPriority){
+	addPriority = function(newPriority) {
 		priorities.push(newPriority);
 	},
-	removePriority = function(index){
+	removePriority = function(index) {
 		priorities.splice(index, 1);
 	},
-	loadPriorities = function(callbackHandler){
+	loadPriorities = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("priorities", function(data){
+		dataService.getEntities("priorities/getAll", function(data) {
 			var newPriorities = priorities;
-			if(data){
+			if(data) {
 				setPriorities(data);
 				newPriorities = data;
 			}
 			
 			callbackHandler(newPriorities, "Load Priorities Successfully...");
-		}, function(error){
+		}, function(error) {
 			callbackHandler([], "Cannot load Priorities - " + error.message);
 		}, true);
 		
 	},
-	loadPrioritiesByPageNo = function(startNo, endNo, callbackHandler){
-		dataService.getEntitiesByPageNo("priorities", startNo, endNo, function(data){
+	loadPrioritiesByPageNo = function(startNo, endNo, callbackHandler) {
+		dataService.getEntitiesByPageNo("priorities/getPage", startNo, endNo, function(data) {
 			var newPriorities = priorities;
-			if(data){
+			if(data) {
 				setPriorities(data);
 				newPriorities = data;
 			}
 			
 			callbackHandler(newPriorities, "Load Priorities Successfully...");
 		},
-		function(error){
+		function(error) {
 			callbackHandler([], "Cannot load Priorities - " + error.message);
 		});
 		
 	},
-	loadPriority = function(id, callbackHandler){
-		dataService.getEntity("priorities", id, function(data){
+	loadPriority = function(id, callbackHandler) {
+		dataService.getEntity("priorities/get", id, function(data) {
 			callbackHandler(data, "Load Priority Successfully...");
 		},
-		function(error){
+		function(error) {
 			callbackHandler({}, "Cannot load Priority - " + error.message);
 		}, true);
 		
 	},
-	createPriority = function(priority, callbackHandler){
+	createPriority = function(priority, callbackHandler) {
 		delete priority.id;
-		dataService.createEntity("priorities/priority", priority, function(data){
-			if(data){
+		dataService.createEntity("priorities/create", priority, function(data) {
+			if(data) {
 				addPriority(data);
 				callbackHandler(data, "Create Priority Successfully...");
 			}
 			
 		},
-		function(error){
+		function(error) {
 			callbackHandler({}, "Cannot create Priority - " + error.message);
 		});
 		
 	},
-	updatePriority = function(priority, callbackHandler){
-		dataService.updateEntity("priorities/priority", priority, function(data){
-			if(data){
+	updatePriority = function(priority, callbackHandler) {
+		dataService.updateEntity("priorities/update", priority, function(data) {
+			if(data) {
 				var index = getPriorityIndex(data.id);
 				removePriority(index);
 				addPriority(data);
@@ -107,44 +107,44 @@ issueTrackerServices.factory("priorityService", function($rootScope, dataService
 			}
 			
 		},
-		function(error){
+		function(error) {
 			callbackHandler({}, "Cannot update Priority - " + error.message);
 		});
 		
 	},
-	deletePriority = function(index, callbackHandler){
+	deletePriority = function(index, callbackHandler) {
 		var priority = getPriorityByIndex(index);
 		
-		dataService.deleteEntity("priorities/priority/" + priority.id, function(data){
+		dataService.deleteEntity("priorities/delete/" + priority.id, function(data) {
 			removePriority(index);
 			callbackHandler(data, "Delete Priority Successfully...");
 		},
-		function(error){
+		function(error) {
 			callbackHandler({}, "Cannot delete Priority - " + error.message);
 		});
 		
 	},
-	uploadPriorityCsv = function(requestData, callbackHandler){
-		dataService.doUploadFilePost("priorities/uploadCsv", requestData, function(data){
-			if(data){
+	uploadPriorityCsv = function(requestData, callbackHandler) {
+		dataService.doUploadFilePost("priorities/uploadCsv", requestData, function(data) {
+			if(data) {
 				callbackHandler(data, "Upload Priorities Successfully...");
 			}
 			
 		},
-		function(error){
+		function(error) {
 			callbackHandler([], "Cannot upload Priorities - " + error.message);
 		});
 	},
-	uploadDefaultPriority = function(callbackHandler){
-		dataService.getEntities("priorities/default", function(data){
+	uploadDefaultPriority = function(callbackHandler) {
+		dataService.getEntities("priorities/saveDefault", function(data) {
 			callbackHandler(data, "Upload Default Priority Successfully...");
-		},function(error){
+		},function(error) {
 			callbackHandler({}, "Cannot upload default Priority - " + error.message);
 		});
 		
 	};
 	
-	return{
+	return {
 		//public functions
 		getPriority : getPriority,
 		addPriority : addPriority,

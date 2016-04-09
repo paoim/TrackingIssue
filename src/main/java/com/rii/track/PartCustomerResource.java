@@ -50,7 +50,7 @@ public class PartCustomerResource {
 	// for input
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	// for output
-	@Path("partCustomer")
+	@Path("create")
 	public Response createPartCustomer(PartCustomer entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -67,7 +67,7 @@ public class PartCustomerResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("partCustomer")
+	@Path("update")
 	public Response updatePartCustomer(PartCustomer entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -83,7 +83,7 @@ public class PartCustomerResource {
 
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("partCustomer/{partCustomerId}")
+	@Path("delete/{partCustomerId}")
 	public Response deletePartCustomer(
 			@PathParam("partCustomerId") String partCustomerId) {
 		if (partCustomerId == null || partCustomerId.length() < 0) {
@@ -97,7 +97,7 @@ public class PartCustomerResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{pageNo}/{itemPerPage}")
+	@Path("getPage/{pageNo}/{itemPerPage}")
 	public List<PartCustomer> getPartCustomersByPageNo(
 			@PathParam("pageNo") String pageNo,
 			@PathParam("itemPerPage") String itemPerPage) {
@@ -107,17 +107,29 @@ public class PartCustomerResource {
 
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("search")
-	public List<PartCustomer> filter(IssueFilter filter) {
+	@Path("postSearch")
+	public List<PartCustomer> postSearch(IssueFilter filter) {
 		if (filter == null) {
 			return new ArrayList<PartCustomer>();
 		}
 
-		return searchService.search(filter);
+		return searchService.postSearch(filter);
 	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getSearch/{query}")
+	public List<PartCustomer> getSearch(@PathParam("query") String query) {
+		if (query == null || query.length() < 0) {
+			return new ArrayList<PartCustomer>();
+		}
+		
+		return searchService.getSearch(query);
+	}
+
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getAll")
 	public List<PartCustomer> getAllPartCustomers() {
 
 		return partCustomerService.getAll("true");
@@ -125,7 +137,7 @@ public class PartCustomerResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{partCustomerId}")
+	@Path("get/{partCustomerId}")
 	public Response getPartCustomer(
 			@PathParam("partCustomerId") String partCustomerId) {
 		if (partCustomerId == null || partCustomerId.length() < 0) {

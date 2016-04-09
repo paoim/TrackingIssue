@@ -411,7 +411,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 		
 		// Sort all TodoResults by Who (ContactID)
 		Collections.sort(results, new TodoResultWhoComparator());
-
+		
 		return results;
 	}
 
@@ -424,7 +424,7 @@ public class TodoServiceImpl implements CRUDService<Todo, TodoResult>,
 	}
 
 	private TodoResult getResult(Todo todo) {
-		Contact contact = contactRepository.findOne(todo.getWho());
+		Contact contact = todo.getWho() != -1 ? contactRepository.findOne(todo.getWho()) : null;
 		TodoResult result = ConvertUtil.todoConverter(todo, contact);
 
 		return result;

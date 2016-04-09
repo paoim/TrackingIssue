@@ -173,8 +173,16 @@ public class PartCustomerServiceImpl implements
 	}
 
 	@Override
-	public List<PartCustomer> search(IssueFilter filter) {
+	public List<PartCustomer> postSearch(IssueFilter filter) {
 		String query = FilterUtil.getIssueSearchQuery(filter);
+		List<PartCustomer> partCustomers = partCustomerRepository
+				.getEntities(query);
+
+		return partCustomers;
+	}
+
+	@Override
+	public List<PartCustomer> getSearch(String query) {
 		List<PartCustomer> partCustomers = partCustomerRepository
 				.getEntities(query);
 

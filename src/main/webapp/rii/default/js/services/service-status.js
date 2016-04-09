@@ -46,51 +46,45 @@ issueTrackerServices.factory("statusService", function($rootScope, dataService) 
 	},
 	loadStatusItems = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("status", function(data) {
+		dataService.getEntities("status/getAll", function(data) {
 			var newStatusItems = statusItems;
 			if(data) {
 				setStatusItems(data);
 				newStatusItems = data;
 			}
-			
 			callbackHandler(newStatusItems, "Load Status Items Successfully...");
 		},function(error) {
 			callbackHandler([], "Cannot load Status Items - " + error.message);
 		}, true);
-		
 	},
 	loadStatusItemsByPageNo = function(startNo, endNo, callbackHandler) {
-		dataService.getEntitiesByPageNo("status", startNo, endNo, function(data) {
+		dataService.getEntitiesByPageNo("status/getPage", startNo, endNo, function(data) {
 			var newStatusItems = statusItems;
 			if(data) {
 				setStatusItems(data);
 				newStatusItems = data;
 			}
-			
 			callbackHandler(newStatusItems, "Load Status Items Successfully...");
 		},
 		function(error) {
 			callbackHandler([], "Cannot load Status Items - " + error.message);
 		});
-		
 	},
 	loadStatus = function(id, callbackHandler) {
-		dataService.getEntity("status", id, function(data) {
+		dataService.getEntity("status/get", id, function(data) {
 			callbackHandler(data, "Load Status Successfully...");
 		},
 		function(error) {
 			callbackHandler({}, "Cannot load Status - " + error.message);
 		}, true);
-		
 	},
 	createStatus = function(status, callbackHandler) {
 		delete status.id;
-		dataService.createEntity("status/status", status, function(data) {
+		dataService.createEntity("status/create", status, function(data) {
 			if(data) {
 				addStatus(data);
 				callbackHandler(data, "Create Status Successfully...");
 			}
-			
 		},
 		function(error) {
 			callbackHandler({}, "Cannot create Status - " + error.message);
@@ -98,24 +92,22 @@ issueTrackerServices.factory("statusService", function($rootScope, dataService) 
 		
 	},
 	updateStatus = function(status, callbackHandler) {
-		dataService.updateEntity("status/status", status, function(data) {
+		dataService.updateEntity("status/update", status, function(data) {
 			if(data) {
 				var index = getStatusIndex(data.id);
 				removeStatus(index);
 				addStatus(data);
 				callbackHandler(data, "Update Status Successfully...");
 			}
-			
 		},
 		function(error) {
 			callbackHandler({}, "Cannot update Status - " + error.message);
 		});
-		
 	},
 	deleteStatus = function(index, callbackHandler) {
 		var status = getStatusByIndex(index);
 		
-		dataService.deleteEntity("status/status/" + status.id, function(data) {
+		dataService.deleteEntity("status/delete/" + status.id, function(data) {
 			removeStatus(index);
 			callbackHandler(data, "Delete Status Successfully...");
 		},
@@ -129,14 +121,13 @@ issueTrackerServices.factory("statusService", function($rootScope, dataService) 
 			if(data) {
 				callbackHandler(data, "Upload Status Successfully...");
 			}
-			
 		},
 		function(error) {
 			callbackHandler([], "Cannot upload Status - " + error.message);
 		});
 	};
 	
-	return{
+	return {
 		//public functions
 		getStatus : getStatus,
 		addStatus : addStatus,

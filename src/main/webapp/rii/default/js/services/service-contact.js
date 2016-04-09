@@ -45,7 +45,7 @@ issueTrackerServices.factory("contactService", function($rootScope, dataService)
 	},
 	loadContacts = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("contacts", function(data) {
+		dataService.getEntities("contacts/getAll", function(data) {
 			var newContacts = contacts;
 			if(data) {
 				setContacts(data);
@@ -59,7 +59,7 @@ issueTrackerServices.factory("contactService", function($rootScope, dataService)
 		
 	},
 	loadContactsByPageNo = function(startNo, endNo, callbackHandler) {
-		dataService.getEntitiesByPageNo("contacts", startNo, endNo, function(data) {
+		dataService.getEntitiesByPageNo("contacts/getPage", startNo, endNo, function(data) {
 			var newContacts = contacts;
 			if(data) {
 				setContacts(data);
@@ -74,7 +74,7 @@ issueTrackerServices.factory("contactService", function($rootScope, dataService)
 		
 	},
 	loadContact = function(id, callbackHandler) {
-		dataService.getEntity("contacts", id, function(data) {
+		dataService.getEntity("contacts/get", id, function(data) {
 			callbackHandler(data, "Load Contact Successfully...");
 		},
 		function(error) {
@@ -102,7 +102,7 @@ issueTrackerServices.factory("contactService", function($rootScope, dataService)
 	},
 	createContact = function(contact, callbackHandler) {
 		delete contact.id;
-		dataService.createEntity("contacts/contact", contact, function(data) {
+		dataService.createEntity("contacts/create", contact, function(data) {
 			if(data) {
 				addContact(data);
 				callbackHandler(data, "Create Contact Successfully...");
@@ -115,7 +115,7 @@ issueTrackerServices.factory("contactService", function($rootScope, dataService)
 		
 	},
 	updateContact = function(contact, callbackHandler) {
-		dataService.updateEntity("contacts/contact", contact, function(data) {
+		dataService.updateEntity("contacts/update", contact, function(data) {
 			if(data) {
 				var index = getContactIndex(data.id);
 				removeContact(index);
@@ -133,7 +133,7 @@ issueTrackerServices.factory("contactService", function($rootScope, dataService)
 		//var contact = getContactByIndex(index);
 		var index = getContactIndex(id);
 		
-		dataService.deleteEntity("contacts/contact/" + id, function(data) {
+		dataService.deleteEntity("contacts/delete/" + id, function(data) {
 			removeContact(index);
 			callbackHandler(data, "Delete Contact Successfully...");
 		},
@@ -144,7 +144,7 @@ issueTrackerServices.factory("contactService", function($rootScope, dataService)
 	},
 	createContactPost = function(contact, callbackHandler) {
 		delete contact.id;
-		dataService.createEntityPost("contacts/contact", contact, function(data) {
+		dataService.createEntityPost("contacts/create", contact, function(data) {
 			if(data) {
 				addContact(data);
 				callbackHandler(data, "Create Contact Successfully...");
@@ -168,7 +168,7 @@ issueTrackerServices.factory("contactService", function($rootScope, dataService)
 		});
 	};
 	
-	return{
+	return {
 		getContact : getContact,
 		addContact : addContact,
 		getContacts : getContacts,

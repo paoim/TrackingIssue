@@ -46,7 +46,7 @@ public class ContactResource {
 	// for input
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	// for output
-	@Path("contact")
+	@Path("create")
 	public Response createContact(Contact entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -80,7 +80,7 @@ public class ContactResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("contact")
+	@Path("update")
 	public Response updateContact(Contact entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -96,7 +96,7 @@ public class ContactResource {
 
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("contact/{contactId}")
+	@Path("delete/{contactId}")
 	public Response deleteContact(@PathParam("contactId") String contactId) {
 		if (contactId == null || contactId.length() < 0) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -109,6 +109,7 @@ public class ContactResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Path("getAll")
 	public List<Contact> getAllContacts() {
 
 		return contactService.getAll("true");
@@ -116,7 +117,7 @@ public class ContactResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{pageNo}/{itemPerPage}")
+	@Path("getPage/{pageNo}/{itemPerPage}")
 	public List<Contact> getContactsByPageNo(
 			@PathParam("pageNo") String pageNo,
 			@PathParam("itemPerPage") String itemPerPage) {
@@ -126,7 +127,7 @@ public class ContactResource {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Path("{contactId}")
+	@Path("get/{contactId}")
 	// http:localhost:8080/TrackingIssue/rest/contact/1234
 	public Response getContact(@PathParam("contactId") String contactId) {
 		if (contactId == null || contactId.length() < 0) {

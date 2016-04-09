@@ -3,19 +3,19 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create PartCustomer Service
-issueTrackerServices.factory("partCustomerService", function($rootScope, dataService){
+issueTrackerServices.factory("partCustomerService", function($rootScope, dataService) {
 	//private variable
 	var partCustomers = [],
 	
 	//private functions
-	setPartCustomers = function(newPartCustomers){
+	setPartCustomers = function(newPartCustomers) {
 		partCustomers = [];
 		partCustomers = newPartCustomers;
 	},
-	getPartCustomerByIndex = function(index){
+	getPartCustomerByIndex = function(index) {
 		return partCustomers[index];
 	},
-	getPartCustomerIndex = function(id){
+	getPartCustomerIndex = function(id) {
 		var index;
 		for (var i = 0; i < partCustomers.length; i++) {
 			if (partCustomers[i].id === id) {
@@ -25,7 +25,7 @@ issueTrackerServices.factory("partCustomerService", function($rootScope, dataSer
 		}
 		return index;
 	},
-	getPartCustomer = function(id){
+	getPartCustomer = function(id) {
 		var partCustomer = {};
 		for (var i = 0; i < partCustomers.length; i++) {
 			if (partCustomers[i].id === id) {
@@ -35,71 +35,71 @@ issueTrackerServices.factory("partCustomerService", function($rootScope, dataSer
 		}
 		return partCustomer;
 	},
-	getPartCustomers = function(){
+	getPartCustomers = function() {
 		return partCustomers;
 	},
-	addPartCustomer = function(newPartCustomter){
+	addPartCustomer = function(newPartCustomter) {
 		partCustomers.push(newPartCustomter);
 	},
-	removePartCustomer = function(index){
+	removePartCustomer = function(index) {
 		partCustomers.splice(index, 1);
 	},
-	loadPartCustomers = function(callbackHandler){
+	loadPartCustomers = function(callbackHandler) {
 		//dataService.setBaseUrl("http://localhost:8080/TrackingIssue/rest/");
-		dataService.getEntities("partCustomers", function(data){
+		dataService.getEntities("partCustomers/getAll", function(data) {
 			var newPartCustomers = partCustomers;
-			if(data){
+			if(data) {
 				setPartCustomers(data);
 				newPartCustomers = data;
 			}
 			
 			callbackHandler(newPartCustomers, "Load PartCustomers Successfully...");
-		},function(error){
+		},function(error) {
 			callbackHandler([], "Cannot load PartCustomers - " + error.message);
 		}, true);
 		
 	},
-	loadPartCustomersByPageNo = function(starNo, endNo, callbackHandler){
-		dataService.getEntitiesByPageNo("partCustomers", starNo, endNo, function(data){
+	loadPartCustomersByPageNo = function(starNo, endNo, callbackHandler) {
+		dataService.getEntitiesByPageNo("partCustomers/getPage", starNo, endNo, function(data) {
 			var newPartCustomers = partCustomers;
-			if(data){
+			if(data) {
 				setPartCustomers(data);
 				newPartCustomers = data;
 			}
 			
 			callbackHandler(newPartCustomers, "Load PartCustomers Successfully...");
 		},
-		function(error){
+		function(error) {
 			callbackHandler([], "Cannot load PartCustomers - " + error.message);
 		});
 		
 	},
-	loadPartCustomer = function(id, callbackHandler){
-		dataService.getEntity("partCustomers", id, function(data){
+	loadPartCustomer = function(id, callbackHandler) {
+		dataService.getEntity("partCustomers/get", id, function(data) {
 			callbackHandler(data, "Load PartCustomer Successfully...");
 		},
-		function(error){
+		function(error) {
 			callbackHandler({}, "Cannot load PartCustomer - " + error.message);
 		}, true);
 		
 	},
-	createPartCustomer = function(partCustomer, callbackHandler){
+	createPartCustomer = function(partCustomer, callbackHandler) {
 		delete partCustomer.id;
-		dataService.createEntity("partCustomers/partCustomer", partCustomer, function(data){
-			if(data){
+		dataService.createEntity("partCustomers/create", partCustomer, function(data) {
+			if(data) {
 				addPartCustomer(data);
 				callbackHandler(data, "Create PartCustomer Successfully...");
 			}
 			
 		},
-		function(error){
+		function(error) {
 			callbackHandler({}, "Cannot create PartCustomer - " + error.message);
 		});
 		
 	},
-	updatePartCustomer = function(partCustomer, callbackHandler){
-		dataService.updateEntity("partCustomers/partCustomer", partCustomer, function(data){
-			if(data){
+	updatePartCustomer = function(partCustomer, callbackHandler) {
+		dataService.updateEntity("partCustomers/update", partCustomer, function(data) {
+			if(data) {
 				var index = getPartCustomerIndex(data.id);
 				removePartCustomer(index);
 				addPartCustomer(data);
@@ -107,35 +107,35 @@ issueTrackerServices.factory("partCustomerService", function($rootScope, dataSer
 			}
 			
 		},
-		function(error){
+		function(error) {
 			callbackHandler({}, "Cannot update PartCustomer - " + error.message);
 		});
 		
 	},
-	deletePartCustomer = function(id, callbackHandler){
-		dataService.deleteEntity("partCustomers/partCustomer/" + id, function(data){
+	deletePartCustomer = function(id, callbackHandler) {
+		dataService.deleteEntity("partCustomers/delete/" + id, function(data) {
 			var index = getPartCustomerIndex(id);
 			removePartCustomer(index);
 			callbackHandler(data, "Delete PartCustomer Successfully...");
 		},
-		function(error){
+		function(error) {
 			callbackHandler({}, "Cannot delete PartCustomer - " + error.message);
 		});
 		
 	},
-	uploadPartCustomerCsv = function(requestData, callbackHandler){
-		dataService.doUploadFilePost("partCustomers/uploadCsv", requestData, function(data){
-			if(data){
+	uploadPartCustomerCsv = function(requestData, callbackHandler) {
+		dataService.doUploadFilePost("partCustomers/uploadCsv", requestData, function(data) {
+			if(data) {
 				callbackHandler(data, "Upload PartCustomer Successfully...");
 			}
 			
 		},
-		function(error){
+		function(error) {
 			callbackHandler({}, "Cannot upload PartCustomer - " + error.message);
 		});
 	};
 	
-	return{
+	return {
 		//public functions
 		getPartCustomer : getPartCustomer,
 		addPartCustomer : addPartCustomer,
