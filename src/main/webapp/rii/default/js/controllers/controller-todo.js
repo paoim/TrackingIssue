@@ -3,7 +3,7 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create Todo Controller
-issueTrackerApp.controller("TodoController", function($scope, $modal, $log, $templateCache, $filter, pageService, todoService, contactService, inputFileService, utilService) {
+issueTrackerApp.controller("TodoController", function($scope, $modal, $log, $timeout, $filter, pageService, todoService, contactService, inputFileService, utilService) {
 	var newPage = {
 		title : "Todos List",
 		isDetailPage : false,
@@ -203,34 +203,33 @@ issueTrackerApp.controller("TodoController", function($scope, $modal, $log, $tem
 	
 	//Upload Excel file
 	var doNewAction = function() {
-		//$templateCache.removeAll();//clear cache
-		var fileSelector = inputFileService.getSelectorById("fileElement");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if (this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				//console.log("Üpload file's size: " + fileSize + "KB");
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileElement");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if (this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					//console.log("Üpload file's size: " + fileSize + "KB");
+					
+					todoService.uploadTodoCsv(requestData, function(data, message) {
+						//console.log(data);
+						//console.log(message);
+						loadTodosList();
+					});
+				}
 				
-				todoService.uploadTodoCsv(requestData, function(data, message) {
-					//console.log(data);
-					//console.log(message);
-					loadTodosList();
-				});
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-		
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	pageService.setPage(newPage);

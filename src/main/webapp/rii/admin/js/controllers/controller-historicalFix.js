@@ -3,7 +3,7 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create historicalFix Controller
-issueTrackerApp.controller("historicalFixController", function($scope, $modal, $log, $templateCache, $filter, pageService, issueService, historicalFixService, inputFileService, utilService) {
+issueTrackerApp.controller("historicalFixController", function($scope, $modal, $log, $timeout, $filter, pageService, issueService, historicalFixService, inputFileService, utilService) {
 	var newPage = {
 		isDetailPage : false,
 		title : "Historical Fixes List",
@@ -241,34 +241,33 @@ issueTrackerApp.controller("historicalFixController", function($scope, $modal, $
 	
 	//Upload Excel file
 	var doNewAction = function() {
-		//$templateCache.removeAll();//clear cache
-		var fileSelector = inputFileService.getSelectorById("fileElement");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if (this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileElement");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if (this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Üpload file's size: " + fileSize + "KB");
+					
+					historicalFixService.uploadHistoricalFixCsv(requestData, function(data, message) {
+						//console.log(data);
+						//console.log(message);
+						loadHistoricalFixList();
+					});
+				}
 				
-				historicalFixService.uploadHistoricalFixCsv(requestData, function(data, message) {
-					//console.log(data);
-					//console.log(message);
-					loadHistoricalFixList();
-				});
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-		
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.doDeleteHistoricalFix = function(id, size) {

@@ -3,7 +3,7 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create Contacts Controller
-issueTrackerApp.controller("ContactsController", function($scope, $modal, $log, $templateCache, pageService, contactService, inputFileService) {
+issueTrackerApp.controller("ContactsController", function($scope, $modal, $log, $timeout, pageService, contactService, inputFileService) {
 	//console.log("ContactsController...");
 	var newPage = {
 		isDetailPage : false,
@@ -45,38 +45,37 @@ issueTrackerApp.controller("ContactsController", function($scope, $modal, $log, 
 	
 	//Upload Excel file
 	var doNewAction = function() {
-		//$templateCache.removeAll();//clear cache
-		var fileSelector = inputFileService.getSelectorById("fileElement");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if (this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
-				
-				if (fileName.indexOf("Contact") > -1) {
-					contactService.uploadContactCsv(requestData, function(data, message) {
-						//console.log(data);
-						//console.log(message);
-						loadContactList();
-					});
-				} else {
-					alert("Your file is not Contact Excel file!");
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileElement");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if (this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Üpload file's size: " + fileSize + "KB");
+					
+					if (fileName.indexOf("Contact") > -1) {
+						contactService.uploadContactCsv(requestData, function(data, message) {
+							//console.log(data);
+							//console.log(message);
+							loadContactList();
+						});
+					} else {
+						alert("Your file is not Contact Excel file!");
+					}
 				}
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-		
+				
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.doDeleteContact = function(id, size) {
@@ -108,7 +107,7 @@ issueTrackerApp.controller("ContactsController", function($scope, $modal, $log, 
 });
 
 //Create Contact Detail Controller
-issueTrackerApp.controller("ContactDetailController", function($scope, $routeParams, $location, pageService, contactService, photoService, utilService, inputFileService) {
+issueTrackerApp.controller("ContactDetailController", function($scope, $routeParams, $location, $timeout, pageService, contactService, photoService, utilService, inputFileService) {
 	var contactId = utilService.getId($routeParams.contactId),
 	contact = {id : contactId},
 	createLabel = "Save New Contact",
@@ -169,66 +168,66 @@ issueTrackerApp.controller("ContactDetailController", function($scope, $routePar
 	$scope.imageSource = "";
 	$scope.isNewUploadImage = true;
 	$scope.openFileDialog = function() {
+		$timeout(function() {
 		var fileSelector = inputFileService.getSelectorById("contactAttachment");
 		inputFileService.loadFileDialog(fileSelector);
 		
 		inputFileService.addFileSelectedListener(fileSelector, function() {
 			$scope.isNewUploadImage = false;
-			var files = this.files,
-			photoId = ($scope.contact.attachment ? $scope.contact.attachment : 0);
-			
-			if (files && files.length > 0) {
-				var file = files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : photoId,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
+				var files = this.files,
+				photoId = ($scope.contact.attachment ? $scope.contact.attachment : 0);
 				
-				//check to make sure it is not the same file's name
-				if (!(fileName === $scope.contactAttachmentName)) {
-					photoService.uploadPhoto(requestData, function(data, message) {
-						if (photoId > 0) {
-							//Old Upload Photo
-							$scope.contact.attachment = photoId;
-							
-							//load image from byte Array to display on page
-							photoService.getByteArrayPhoto(photoId, function(data, message) {
-								$scope.imageSource = utilService.getImageUrlBase64(data);
-							});
-							
-						} else {
-							//New Upload Photo
-							photoService.getLastPhoto(function(data, message) {
-								var newPhotoId = data.id;
-								$scope.contact.attachment = newPhotoId;
-								
-								if (newPhotoId > 0) {
-									//load image from byte Array to display on page
-									photoService.getByteArrayPhoto(newPhotoId, function(data, message) {
-										$scope.imageSource = utilService.getImageUrlBase64(data);
-									});
-								}
-								
-							});
-							
-						}
-						//console.log(message);
-					});
+				if (files && files.length > 0) {
+					var file = files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : photoId,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Üpload file's size: " + fileSize + "KB");
 					
+					//check to make sure it is not the same file's name
+					if (!(fileName === $scope.contactAttachmentName)) {
+						photoService.uploadPhoto(requestData, function(data, message) {
+							if (photoId > 0) {
+								//Old Upload Photo
+								$scope.contact.attachment = photoId;
+								
+								//load image from byte Array to display on page
+								photoService.getByteArrayPhoto(photoId, function(data, message) {
+									$scope.imageSource = utilService.getImageUrlBase64(data);
+								});
+								
+							} else {
+								//New Upload Photo
+								photoService.getLastPhoto(function(data, message) {
+									var newPhotoId = data.id;
+									$scope.contact.attachment = newPhotoId;
+									
+									if (newPhotoId > 0) {
+										//load image from byte Array to display on page
+										photoService.getByteArrayPhoto(newPhotoId, function(data, message) {
+											$scope.imageSource = utilService.getImageUrlBase64(data);
+										});
+									}
+									
+								});
+								
+							}
+							//console.log(message);
+						});
+						
+					}
+					
+					$scope.contactAttachmentName = fileName;
 				}
 				
-				$scope.contactAttachmentName = fileName;
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-		
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	var newPage = {

@@ -4,7 +4,7 @@
 ** Create Date: 07/11/2014
 *********************************************/
 // Create Issues Controller
-issueTrackerApp.controller("IssuesController", function($scope, $modal, $log, $filter, pageService, issueService, contactService, statusService, inputFileService, utilService) {
+issueTrackerApp.controller("IssuesController", function($scope, $modal, $log, $filter, $timeout, pageService, issueService, contactService, statusService, inputFileService, utilService) {
 	var newPage = {
 		isDetailPage : false,
 		title : "Issues List",
@@ -296,40 +296,39 @@ issueTrackerApp.controller("IssuesController", function($scope, $modal, $log, $f
 	
 	//Upload Excel file
 	var doNewAction = function() {
-		//$templateCache.removeAll();//clear cache
-		var fileSelector = inputFileService.getSelectorById("fileElement");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if(this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				//console.log("Üpload file's size: " + fileSize + "KB");
-				
-				if(fileName.indexOf("Issue") > -1) {
-					issueService.uploadIssueCsv(requestData, function(data, message) {
-						//console.log(data);
-						//console.log(message);
-						loadIssueList();
-					});
-				}
-				else {
-					alert("Your file is not Issue Excel file!");
-				}
-				
-			}
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileElement");
+			inputFileService.loadFileDialog(fileSelector);
 			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-		
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if(this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					//console.log("Üpload file's size: " + fileSize + "KB");
+					
+					if(fileName.indexOf("Issue") > -1) {
+						issueService.uploadIssueCsv(requestData, function(data, message) {
+							//console.log(data);
+							//console.log(message);
+							loadIssueList();
+						});
+					}
+					else {
+						alert("Your file is not Issue Excel file!");
+					}
+					
+				}
+				
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.doDeleteIssue = function(id, size) {
@@ -360,7 +359,7 @@ issueTrackerApp.controller("IssuesController", function($scope, $modal, $log, $f
 });
 
 //Create Issue Detail Controller
-issueTrackerApp.controller("IssueDetailController", function($scope, $routeParams, $location, $modal, $log, pageService, utilService, issueService, photoService, contactService, priorityService, statusService, categoryService, datePickerService, inputFileService) {
+issueTrackerApp.controller("IssueDetailController", function($scope, $routeParams, $location, $modal, $log, $timeout, pageService, utilService, issueService, photoService, contactService, priorityService, statusService, categoryService, datePickerService, inputFileService) {
 	var isUpdateIssue = false,
 	createLabel = "Save Issue",
 	issues = issueService.getIssues(),
@@ -421,67 +420,66 @@ issueTrackerApp.controller("IssueDetailController", function($scope, $routeParam
 	$scope.imageSource = "";
 	$scope.isNewUploadImage = true;
 	$scope.openFileDialog = function() {
-		var fileSelector = inputFileService.getSelectorById("issueAttachment");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			$scope.isNewUploadImage = false;
-			var files = this.files,
-			photoId = ($scope.issue.attachment ? $scope.issue.attachment : 0);
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("issueAttachment");
+			inputFileService.loadFileDialog(fileSelector);
 			
-			if(files && files.length > 0) {
-				var file = files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : photoId,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				//console.log("Üpload file's size: " + fileSize + "KB");
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				$scope.isNewUploadImage = false;
+				var files = this.files,
+				photoId = ($scope.issue.attachment ? $scope.issue.attachment : 0);
 				
-				//check to make sure it is not the same file's name
-				if(!(fileName === $scope.issueAttachmentName)) {
-					photoService.uploadPhoto(requestData, function(data, message) {
-						if(photoId > 0) {
-							//Old Upload Photo
-							$scope.issue.attachment = photoId;
-							
-							//load image from byte Array to display on page
-							photoService.getByteArrayPhoto(photoId, function(data, message) {
-								$scope.imageSource = utilService.getImageUrlBase64(data);
-							});
-							
-						}
-						else {
-							//New Upload Photo
-							photoService.getLastPhoto(function(data, message) {
-								var newPhotoId = data.id;
-								$scope.issue.attachment = newPhotoId;
-								
-								if(newPhotoId > 0) {
-									//load image from byte Array to display on page
-									photoService.getByteArrayPhoto(newPhotoId, function(data, message) {
-										$scope.imageSource = utilService.getImageUrlBase64(data);
-									});
-								}
-								
-							});
-							
-						}
-						//console.log(message);
-					});
+				if(files && files.length > 0) {
+					var file = files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : photoId,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					//console.log("Üpload file's size: " + fileSize + "KB");
 					
+					//check to make sure it is not the same file's name
+					if(!(fileName === $scope.issueAttachmentName)) {
+						photoService.uploadPhoto(requestData, function(data, message) {
+							if(photoId > 0) {
+								//Old Upload Photo
+								$scope.issue.attachment = photoId;
+								
+								//load image from byte Array to display on page
+								photoService.getByteArrayPhoto(photoId, function(data, message) {
+									$scope.imageSource = utilService.getImageUrlBase64(data);
+								});
+								
+							} else {
+								//New Upload Photo
+								photoService.getLastPhoto(function(data, message) {
+									var newPhotoId = data.id;
+									$scope.issue.attachment = newPhotoId;
+									
+									if(newPhotoId > 0) {
+										//load image from byte Array to display on page
+										photoService.getByteArrayPhoto(newPhotoId, function(data, message) {
+											$scope.imageSource = utilService.getImageUrlBase64(data);
+										});
+									}
+									
+								});
+								
+							}
+							//console.log(message);
+						});
+						
+					}
+					
+					$scope.issueAttachmentName = fileName;
 				}
 				
-				$scope.issueAttachmentName = fileName;
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-		
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	//Bind Data into UI

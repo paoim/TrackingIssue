@@ -3,7 +3,7 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create PartCustomer Controller
-issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $log, $templateCache, pageService, partCustomerService, inputFileService) {
+issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $log, $timeout, pageService, partCustomerService, inputFileService) {
 	var newPage = {
 		isDetailPage : false,
 		title : "PartCustomers List",
@@ -44,34 +44,33 @@ issueTrackerApp.controller("PartCustomerController", function($scope, $modal, $l
 	
 	//Upload Excel file
 	var doNewAction = function() {
-		//$templateCache.removeAll();//clear cache
-		var fileSelector = inputFileService.getSelectorById("fileElement");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if (this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileElement");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if (this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Üpload file's size: " + fileSize + "KB");
+					
+					partCustomerService.uploadPartCustomerCsv(requestData, function(data, message) {
+						//console.log(data);
+						//console.log(message);
+						loadPartCustomerList();
+					});
+				}
 				
-				partCustomerService.uploadPartCustomerCsv(requestData, function(data, message) {
-					//console.log(data);
-					//console.log(message);
-					loadPartCustomerList();
-				});
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-		
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.doDeletePartCustomer = function(id, size) {

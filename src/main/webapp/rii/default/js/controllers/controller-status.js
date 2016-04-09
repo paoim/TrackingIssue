@@ -3,7 +3,7 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create Status Controller
-issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $templateCache, pageService, statusService, inputFileService){
+issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $templateCache, $timeout, pageService, statusService, inputFileService){
 	var newPage = {
 		isDetailPage : false,
 		isUploadExcelFile : false,//flag to show or hide upload button
@@ -44,34 +44,33 @@ issueTrackerApp.controller("StatusController", function($scope, $modal, $log, $t
 	
 	//Upload Excel File
 	var doNewAction = function(){
-		//$templateCache.removeAll();//clear cache
-		var fileSelector = inputFileService.getSelectorById("fileElement");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function(){
-			if(this.files && this.files.length > 0){
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileElement");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function(){
+				if(this.files && this.files.length > 0){
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Üpload file's size: " + fileSize + "KB");
+					
+					statusService.uploadStatusCsv(requestData, function(data, message){
+						//console.log(data);
+						//console.log(message);
+						loadStatusList();
+					});
+				}
 				
-				statusService.uploadStatusCsv(requestData, function(data, message){
-					//console.log(data);
-					//console.log(message);
-					loadStatusList();
-				});
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-		
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.doDeleteStatus = function(index, size){

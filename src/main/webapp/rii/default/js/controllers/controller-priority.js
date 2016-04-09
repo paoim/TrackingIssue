@@ -3,7 +3,7 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create Priority Controller
-issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, $templateCache, pageService, priorityService, inputFileService){
+issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, $timeout, pageService, priorityService, inputFileService){
 	var newPage = {
 		isDetailPage : false,
 		isUploadExcelFile : false,//flag to show or hide upload button
@@ -44,34 +44,33 @@ issueTrackerApp.controller("PriorityController", function($scope, $modal, $log, 
 	
 	//Upload Excel File
 	var doNewAction = function(){
-		//$templateCache.removeAll();//clear cache
-		var fileSelector = inputFileService.getSelectorById("fileElement");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function(){
-			if(this.files && this.files.length > 0){
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileElement");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function(){
+				if(this.files && this.files.length > 0){
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Üpload file's size: " + fileSize + "KB");
+					
+					priorityService.uploadPriorityCsv(requestData, function(data, message){
+						//console.log(data);
+						//console.log(message);
+						loadPriorityList();
+					});
+				}
 				
-				priorityService.uploadPriorityCsv(requestData, function(data, message){
-					//console.log(data);
-					//console.log(message);
-					loadPriorityList();
-				});
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-		
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.doDeletePriority = function(index, size){

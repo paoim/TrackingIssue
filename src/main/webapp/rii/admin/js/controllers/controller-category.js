@@ -3,7 +3,7 @@
 ** Email: paoim@yahoo.com
 *********************************************/
 //Create Category Controller
-issueTrackerApp.controller("CategoryController", function($scope, $modal, $log, pageService, categoryService, inputFileService) {
+issueTrackerApp.controller("CategoryController", function($scope, $modal, $log, $timeout, pageService, categoryService, inputFileService) {
 	var newPage = {
 		isDetailPage : false,
 		title : "Categories List",
@@ -45,36 +45,35 @@ issueTrackerApp.controller("CategoryController", function($scope, $modal, $log, 
 	//Upload Excel file
 	//inputFileService.setFileSelectorId("fileElement");
 	var doNewAction = function() {
-		//$templateCache.removeAll();//clear cache
-		var fileSelector = inputFileService.getSelectorById("fileElement");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			var files = this.files;
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileElement");
+			inputFileService.loadFileDialog(fileSelector);
 			
-			if (files && files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				var files = this.files;
 				
-				categoryService.uploadCategoryCsv(requestData, function(data, message) {
-					//console.log(data);
-					//console.log(message);
-					loadCategoryList();
-				});
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-		
+				if (files && files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Üpload file's size: " + fileSize + "KB");
+					
+					categoryService.uploadCategoryCsv(requestData, function(data, message) {
+						//console.log(data);
+						//console.log(message);
+						loadCategoryList();
+					});
+				}
+				
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.doDeleteCategory = function(index, size) {

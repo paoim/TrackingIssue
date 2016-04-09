@@ -59,226 +59,233 @@ issueTrackerApp.controller("ImportDataController", function($scope, $timeout, pa
 	};
 	
 	$scope.uploadCategories = function() {
-		var fileSelector = inputFileService.getSelectorById("fileCategory");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			var files = this.files;
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileCategory");
+			inputFileService.loadFileDialog(fileSelector);
 			
-			if(files && files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				var files = this.files;
 				
-				categoryService.uploadCategoryCsv(requestData, function(data, message) {
-					$timeout(function() {
-						$scope.data.isDisabledCategory = true;
-						$scope.data.isDisabledPriority = false;
+				if(files && files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Upload file's size: " + fileSize + "KB");
+					
+					categoryService.uploadCategoryCsv(requestData, function(data, message) {
+						$timeout(function() {
+							$scope.data.isDisabledCategory = true;
+							$scope.data.isDisabledPriority = false;
+						});
 					});
-				});
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
+				}
+				
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.uploadPriorities = function() {
-		var fileSelector = inputFileService.getSelectorById("filePriority");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if(this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
-				
-				priorityService.uploadPriorityCsv(requestData, function(data, message) {
-					$timeout(function() {
-						$scope.data.isDisabledPriority = true;
-						$scope.data.isDisabledStatus = false;
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("filePriority");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if(this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Upload file's size: " + fileSize + "KB");
+					
+					priorityService.uploadPriorityCsv(requestData, function(data, message) {
+						$timeout(function() {
+							$scope.data.isDisabledPriority = true;
+							$scope.data.isDisabledStatus = false;
+						});
 					});
-				});
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
+				}
+				
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.uploadStatus = function() {
-		var fileSelector = inputFileService.getSelectorById("fileStatus");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if(this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
-				
-				statusService.uploadStatusCsv(requestData, function(data, message) {
-					$timeout(function() {
-						$scope.data.isDisabledStatus = true;
-						$scope.data.isDisabledContact = false;
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileStatus");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if(this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Upload file's size: " + fileSize + "KB");
+					
+					statusService.uploadStatusCsv(requestData, function(data, message) {
+						$timeout(function() {
+							$scope.data.isDisabledStatus = true;
+							$scope.data.isDisabledContact = false;
+						});
 					});
-				});
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
+				}
+				
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.uploadContacts = function() {
-		var fileSelector = inputFileService.getSelectorById("fileContact");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if(this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
-				
-				if(fileName.indexOf("Contact") > -1) {
-					contactService.uploadContactCsv(requestData, function(data, message) {
-						$timeout(function() {//to refresh data binding
-							$scope.data.isDisabledContact = true;
-							$scope.data.isDisabledPartCustomer = false;
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileContact");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if(this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Upload file's size: " + fileSize + "KB");
+					
+					if(fileName.indexOf("Contact") > -1) {
+						contactService.uploadContactCsv(requestData, function(data, message) {
+							$timeout(function() {//to refresh data binding
+								$scope.data.isDisabledContact = true;
+								$scope.data.isDisabledPartCustomer = false;
+							});
 						});
-					});
+					}
+					else{
+						alert("Your file is not Contact Excel file!");
+					}
 				}
-				else{
-					alert("Your file is not Contact Excel file!");
-				}
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
+				
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.uploadPartsCustomers = function() {
-		var fileSelector = inputFileService.getSelectorById("filePartCustomer");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if(this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
-				
-				partCustomerService.uploadPartCustomerCsv(requestData, function(data, message) {
-					$timeout(function() {
-						$scope.data.isDisabledPartCustomer = true;
-						$scope.data.isDisabledIssue = false;
-					});
-				});
-			}
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("filePartCustomer");
+			inputFileService.loadFileDialog(fileSelector);
 			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
-	};
-	
-	$scope.uploadIssues = function() {
-		var fileSelector = inputFileService.getSelectorById("fileIssue");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if(this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
-				
-				if(fileName.indexOf("Issue") > -1) {
-					issueService.uploadIssueCsv(requestData, function(data, message) {
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if(this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Upload file's size: " + fileSize + "KB");
+					
+					partCustomerService.uploadPartCustomerCsv(requestData, function(data, message) {
 						$timeout(function() {
-							$scope.data.isDisabledIssue = true;
-							$scope.data.isDisabledUploadHP = false;
+							$scope.data.isDisabledPartCustomer = true;
+							$scope.data.isDisabledIssue = false;
 						});
 					});
 				}
-				else{
-					alert("Your file is not Issue Excel file!");
+				
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
+	};
+	
+	$scope.uploadIssues = function() {
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileIssue");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if(this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Upload file's size: " + fileSize + "KB");
+					
+					if(fileName.indexOf("Issue") > -1) {
+						issueService.uploadIssueCsv(requestData, function(data, message) {
+							$timeout(function() {
+								$scope.data.isDisabledIssue = true;
+								$scope.data.isDisabledUploadHP = false;
+							});
+						});
+					}
+					else{
+						alert("Your file is not Issue Excel file!");
+					}
+					
 				}
 				
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.uploadHistoricalProblems = function() {
-		var fileSelector = inputFileService.getSelectorById("fileHistoricalProblem");
-		inputFileService.loadFileDialog(fileSelector);
-		
-		inputFileService.addFileSelectedListener(fileSelector, function() {
-			if(this.files && this.files.length > 0) {
-				var file = this.files[0],
-				fileName = file.name,
-				fileSize = parseInt(file.size / 1024),
-				requestData = {
-					fileId : 0,
-					fileRequest : file,
-					fileSize : file.size
-				};
-				console.log("Üpload file's size: " + fileSize + "KB");
-				
-				historicalProblemService.uploadHistoricalProblemCsv(requestData, function(data, message) {
-					$timeout(function() {
-						$scope.data.isDisabledUploadHP = true;
-						$scope.data.isDisabledUpdateHP = false;
+		$timeout(function() {
+			var fileSelector = inputFileService.getSelectorById("fileHistoricalProblem");
+			inputFileService.loadFileDialog(fileSelector);
+			
+			inputFileService.addFileSelectedListener(fileSelector, function() {
+				if(this.files && this.files.length > 0) {
+					var file = this.files[0],
+					fileName = file.name,
+					fileSize = parseInt(file.size / 1024),
+					requestData = {
+						fileId : 0,
+						fileRequest : file,
+						fileSize : file.size
+					};
+					console.log("Upload file's size: " + fileSize + "KB");
+					
+					historicalProblemService.uploadHistoricalProblemCsv(requestData, function(data, message) {
+						$timeout(function() {
+							$scope.data.isDisabledUploadHP = true;
+							$scope.data.isDisabledUpdateHP = false;
+						});
 					});
-				});
-			}
-			
-			//clear input file after loading file dialog
-			inputFileService.clearFileInput(this);
-			
-		});
+				}
+				
+				//clear input file after loading file dialog
+				inputFileService.clearFileInput(this);
+			});
+		}, 0, false);
 	};
 	
 	$scope.updateHistoricalProblems = function() {
